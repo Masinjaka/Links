@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 
 class FeedFilterChip extends StatelessWidget {
   const FeedFilterChip({
@@ -16,8 +18,10 @@ class FeedFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ink = LinkVaultThemeTokens.ink(context);
-    final textStyle = Theme.of(context).textTheme.labelLarge?.copyWith(
+    final textStyle = GoogleFonts.openSans(
+      textStyle: Theme.of(context).textTheme.labelLarge,
       color: selected ? LinkVaultColors.onPrimary : ink,
+      fontWeight: FontWeight.w800,
     );
 
     return Material(
@@ -37,17 +41,17 @@ class FeedFilterChip extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (selected) ...[
-                  Icon(
-                    Icons.check_rounded,
-                    color: LinkVaultColors.onPrimary,
-                    size: 18,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (selected) ...[
+                Icon(
+                  Icons.check_rounded,
+                  color: LinkVaultColors.onPrimary,
+                  size: 18,
                 ),
                 const SizedBox(width: 8),
               ],
-              Text(label, style: textStyle),
+              Text(label.displayText, style: textStyle),
             ],
           ),
         ),

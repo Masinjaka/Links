@@ -9,6 +9,7 @@ class LinkDetailsBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
+    final titleSize = textTheme.labelLarge?.fontSize;
     final readingTime = link.link.readingTime.trim();
     final surface = LinkVaultThemeTokens.surface(context);
     final ink = LinkVaultThemeTokens.ink(context);
@@ -93,11 +94,11 @@ class LinkDetailsBody extends ConsumerWidget {
                                 : 0,
                           ),
                           Text(
-                            link.link.title.toUpperCase(),
+                            link.link.title.toUpperCase().displayText,
                             textAlign: TextAlign.left,
                             style: textTheme.headlineMedium?.copyWith(
                               color: ink,
-                              fontSize: 28,
+                              fontSize: 24,
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -120,7 +121,7 @@ class LinkDetailsBody extends ConsumerWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: textTheme.bodyLarge?.copyWith(
                                     color: ink,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),
@@ -135,11 +136,14 @@ class LinkDetailsBody extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('AUTO_SUMMARY', style: textTheme.headlineMedium),
-                        Container(
-                          width: 120,
-                          height: 4,
-                          color: const Color(0xFFFF003D),
+                        Text(
+                          'AUTO_SUMMARY'.displayText,
+                          style: GoogleFonts.openSans(
+                            textStyle: textTheme.labelLarge,
+                            color: ink,
+                            fontSize: titleSize,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ],
                     ),
@@ -151,17 +155,17 @@ class LinkDetailsBody extends ConsumerWidget {
                       child: Text(
                         link.link.description,
                         style: textTheme.bodyLarge?.copyWith(
-                          fontSize: 18,
+                          fontSize: 16,
                           height: 1.65,
                         ),
                       ),
                     ),
                     const SizedBox(height: 45),
                     Text(
-                      'METADATA_TAGS',
+                      'METADATA_TAGS'.displayText,
                       style: textTheme.headlineMedium?.copyWith(
                         color: LinkVaultColors.secondary,
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -261,7 +265,7 @@ class LinkDetailsBody extends ConsumerWidget {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('INVALID_LINK_URL')));
+      ).showSnackBar(SnackBar(content: Text('INVALID_LINK_URL'.displayText)));
       return;
     }
 
@@ -272,7 +276,7 @@ class LinkDetailsBody extends ConsumerWidget {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('FAILED_TO_OPEN_LINK')));
+    ).showSnackBar(SnackBar(content: Text('FAILED_TO_OPEN_LINK'.displayText)));
   }
 
   Future<void> _archiveLink(BuildContext context, WidgetRef ref) async {
@@ -294,6 +298,6 @@ class LinkDetailsBody extends ConsumerWidget {
     }
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('LINK_ARCHIVED')));
+    ).showSnackBar(SnackBar(content: Text('LINK_ARCHIVED'.displayText)));
   }
 }

@@ -32,7 +32,7 @@ class _CollectionIconPickerDialogState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'SELECT_COLLECTION_ICON',
+              'SELECT_COLLECTION_ICON'.displayText,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 6),
@@ -89,7 +89,7 @@ class _CollectionIconPickerDialogState
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              option.label,
+                              option.label.displayText,
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

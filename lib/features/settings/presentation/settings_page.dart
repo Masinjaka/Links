@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/settings/presentation/widget/settings_widgets.dart';
 import 'package:linkvault/features/settings/provider/settings_providers.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -20,7 +20,7 @@ class SettingsPage extends ConsumerWidget {
     return VelocityPage(
       bottomInset: 64,
       children: [
-        SettingsHeader(onClose: () => context.go('/')),
+        const SettingsHeader(),
         Padding(
           padding: const EdgeInsets.only(top: 17),
           child: SettingsSection(
@@ -74,19 +74,19 @@ class SettingsPage extends ConsumerWidget {
         Center(
           child: version.when(
             data: (value) => Text(
-              'VERSION_$value',
+              'VERSION_$value'.displayText,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: LinkVaultColors.secondary,
               ),
             ),
             error: (_, _) => Text(
-              'VERSION_UNAVAILABLE',
+              'VERSION_UNAVAILABLE'.displayText,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: LinkVaultColors.secondary,
               ),
             ),
             loading: () => Text(
-              'LOADING_VERSION...',
+              'LOADING_VERSION...'.displayText,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: LinkVaultColors.secondary,
               ),
@@ -122,7 +122,8 @@ class SettingsPage extends ConsumerWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          imported == 0 ? 'NO_LINKS_IMPORTED' : 'IMPORTED_${imported}_LINKS',
+          (imported == 0 ? 'NO_LINKS_IMPORTED' : 'IMPORTED_${imported}_LINKS')
+              .displayText,
         ),
       ),
     );
@@ -155,7 +156,7 @@ Future<void> showCsvExportDialog(BuildContext context, String csv) async {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'EXPORT_CSV',
+                'EXPORT_CSV'.displayText,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 12),
@@ -203,7 +204,7 @@ Future<void> showCsvExportDialog(BuildContext context, String csv) async {
                         }
                         Navigator.of(context).pop();
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('CSV_COPIED')),
+                          SnackBar(content: Text('CSV_COPIED'.displayText)),
                         );
                       },
                     ),
@@ -246,7 +247,7 @@ Future<String?> showCsvImportDialog(BuildContext context) async {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'IMPORT_CSV',
+                'IMPORT_CSV'.displayText,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 12),

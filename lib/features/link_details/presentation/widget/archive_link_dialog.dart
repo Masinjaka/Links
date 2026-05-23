@@ -21,7 +21,7 @@ Future<bool> showArchiveLinkDialog(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'ARCHIVE_LINK',
+                'ARCHIVE_LINK'.displayText,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 12),

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 
 class LinkDetailsTitleBanner extends StatelessWidget {
   const LinkDetailsTitleBanner({super.key, required this.title, this.style});
@@ -21,9 +22,9 @@ class LinkDetailsTitleBanner extends StatelessWidget {
         style ??
         Theme.of(context).textTheme.headlineMedium?.copyWith(
           color: LinkVaultColors.onPrimary,
-          fontSize: 28,
+          fontSize: 24,
         ) ??
-        TextStyle(color: LinkVaultColors.onPrimary, fontSize: 28);
+        TextStyle(color: LinkVaultColors.onPrimary, fontSize: 24);
     final textDirection = Directionality.of(context);
     final textScaler = MediaQuery.textScalerOf(context);
 
@@ -35,7 +36,7 @@ class LinkDetailsTitleBanner extends StatelessWidget {
               ? constraints.maxWidth
               : 720.0;
           final layout = _BannerTextLayout.resolve(
-            title: title.toUpperCase(),
+            title: title.toUpperCase().displayText,
             style: textStyle,
             textDirection: textDirection,
             textScaler: textScaler,

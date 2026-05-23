@@ -9,6 +9,7 @@ import 'package:linkvault/features/collections/provider/collections_providers.da
 import 'package:linkvault/features/collections/repository/collections_repository.dart';
 import 'package:linkvault/features/feed/presentation/widgets/feed_filter_rail.dart';
 import 'package:linkvault/features/feed/presentation/widgets/feed_search_strip.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/square_button_widget.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
@@ -50,7 +51,7 @@ class CollectionsPage extends ConsumerWidget {
       spacing: 0,
       overlay: overlay,
       children: [
-        CollectionsHeader(onClose: () => context.go('/')),
+        const CollectionsHeader(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -123,7 +124,7 @@ class CollectionsPage extends ConsumerWidget {
                 },
               ),
               error: (error, stackTrace) => Text(
-                'DATABASE_ERROR',
+                'DATABASE_ERROR'.displayText,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               loading: () => Center(
@@ -226,7 +227,7 @@ class _SelectAllStrip extends StatelessWidget {
                     _SelectAllCheckbox(selected: selected),
                     const SizedBox(width: 14),
                     Text(
-                      'SELECT_ALL',
+                      'SELECT_ALL'.displayText,
                       style: textTheme.bodyLarge?.copyWith(
                         color: ink,
                         fontWeight: FontWeight.w700,
@@ -244,7 +245,7 @@ class _SelectAllStrip extends StatelessWidget {
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: const Text('CANCEL'),
+              child: Text('CANCEL'.displayText),
             ),
           ],
         ),

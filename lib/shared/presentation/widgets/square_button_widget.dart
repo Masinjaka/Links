@@ -57,11 +57,7 @@ class _SquareButtonState extends State<SquareButton> {
         padding: EdgeInsets.zero,
         alignment: Alignment.center,
         constraints: const BoxConstraints(),
-        icon: Icon(
-          widget.icon,
-          color: resolvedIconColor,
-          size: 28,
-        ),
+        icon: Icon(widget.icon, color: resolvedIconColor, size: 28),
       ),
     );
   }

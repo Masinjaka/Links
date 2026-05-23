@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 
 class PageTitle extends StatelessWidget {
   const PageTitle({super.key, this.title, this.subtitle});
@@ -15,7 +16,7 @@ class PageTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title ?? 'SAVEYO',
+          (title ?? 'SAVEYO').displayText,
           style: textTheme.headlineLarge?.copyWith(
             color: LinkVaultThemeTokens.ink(context),
           ),
@@ -27,7 +28,7 @@ class PageTitle extends StatelessWidget {
             color: LinkVaultColors.primary,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             child: Text(
-              subtitle ?? 'LINKS',
+              (subtitle ?? 'LINKS').displayText,
               style: textTheme.headlineMedium?.copyWith(
                 color: LinkVaultColors.onPrimary,
               ),

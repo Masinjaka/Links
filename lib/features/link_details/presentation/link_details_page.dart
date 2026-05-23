@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/link_details/presentation/widget/link_details_widgets.dart';
 import 'package:linkvault/features/link_details/provider/link_details_providers.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
 class LinkDetailsPage extends ConsumerWidget {
@@ -28,7 +29,12 @@ class LinkDetailsPage extends ConsumerWidget {
             const Positioned.fill(
               child: IgnorePointer(child: VelocityKineticBackground()),
             ),
-            Center(child: Text('DATABASE_ERROR', style: textTheme.labelLarge)),
+            Center(
+              child: Text(
+                'DATABASE_ERROR'.displayText,
+                style: textTheme.labelLarge,
+              ),
+            ),
           ],
         ),
       ),

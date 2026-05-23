@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 
 class FeedSearchStrip extends StatelessWidget {
   const FeedSearchStrip({super.key, required this.onChanged});
@@ -38,7 +39,7 @@ class FeedSearchStrip extends StatelessWidget {
                 color: ink,
                 fontWeight: FontWeight.w600,
               ),
-              decoration: const InputDecoration(hintText: 'SEARCH_SYSTEM...'),
+              decoration: InputDecoration(hintText: 'SEARCH'.displayText),
             ),
           ),
         ],

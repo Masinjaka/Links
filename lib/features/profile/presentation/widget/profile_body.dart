@@ -25,8 +25,8 @@ class ProfileBody extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        profile.displayName,
-                        style: textTheme.headlineLarge?.copyWith(fontSize: 42),
+                        profile.displayName.displayText,
+                        style: textTheme.headlineLarge?.copyWith(fontSize: 36),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -38,7 +38,7 @@ class ProfileBody extends StatelessWidget {
                           vertical: 6,
                         ),
                         child: Text(
-                          profile.authLevel,
+                          profile.authLevel.displayText,
                           style: textTheme.labelLarge?.copyWith(fontSize: 14),
                         ),
                       ),

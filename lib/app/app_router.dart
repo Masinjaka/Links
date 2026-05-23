@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:linkvault/app/primary_navigation_shell.dart';
 import 'package:linkvault/features/add_link/presentation/add_link_page.dart';
 import 'package:linkvault/features/collections/presentation/add_collection_page.dart';
 import 'package:linkvault/features/collections/presentation/collection_details_page.dart';
@@ -13,107 +13,92 @@ import 'package:linkvault/features/settings/presentation/settings_page.dart';
 
 final appRouter = GoRouter(
   routes: [
-    GoRoute(
-      path: '/',
-      name: 'feed',
-      pageBuilder: (context, state) => _buildSlidePage(state, const FeedPage()),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return PrimaryNavigationShell(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/',
+              name: 'feed',
+              builder: (context, state) => const FeedPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/collections',
+              name: 'collections',
+              builder: (context, state) => const CollectionsPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/settings',
+              name: 'settings',
+              builder: (context, state) => const SettingsPage(),
+            ),
+          ],
+        ),
+      ],
     ),
     GoRoute(
       path: '/onboarding',
       name: 'onboarding',
-      pageBuilder: (context, state) =>
-          _buildSlidePage(state, const OnboardingPage()),
+      builder: (context, state) => const OnboardingPage(),
     ),
     GoRoute(
       path: '/add',
       name: 'add-link',
-      pageBuilder: (context, state) {
+      builder: (context, state) {
         final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
         final collectionId = int.tryParse(
           state.uri.queryParameters['collectionId'] ?? '',
         );
-        return _buildSlidePage(
-          state,
-          AddLinkPage(linkId: id, collectionId: collectionId),
-        );
+        return AddLinkPage(linkId: id, collectionId: collectionId);
       },
-    ),
-    GoRoute(
-      path: '/collections',
-      name: 'collections',
-      pageBuilder: (context, state) =>
-          _buildSlidePage(state, const CollectionsPage()),
     ),
     GoRoute(
       path: '/collections/add',
       name: 'add-collection',
-      pageBuilder: (context, state) {
+      builder: (context, state) {
         final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
-        return _buildSlidePage(state, AddCollectionPage(collectionId: id));
+        return AddCollectionPage(collectionId: id);
       },
     ),
     GoRoute(
       path: '/collections/view',
       name: 'collection-details',
-      pageBuilder: (context, state) {
+      builder: (context, state) {
         final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
         if (id == null) {
-          return _buildSlidePage(state, const CollectionsPage());
+          return const CollectionsPage();
         }
 
-        return _buildSlidePage(state, CollectionDetailsPage(collectionId: id));
+        return CollectionDetailsPage(collectionId: id);
       },
     ),
     GoRoute(
       path: '/details',
       name: 'link-details',
-      pageBuilder: (context, state) {
+      builder: (context, state) {
         final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
         final collectionId = int.tryParse(
           state.uri.queryParameters['collectionId'] ?? '',
         );
 
-        return _buildSlidePage(
-          state,
-          LinkDetailsPage(linkId: id, collectionId: collectionId),
-        );
+        return LinkDetailsPage(linkId: id, collectionId: collectionId);
       },
     ),
     GoRoute(
       path: '/profile',
       name: 'profile',
-      pageBuilder: (context, state) =>
-          _buildSlidePage(state, const ProfilePage()),
-    ),
-    GoRoute(
-      path: '/settings',
-      name: 'settings',
-      pageBuilder: (context, state) =>
-          _buildSlidePage(state, const SettingsPage()),
+      builder: (context, state) => const ProfilePage(),
     ),
   ],
 );
-
-CustomTransitionPage<void> _buildSlidePage(GoRouterState state, Widget child) {
-  return CustomTransitionPage<void>(
-    key: state.pageKey,
-    child: child,
-    transitionDuration: const Duration(milliseconds: 280),
-    reverseTransitionDuration: const Duration(milliseconds: 240),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      final curvedAnimation = CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeOutCubic,
-        reverseCurve: Curves.easeInCubic,
-      );
-
-      return SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(1, 0),
-          end: Offset.zero,
-        ).animate(curvedAnimation),
-        child: child,
-      );
-    },
-  );
-}

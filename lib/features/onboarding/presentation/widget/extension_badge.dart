@@ -17,7 +17,7 @@ class ExtensionBadge extends StatelessWidget {
           Icon(Icons.public_rounded, color: LinkVaultThemeTokens.ink(context)),
           const SizedBox(width: 24),
           Text(
-            label,
+            label.displayText,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontSize: 18),

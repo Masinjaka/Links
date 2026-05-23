@@ -46,6 +46,9 @@ class _SettingsOptionCopy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: Theme.of(context).textTheme.titleMedium);
+    return Text(
+      title.displayText,
+      style: Theme.of(context).textTheme.titleMedium,
+    );
   }
 }

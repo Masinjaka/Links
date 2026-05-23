@@ -61,7 +61,7 @@ class LinkVaultTheme {
   }) {
     final base = ThemeData(useMaterial3: true, brightness: brightness);
     // final fontFamily = GoogleFonts.jersey25().fontFamily;
-    final fontFamily = GoogleFonts.manrope().fontFamily;
+    final fontFamily = GoogleFonts.nunito().fontFamily;
 
     return base.copyWith(
       scaffoldBackgroundColor: background,
@@ -80,7 +80,7 @@ class LinkVaultTheme {
       textTheme: TextTheme(
         headlineLarge: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 34,
+          fontSize: 30,
           fontWeight: FontWeight.w700,
           height: 1,
           letterSpacing: 0,
@@ -88,7 +88,7 @@ class LinkVaultTheme {
         ),
         headlineMedium: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 22,
+          fontSize: 20,
           fontWeight: FontWeight.w700,
           height: 1.1,
           letterSpacing: 0,
@@ -96,7 +96,7 @@ class LinkVaultTheme {
         ),
         titleLarge: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
           height: 1.2,
           letterSpacing: 0,
@@ -104,7 +104,7 @@ class LinkVaultTheme {
         ),
         titleMedium: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.w700,
           height: 1.2,
           letterSpacing: 0,
@@ -112,7 +112,7 @@ class LinkVaultTheme {
         ),
         bodyLarge: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
           height: 1.4,
           letterSpacing: 0,
@@ -120,7 +120,7 @@ class LinkVaultTheme {
         ),
         bodyMedium: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
           height: 1.4,
           letterSpacing: 0,
@@ -128,7 +128,7 @@ class LinkVaultTheme {
         ),
         bodySmall: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 13,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
           height: 1.4,
           letterSpacing: 0,
@@ -136,7 +136,7 @@ class LinkVaultTheme {
         ),
         labelLarge: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
           height: 1.2,
           letterSpacing: 0,
@@ -144,7 +144,7 @@ class LinkVaultTheme {
         ),
         labelMedium: TextStyle(
           fontFamily: fontFamily,
-          fontSize: 13,
+          fontSize: 12,
           fontWeight: FontWeight.w600,
           height: 1.2,
           letterSpacing: 0,
@@ -167,7 +167,7 @@ class LinkVaultTheme {
         hintStyle: TextStyle(
           color: secondary,
           fontFamily: fontFamily,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
           letterSpacing: 0,
         ),

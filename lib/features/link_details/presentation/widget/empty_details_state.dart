@@ -19,7 +19,7 @@ class EmptyDetailsState extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'NO_LINK_SELECTED',
+                    'NO_LINK_SELECTED'.displayText,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: LinkVaultColors.primary,
                     ),

@@ -12,11 +12,21 @@ class SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final titleSize = textTheme.labelLarge?.fontSize;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: Theme.of(context).textTheme.headlineMedium),
-        Container(width: 120, height: 4, color: LinkVaultColors.primary),
+        Text(
+          title.displayText,
+          style: GoogleFonts.openSans(
+            textStyle: textTheme.labelLarge,
+            color: LinkVaultThemeTokens.ink(context),
+            fontSize: titleSize,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         const SizedBox(height: 20),
         SizedBox(
           width: double.infinity,

@@ -87,7 +87,7 @@ class CollectionDetailsHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'COLLECTION',
+                          'COLLECTION'.displayText,
                           style: textTheme.labelLarge?.copyWith(
                             color: LinkVaultColors.secondary,
                             fontSize: 13,
@@ -95,7 +95,7 @@ class CollectionDetailsHeader extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          collection.collection.title,
+                          collection.collection.title.displayText,
                           style: textTheme.headlineMedium,
                         ),
                       ],

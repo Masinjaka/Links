@@ -12,6 +12,7 @@ import 'package:linkvault/features/feed/presentation/widgets/kinetic_link_card.d
 import 'package:linkvault/features/feed/presentation/widgets/quick_action_widget.dart';
 import 'package:linkvault/features/feed/provider/feed_providers.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/square_button_widget.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
@@ -159,7 +160,7 @@ class FeedPage extends ConsumerWidget {
                   ],
                   error: (error, stackTrace) => [
                     Text(
-                      'DATABASE_ERROR',
+                      'DATABASE_ERROR'.displayText,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ],
@@ -261,7 +262,7 @@ class _FeedSelectAllStrip extends StatelessWidget {
                     _FeedSelectionCheckbox(selected: selected),
                     const SizedBox(width: 14),
                     Text(
-                      'SELECT_ALL',
+                      'SELECT_ALL'.displayText,
                       style: textTheme.bodyLarge?.copyWith(
                         color: ink,
                         fontWeight: FontWeight.w700,
@@ -279,7 +280,7 @@ class _FeedSelectAllStrip extends StatelessWidget {
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: const Text('CANCEL'),
+              child: Text('CANCEL'.displayText),
             ),
           ],
         ),
@@ -341,7 +342,7 @@ Future<bool> showArchiveLinksDialog(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'ARCHIVE_LINKS',
+                'ARCHIVE_LINKS'.displayText,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 12),

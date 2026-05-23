@@ -84,7 +84,7 @@ class _SelectableCollectionLinkRowState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.link.link.title,
+                            widget.link.link.title.displayText,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(

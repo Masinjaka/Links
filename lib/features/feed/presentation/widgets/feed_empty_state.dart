@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 
 class FeedEmptyState extends StatelessWidget {
   const FeedEmptyState({super.key});
@@ -24,7 +25,7 @@ class FeedEmptyState extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'NO_LINKS',
+            'NO_LINKS'.displayText,
             style: textTheme.headlineMedium?.copyWith(color: ink),
           ),
           const SizedBox(height: 12),

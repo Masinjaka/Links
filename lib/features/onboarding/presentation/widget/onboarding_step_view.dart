@@ -48,7 +48,7 @@ class OnboardingStepView extends StatelessWidget {
                     ),
                     child: Text(
                       step.stepNumber,
-                      style: textTheme.headlineMedium?.copyWith(fontSize: 30),
+                      style: textTheme.headlineMedium?.copyWith(fontSize: 26),
                     ),
                   ),
                 ),
@@ -67,22 +67,22 @@ class OnboardingStepView extends StatelessWidget {
         ),
         const SizedBox(height: 48),
         Text(
-          step.title,
-          style: textTheme.headlineLarge?.copyWith(fontSize: 36, height: 1),
+          step.title.displayText,
+          style: textTheme.headlineLarge?.copyWith(fontSize: 32, height: 1),
         ),
         const SizedBox(height: 26),
         Text(
-          step.description,
+          step.description.displayText,
           style: textTheme.bodyLarge?.copyWith(
             color: LinkVaultColors.secondary,
-            fontSize: 17,
+            fontSize: 15,
           ),
         ),
         if (step.showPlatforms) ...[
           const SizedBox(height: 52),
           Center(
             child: Text(
-              'SUPPORTED_PLATFORMS',
+              'SUPPORTED_PLATFORMS'.displayText,
               style: textTheme.labelLarge?.copyWith(
                 color: LinkVaultColors.secondary,
                 fontSize: 13,

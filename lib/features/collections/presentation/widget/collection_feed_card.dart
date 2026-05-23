@@ -87,7 +87,7 @@ class _CollectionFeedCardState extends State<CollectionFeedCard> {
                           const SizedBox(width: 12),
                         ],
                         Text(
-                          '${widget.group.count}_LINKS',
+                          '${widget.group.count} Links',
                           style: textTheme.bodyLarge?.copyWith(
                             color: LinkVaultThemeTokens.secondaryInk(context),
                             fontWeight: FontWeight.w500,
@@ -108,8 +108,13 @@ class _CollectionFeedCardState extends State<CollectionFeedCard> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      widget.group.collection.title.toUpperCase(),
-                      style: textTheme.headlineMedium?.copyWith(color: ink),
+                      widget.group.collection.title.toUpperCase().displayText,
+                      style: GoogleFonts.openSans(
+                        textStyle: textTheme.labelLarge,
+                        color: ink,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -118,9 +123,16 @@ class _CollectionFeedCardState extends State<CollectionFeedCard> {
                       Row(
                         children: [
                           Flexible(
-                            child: _CollectionMetaBadge(
+                            child: MetaBadge(
                               label: widget.group.collection.tagName,
                               filled: true,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 7,
+                              ),
+                              fontSize: 12,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],

@@ -42,7 +42,7 @@ class _CollectionLinkPickerDialogState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ADD_LINKS',
+                        'ADD_LINKS'.displayText,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       const SizedBox(height: 6),
@@ -76,7 +76,7 @@ class _CollectionLinkPickerDialogState
                   if (items.isEmpty) {
                     return Center(
                       child: Text(
-                        'NO_AVAILABLE_LINKS',
+                        'NO_AVAILABLE_LINKS'.displayText,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     );
@@ -108,7 +108,7 @@ class _CollectionLinkPickerDialogState
                 },
                 error: (_, _) => Center(
                   child: Text(
-                    'DATABASE_ERROR',
+                    'DATABASE_ERROR'.displayText,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),

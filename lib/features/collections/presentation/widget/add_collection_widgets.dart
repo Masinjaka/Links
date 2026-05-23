@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/collections/presentation/widget/collection_icon_catalog.dart';
-import 'package:linkvault/shared/presentation/widgets/page_title_widget.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/square_button_widget.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 

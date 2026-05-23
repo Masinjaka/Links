@@ -7,6 +7,8 @@ class AddCollectionPageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -14,7 +16,14 @@ class AddCollectionPageHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const PageTitle(title: 'ADD', subtitle: 'COLLECTION'),
+            Text(
+              'Add collections',
+              style: textTheme.titleLarge?.copyWith(
+                color: LinkVaultThemeTokens.ink(context),
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             SquareButton(
               onPressed: onBack,
               backgroundColor: LinkVaultThemeTokens.surface(context),

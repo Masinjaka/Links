@@ -7,6 +7,7 @@ import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/core/database/app_database.dart';
 import 'package:linkvault/features/collections/presentation/widget/add_collection_widgets.dart';
 import 'package:linkvault/features/collections/provider/collections_providers.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
 class AddCollectionPage extends ConsumerStatefulWidget {
@@ -117,10 +118,10 @@ class _AddCollectionPageState extends ConsumerState<AddCollectionPage> {
             const CollectionSectionTitle(title: 'ASSIGN_TAGS'),
             const SizedBox(height: 32),
             Text(
-              'NEW_TAG',
+              'NEW_TAG'.displayText,
               style: TextStyle(
                 color: LinkVaultThemeTokens.ink(context),
-                fontFamily: GoogleFonts.manrope().fontFamily,
+                fontFamily: GoogleFonts.nunito().fontFamily,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -139,7 +140,7 @@ class _AddCollectionPageState extends ConsumerState<AddCollectionPage> {
                   animation: _tagFocusNode,
                   builder: (context, child) {
                     return Text(
-                      'ADD',
+                      'ADD'.displayText,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: _tagFocusNode.hasFocus
                             ? LinkVaultColors.primary
@@ -251,9 +252,9 @@ class _AddCollectionPageState extends ConsumerState<AddCollectionPage> {
   Future<void> _save() async {
     final title = _titleController.text.trim();
     if (title.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('COLLECTION_NAME_REQUIRED')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('COLLECTION_NAME_REQUIRED'.displayText)),
+      );
       return;
     }
 

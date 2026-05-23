@@ -21,7 +21,7 @@ Future<bool> showArchiveCollectionDialog(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'ARCHIVE_COLLECTION',
+                'ARCHIVE_COLLECTION'.displayText,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 12),
@@ -81,7 +81,7 @@ Future<bool> showArchiveCollectionsDialog(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'ARCHIVE_COLLECTIONS',
+                'ARCHIVE_COLLECTIONS'.displayText,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 12),

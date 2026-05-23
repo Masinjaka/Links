@@ -7,6 +7,7 @@ import 'package:linkvault/features/collections/presentation/widget/add_collectio
 import 'package:linkvault/features/collections/presentation/widget/collection_details_widgets.dart';
 import 'package:linkvault/features/collections/provider/collections_providers.dart';
 import 'package:linkvault/features/collections/repository/collections_repository.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
 class CollectionDetailsPage extends ConsumerWidget {
@@ -70,7 +71,7 @@ class CollectionDetailsPage extends ConsumerWidget {
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Text('+ ADD_LINKS'),
+                            child: Text('+ ADD_LINKS'.displayText),
                           ),
                           //
                         ],
@@ -81,7 +82,7 @@ class CollectionDetailsPage extends ConsumerWidget {
                           backgroundColor: LinkVaultThemeTokens.surface(
                             context,
                           ),
-                          child: const Text('NO_LINKS_IN_COLLECTION'),
+                          child: Text('NO_LINKS_IN_COLLECTION'.displayText),
                         )
                       else ...[
                         for (final (index, link) in links.indexed) ...[
@@ -110,7 +111,10 @@ class CollectionDetailsPage extends ConsumerWidget {
                   child: IgnorePointer(child: VelocityKineticBackground()),
                 ),
                 Center(
-                  child: Text('DATABASE_ERROR', style: textTheme.labelLarge),
+                  child: Text(
+                    'DATABASE_ERROR'.displayText,
+                    style: textTheme.labelLarge,
+                  ),
                 ),
               ],
             ),
@@ -139,7 +143,12 @@ class CollectionDetailsPage extends ConsumerWidget {
             const Positioned.fill(
               child: IgnorePointer(child: VelocityKineticBackground()),
             ),
-            Center(child: Text('DATABASE_ERROR', style: textTheme.labelLarge)),
+            Center(
+              child: Text(
+                'DATABASE_ERROR'.displayText,
+                style: textTheme.labelLarge,
+              ),
+            ),
           ],
         ),
       ),
@@ -226,7 +235,7 @@ class _EmptyCollectionDetailsState extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'COLLECTION_NOT_FOUND',
+                    'COLLECTION_NOT_FOUND'.displayText,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: LinkVaultColors.primary,
                     ),

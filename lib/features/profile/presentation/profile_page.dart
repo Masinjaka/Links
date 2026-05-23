@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/profile/presentation/widget/profile_widgets.dart';
 import 'package:linkvault/features/profile/provider/profile_providers.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -23,7 +24,12 @@ class ProfilePage extends ConsumerWidget {
             const Positioned.fill(
               child: IgnorePointer(child: VelocityKineticBackground()),
             ),
-            Center(child: Text('DATABASE_ERROR', style: textTheme.labelLarge)),
+            Center(
+              child: Text(
+                'DATABASE_ERROR'.displayText,
+                style: textTheme.labelLarge,
+              ),
+            ),
           ],
         ),
       ),

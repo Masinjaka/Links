@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 
 const double kVelocityPadding = 32;
 const double kVelocityGap = 10;
@@ -87,6 +88,7 @@ class VelocitySectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final resolvedTitleColor = titleColor ?? LinkVaultThemeTokens.ink(context);
+    final titleSize = textTheme.labelLarge?.fontSize;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -96,15 +98,18 @@ class VelocitySectionHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                title,
-                style: textTheme.headlineMedium?.copyWith(
+                title.displayText,
+                style: GoogleFonts.openSans(
+                  textStyle: textTheme.labelLarge,
                   color: resolvedTitleColor,
+                  fontSize: titleSize,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
             if (actionLabel != null)
               Text(
-                actionLabel!,
+                actionLabel!.displayText,
                 style: textTheme.labelLarge?.copyWith(
                   color: LinkVaultColors.primary,
                   decoration: TextDecoration.underline,
@@ -113,12 +118,6 @@ class VelocitySectionHeader extends StatelessWidget {
                 ),
               ),
           ],
-        ),
-        const SizedBox(height: 14),
-        Divider(
-          height: 1,
-          color: LinkVaultThemeTokens.primary(context),
-          thickness: 2,
         ),
       ],
     );
@@ -243,7 +242,7 @@ class VelocityTextInput extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
-              decoration: InputDecoration(hintText: hint),
+              decoration: InputDecoration(hintText: hint.displayText),
             ),
           ),
           if (trailing != null) ...[const SizedBox(width: 16), trailing!],
@@ -296,7 +295,7 @@ class VelocityChip extends StatelessWidget {
                 const SizedBox(width: 8),
               ],
               Text(
-                label,
+                label.displayText,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: foreground,
                   fontSize: 14,
@@ -385,7 +384,7 @@ class VelocityButton extends StatelessWidget {
                 const SizedBox(width: 10),
               ],
               Text(
-                label,
+                label.displayText,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: resolvedForegroundColor,
                   fontSize: 16,
@@ -442,12 +441,12 @@ class VelocitySettingRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  title.displayText,
                   style: textTheme.titleMedium?.copyWith(fontSize: 18),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  subtitle,
+                  subtitle.displayText,
                   style: textTheme.labelLarge?.copyWith(
                     color: LinkVaultColors.secondary,
                     fontSize: 13,
@@ -494,7 +493,7 @@ class VelocityStatBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            label.displayText,
             style: textTheme.labelLarge?.copyWith(
               color: LinkVaultColors.secondary,
               fontSize: 13,
@@ -506,7 +505,7 @@ class VelocityStatBox extends StatelessWidget {
             children: [
               Text(
                 value,
-                style: textTheme.headlineMedium?.copyWith(fontSize: 28),
+                style: textTheme.headlineMedium?.copyWith(fontSize: 24),
               ),
               const SizedBox(width: 8),
               Padding(
@@ -647,7 +646,7 @@ class _BarChartPainter extends CustomPainter {
         style: TextStyle(
           color: LinkVaultColors.secondary,
           fontSize: 12,
-          fontFamily: GoogleFonts.manrope().fontFamily,
+          fontFamily: GoogleFonts.nunito().fontFamily,
         ),
       );
       labelPainter.layout();
@@ -724,7 +723,7 @@ class _LineChartPainter extends CustomPainter {
         style: TextStyle(
           color: LinkVaultColors.secondary,
           fontSize: 12,
-          fontFamily: GoogleFonts.manrope().fontFamily,
+          fontFamily: GoogleFonts.nunito().fontFamily,
         ),
       );
       labelPainter.layout();

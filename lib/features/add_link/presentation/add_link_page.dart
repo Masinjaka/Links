@@ -10,6 +10,7 @@ import 'package:linkvault/features/add_link/provider/add_link_metadata_providers
 import 'package:linkvault/features/add_link/presentation/widget/add_link_widgets.dart';
 import 'package:linkvault/features/add_link/provider/add_link_providers.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
+import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
 
 class AddLinkPage extends ConsumerStatefulWidget {
@@ -46,6 +47,8 @@ class _AddLinkPageState extends ConsumerState<AddLinkPage> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final titleSize = textTheme.labelLarge?.fontSize;
     final urlDraft = ref.watch(addLinkUrlDraftProvider);
     final livePreview = ref.watch(addLinkLivePreviewProvider);
     final hasUrlDraft = urlDraft.trim().isNotEmpty;
@@ -121,16 +124,20 @@ class _AddLinkPageState extends ConsumerState<AddLinkPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'ASSIGN_TAGS',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'ASSIGN_TAGS'.displayText,
+              style: GoogleFonts.openSans(
+                textStyle: textTheme.labelLarge,
+                color: LinkVaultThemeTokens.ink(context),
+                fontSize: titleSize,
+                fontWeight: FontWeight.w800,
+              ),
             ),
-            Container(width: 120, height: 4, color: const Color(0xFFFF003D)),
             const SizedBox(height: 32),
             Text(
-              'NEW_TAG',
+              'NEW_TAG'.displayText,
               style: TextStyle(
                 color: LinkVaultThemeTokens.ink(context),
-                fontFamily: GoogleFonts.manrope().fontFamily,
+                fontFamily: GoogleFonts.nunito().fontFamily,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -152,7 +159,7 @@ class _AddLinkPageState extends ConsumerState<AddLinkPage> {
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                child: const Text('ADD'),
+                child: Text('ADD'.displayText),
               ),
             ),
             const SizedBox(height: 32),
@@ -225,7 +232,7 @@ class _AddLinkPageState extends ConsumerState<AddLinkPage> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('TAG_SAVE_FAILED')));
+      ).showSnackBar(SnackBar(content: Text('TAG_SAVE_FAILED'.displayText)));
     }
   }
 
