@@ -19,14 +19,14 @@ class EmptyDetailsState extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'NO_LINK_SELECTED'.displayText,
+                    linkVaultLocalizationsOf(context).noLinkSelected,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: LinkVaultColors.primary,
                     ),
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Choose a link from the feed or add a new one.',
+                    linkVaultLocalizationsOf(context).chooseLinkOrAdd,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: LinkVaultColors.secondary,
                     ),

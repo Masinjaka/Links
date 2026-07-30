@@ -54,7 +54,7 @@ final class AddLinkRepositoryProvider
   }
 }
 
-String _$addLinkRepositoryHash() => r'd4a384588fe6cf00d5af73069bde6aed3712deae';
+String _$addLinkRepositoryHash() => r'e6ab4d085c2dead27744a5bed937d4316f4c7ef1';
 
 @ProviderFor(AddLinkOptimisticTags)
 final addLinkOptimisticTagsProvider = AddLinkOptimisticTagsProvider._();
@@ -89,7 +89,7 @@ final class AddLinkOptimisticTagsProvider
 }
 
 String _$addLinkOptimisticTagsHash() =>
-    r'f049f1fca9675c91f1100bacf6c9edafa4fd9ceb';
+    r'fb549c7020d513427cfc0619a6efc2637b9b62bf';
 
 abstract class _$AddLinkOptimisticTags extends $Notifier<Set<String>> {
   Set<String> build();

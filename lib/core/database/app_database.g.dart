@@ -40,6 +40,53 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _originalUrlMeta = const VerificationMeta(
+    'originalUrl',
+  );
+  @override
+  late final GeneratedColumn<String> originalUrl = GeneratedColumn<String>(
+    'original_url',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _normalizedUrlMeta = const VerificationMeta(
+    'normalizedUrl',
+  );
+  @override
+  late final GeneratedColumn<String> normalizedUrl = GeneratedColumn<String>(
+    'normalized_url',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _canonicalUrlMeta = const VerificationMeta(
+    'canonicalUrl',
+  );
+  @override
+  late final GeneratedColumn<String> canonicalUrl = GeneratedColumn<String>(
+    'canonical_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _urlHashMeta = const VerificationMeta(
+    'urlHash',
+  );
+  @override
+  late final GeneratedColumn<String> urlHash = GeneratedColumn<String>(
+    'url_hash',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
   static const VerificationMeta _domainMeta = const VerificationMeta('domain');
   @override
   late final GeneratedColumn<String> domain = GeneratedColumn<String>(
@@ -61,12 +108,33 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
     requiredDuringInsert: false,
     defaultValue: const Constant(''),
   );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
   static const VerificationMeta _sourceImageUrlMeta = const VerificationMeta(
     'sourceImageUrl',
   );
   @override
   late final GeneratedColumn<String> sourceImageUrl = GeneratedColumn<String>(
     'source_image_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _faviconUrlMeta = const VerificationMeta(
+    'faviconUrl',
+  );
+  @override
+  late final GeneratedColumn<String> faviconUrl = GeneratedColumn<String>(
+    'favicon_url',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -84,6 +152,58 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
     requiredDuringInsert: false,
     defaultValue: const Constant(''),
   );
+  static const VerificationMeta _contentTypeMeta = const VerificationMeta(
+    'contentType',
+  );
+  @override
+  late final GeneratedColumn<String> contentType = GeneratedColumn<String>(
+    'content_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('webpage'),
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('active'),
+  );
+  static const VerificationMeta _isFavouriteMeta = const VerificationMeta(
+    'isFavourite',
+  );
+  @override
+  late final GeneratedColumn<bool> isFavourite = GeneratedColumn<bool>(
+    'is_favourite',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_favourite" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isPinnedMeta = const VerificationMeta(
+    'isPinned',
+  );
+  @override
+  late final GeneratedColumn<bool> isPinned = GeneratedColumn<bool>(
+    'is_pinned',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_pinned" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _isArchivedMeta = const VerificationMeta(
     'isArchived',
   );
@@ -98,6 +218,42 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
       'CHECK ("is_archived" IN (0, 1))',
     ),
     defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _metadataStatusMeta = const VerificationMeta(
+    'metadataStatus',
+  );
+  @override
+  late final GeneratedColumn<String> metadataStatus = GeneratedColumn<String>(
+    'metadata_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
+  static const VerificationMeta _offlineStatusMeta = const VerificationMeta(
+    'offlineStatus',
+  );
+  @override
+  late final GeneratedColumn<String> offlineStatus = GeneratedColumn<String>(
+    'offline_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('unavailable'),
+  );
+  static const VerificationMeta _linkHealthStatusMeta = const VerificationMeta(
+    'linkHealthStatus',
+  );
+  @override
+  late final GeneratedColumn<String> linkHealthStatus = GeneratedColumn<String>(
+    'link_health_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('unknown'),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -123,18 +279,106 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
     requiredDuringInsert: false,
     defaultValue: currentDateAndTime,
   );
+  static const VerificationMeta _lastOpenedAtMeta = const VerificationMeta(
+    'lastOpenedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastOpenedAt = GeneratedColumn<DateTime>(
+    'last_opened_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _metadataFetchedAtMeta = const VerificationMeta(
+    'metadataFetchedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> metadataFetchedAt =
+      GeneratedColumn<DateTime>(
+        'metadata_fetched_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _linkCheckedAtMeta = const VerificationMeta(
+    'linkCheckedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> linkCheckedAt =
+      GeneratedColumn<DateTime>(
+        'link_checked_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _manualSortOrderMeta = const VerificationMeta(
+    'manualSortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> manualSortOrder = GeneratedColumn<int>(
+    'manual_sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
     title,
     url,
+    originalUrl,
+    normalizedUrl,
+    canonicalUrl,
+    urlHash,
     domain,
     description,
+    note,
     sourceImageUrl,
+    faviconUrl,
     readingTime,
+    contentType,
+    status,
+    isFavourite,
+    isPinned,
     isArchived,
+    metadataStatus,
+    offlineStatus,
+    linkHealthStatus,
     createdAt,
     updatedAt,
+    lastOpenedAt,
+    archivedAt,
+    deletedAt,
+    metadataFetchedAt,
+    linkCheckedAt,
+    manualSortOrder,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -167,6 +411,39 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
     } else if (isInserting) {
       context.missing(_urlMeta);
     }
+    if (data.containsKey('original_url')) {
+      context.handle(
+        _originalUrlMeta,
+        originalUrl.isAcceptableOrUnknown(
+          data['original_url']!,
+          _originalUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('normalized_url')) {
+      context.handle(
+        _normalizedUrlMeta,
+        normalizedUrl.isAcceptableOrUnknown(
+          data['normalized_url']!,
+          _normalizedUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('canonical_url')) {
+      context.handle(
+        _canonicalUrlMeta,
+        canonicalUrl.isAcceptableOrUnknown(
+          data['canonical_url']!,
+          _canonicalUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('url_hash')) {
+      context.handle(
+        _urlHashMeta,
+        urlHash.isAcceptableOrUnknown(data['url_hash']!, _urlHashMeta),
+      );
+    }
     if (data.containsKey('domain')) {
       context.handle(
         _domainMeta,
@@ -184,6 +461,12 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
         ),
       );
     }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
     if (data.containsKey('source_image_url')) {
       context.handle(
         _sourceImageUrlMeta,
@@ -191,6 +474,12 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
           data['source_image_url']!,
           _sourceImageUrlMeta,
         ),
+      );
+    }
+    if (data.containsKey('favicon_url')) {
+      context.handle(
+        _faviconUrlMeta,
+        faviconUrl.isAcceptableOrUnknown(data['favicon_url']!, _faviconUrlMeta),
       );
     }
     if (data.containsKey('reading_time')) {
@@ -202,10 +491,67 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
         ),
       );
     }
+    if (data.containsKey('content_type')) {
+      context.handle(
+        _contentTypeMeta,
+        contentType.isAcceptableOrUnknown(
+          data['content_type']!,
+          _contentTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('is_favourite')) {
+      context.handle(
+        _isFavouriteMeta,
+        isFavourite.isAcceptableOrUnknown(
+          data['is_favourite']!,
+          _isFavouriteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_pinned')) {
+      context.handle(
+        _isPinnedMeta,
+        isPinned.isAcceptableOrUnknown(data['is_pinned']!, _isPinnedMeta),
+      );
+    }
     if (data.containsKey('is_archived')) {
       context.handle(
         _isArchivedMeta,
         isArchived.isAcceptableOrUnknown(data['is_archived']!, _isArchivedMeta),
+      );
+    }
+    if (data.containsKey('metadata_status')) {
+      context.handle(
+        _metadataStatusMeta,
+        metadataStatus.isAcceptableOrUnknown(
+          data['metadata_status']!,
+          _metadataStatusMeta,
+        ),
+      );
+    }
+    if (data.containsKey('offline_status')) {
+      context.handle(
+        _offlineStatusMeta,
+        offlineStatus.isAcceptableOrUnknown(
+          data['offline_status']!,
+          _offlineStatusMeta,
+        ),
+      );
+    }
+    if (data.containsKey('link_health_status')) {
+      context.handle(
+        _linkHealthStatusMeta,
+        linkHealthStatus.isAcceptableOrUnknown(
+          data['link_health_status']!,
+          _linkHealthStatusMeta,
+        ),
       );
     }
     if (data.containsKey('created_at')) {
@@ -218,6 +564,54 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
       context.handle(
         _updatedAtMeta,
         updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('last_opened_at')) {
+      context.handle(
+        _lastOpenedAtMeta,
+        lastOpenedAt.isAcceptableOrUnknown(
+          data['last_opened_at']!,
+          _lastOpenedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('metadata_fetched_at')) {
+      context.handle(
+        _metadataFetchedAtMeta,
+        metadataFetchedAt.isAcceptableOrUnknown(
+          data['metadata_fetched_at']!,
+          _metadataFetchedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('link_checked_at')) {
+      context.handle(
+        _linkCheckedAtMeta,
+        linkCheckedAt.isAcceptableOrUnknown(
+          data['link_checked_at']!,
+          _linkCheckedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('manual_sort_order')) {
+      context.handle(
+        _manualSortOrderMeta,
+        manualSortOrder.isAcceptableOrUnknown(
+          data['manual_sort_order']!,
+          _manualSortOrderMeta,
+        ),
       );
     }
     return context;
@@ -241,6 +635,22 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
         DriftSqlType.string,
         data['${effectivePrefix}url'],
       )!,
+      originalUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}original_url'],
+      )!,
+      normalizedUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}normalized_url'],
+      )!,
+      canonicalUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}canonical_url'],
+      ),
+      urlHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}url_hash'],
+      )!,
       domain: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}domain'],
@@ -249,17 +659,53 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      )!,
       sourceImageUrl: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}source_image_url'],
+      ),
+      faviconUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}favicon_url'],
       ),
       readingTime: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}reading_time'],
       )!,
+      contentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}content_type'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      isFavourite: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_favourite'],
+      )!,
+      isPinned: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_pinned'],
+      )!,
       isArchived: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_archived'],
+      )!,
+      metadataStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}metadata_status'],
+      )!,
+      offlineStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}offline_status'],
+      )!,
+      linkHealthStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}link_health_status'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
@@ -268,6 +714,30 @@ class $LinksTable extends Links with TableInfo<$LinksTable, Link> {
       updatedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
+      )!,
+      lastOpenedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_opened_at'],
+      ),
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      metadataFetchedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}metadata_fetched_at'],
+      ),
+      linkCheckedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}link_checked_at'],
+      ),
+      manualSortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}manual_sort_order'],
       )!,
     );
   }
@@ -282,24 +752,62 @@ class Link extends DataClass implements Insertable<Link> {
   final int id;
   final String title;
   final String url;
+  final String originalUrl;
+  final String normalizedUrl;
+  final String? canonicalUrl;
+  final String urlHash;
   final String domain;
   final String description;
+  final String note;
   final String? sourceImageUrl;
+  final String? faviconUrl;
   final String readingTime;
+  final String contentType;
+  final String status;
+  final bool isFavourite;
+  final bool isPinned;
   final bool isArchived;
+  final String metadataStatus;
+  final String offlineStatus;
+  final String linkHealthStatus;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final DateTime? lastOpenedAt;
+  final DateTime? archivedAt;
+  final DateTime? deletedAt;
+  final DateTime? metadataFetchedAt;
+  final DateTime? linkCheckedAt;
+  final int manualSortOrder;
   const Link({
     required this.id,
     required this.title,
     required this.url,
+    required this.originalUrl,
+    required this.normalizedUrl,
+    this.canonicalUrl,
+    required this.urlHash,
     required this.domain,
     required this.description,
+    required this.note,
     this.sourceImageUrl,
+    this.faviconUrl,
     required this.readingTime,
+    required this.contentType,
+    required this.status,
+    required this.isFavourite,
+    required this.isPinned,
     required this.isArchived,
+    required this.metadataStatus,
+    required this.offlineStatus,
+    required this.linkHealthStatus,
     required this.createdAt,
     required this.updatedAt,
+    this.lastOpenedAt,
+    this.archivedAt,
+    this.deletedAt,
+    this.metadataFetchedAt,
+    this.linkCheckedAt,
+    required this.manualSortOrder,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -307,15 +815,48 @@ class Link extends DataClass implements Insertable<Link> {
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
     map['url'] = Variable<String>(url);
+    map['original_url'] = Variable<String>(originalUrl);
+    map['normalized_url'] = Variable<String>(normalizedUrl);
+    if (!nullToAbsent || canonicalUrl != null) {
+      map['canonical_url'] = Variable<String>(canonicalUrl);
+    }
+    map['url_hash'] = Variable<String>(urlHash);
     map['domain'] = Variable<String>(domain);
     map['description'] = Variable<String>(description);
+    map['note'] = Variable<String>(note);
     if (!nullToAbsent || sourceImageUrl != null) {
       map['source_image_url'] = Variable<String>(sourceImageUrl);
     }
+    if (!nullToAbsent || faviconUrl != null) {
+      map['favicon_url'] = Variable<String>(faviconUrl);
+    }
     map['reading_time'] = Variable<String>(readingTime);
+    map['content_type'] = Variable<String>(contentType);
+    map['status'] = Variable<String>(status);
+    map['is_favourite'] = Variable<bool>(isFavourite);
+    map['is_pinned'] = Variable<bool>(isPinned);
     map['is_archived'] = Variable<bool>(isArchived);
+    map['metadata_status'] = Variable<String>(metadataStatus);
+    map['offline_status'] = Variable<String>(offlineStatus);
+    map['link_health_status'] = Variable<String>(linkHealthStatus);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || lastOpenedAt != null) {
+      map['last_opened_at'] = Variable<DateTime>(lastOpenedAt);
+    }
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || metadataFetchedAt != null) {
+      map['metadata_fetched_at'] = Variable<DateTime>(metadataFetchedAt);
+    }
+    if (!nullToAbsent || linkCheckedAt != null) {
+      map['link_checked_at'] = Variable<DateTime>(linkCheckedAt);
+    }
+    map['manual_sort_order'] = Variable<int>(manualSortOrder);
     return map;
   }
 
@@ -324,15 +865,48 @@ class Link extends DataClass implements Insertable<Link> {
       id: Value(id),
       title: Value(title),
       url: Value(url),
+      originalUrl: Value(originalUrl),
+      normalizedUrl: Value(normalizedUrl),
+      canonicalUrl: canonicalUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(canonicalUrl),
+      urlHash: Value(urlHash),
       domain: Value(domain),
       description: Value(description),
+      note: Value(note),
       sourceImageUrl: sourceImageUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(sourceImageUrl),
+      faviconUrl: faviconUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(faviconUrl),
       readingTime: Value(readingTime),
+      contentType: Value(contentType),
+      status: Value(status),
+      isFavourite: Value(isFavourite),
+      isPinned: Value(isPinned),
       isArchived: Value(isArchived),
+      metadataStatus: Value(metadataStatus),
+      offlineStatus: Value(offlineStatus),
+      linkHealthStatus: Value(linkHealthStatus),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
+      lastOpenedAt: lastOpenedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastOpenedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      metadataFetchedAt: metadataFetchedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(metadataFetchedAt),
+      linkCheckedAt: linkCheckedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(linkCheckedAt),
+      manualSortOrder: Value(manualSortOrder),
     );
   }
 
@@ -345,13 +919,34 @@ class Link extends DataClass implements Insertable<Link> {
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       url: serializer.fromJson<String>(json['url']),
+      originalUrl: serializer.fromJson<String>(json['originalUrl']),
+      normalizedUrl: serializer.fromJson<String>(json['normalizedUrl']),
+      canonicalUrl: serializer.fromJson<String?>(json['canonicalUrl']),
+      urlHash: serializer.fromJson<String>(json['urlHash']),
       domain: serializer.fromJson<String>(json['domain']),
       description: serializer.fromJson<String>(json['description']),
+      note: serializer.fromJson<String>(json['note']),
       sourceImageUrl: serializer.fromJson<String?>(json['sourceImageUrl']),
+      faviconUrl: serializer.fromJson<String?>(json['faviconUrl']),
       readingTime: serializer.fromJson<String>(json['readingTime']),
+      contentType: serializer.fromJson<String>(json['contentType']),
+      status: serializer.fromJson<String>(json['status']),
+      isFavourite: serializer.fromJson<bool>(json['isFavourite']),
+      isPinned: serializer.fromJson<bool>(json['isPinned']),
       isArchived: serializer.fromJson<bool>(json['isArchived']),
+      metadataStatus: serializer.fromJson<String>(json['metadataStatus']),
+      offlineStatus: serializer.fromJson<String>(json['offlineStatus']),
+      linkHealthStatus: serializer.fromJson<String>(json['linkHealthStatus']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      lastOpenedAt: serializer.fromJson<DateTime?>(json['lastOpenedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      metadataFetchedAt: serializer.fromJson<DateTime?>(
+        json['metadataFetchedAt'],
+      ),
+      linkCheckedAt: serializer.fromJson<DateTime?>(json['linkCheckedAt']),
+      manualSortOrder: serializer.fromJson<int>(json['manualSortOrder']),
     );
   }
   @override
@@ -361,13 +956,32 @@ class Link extends DataClass implements Insertable<Link> {
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
       'url': serializer.toJson<String>(url),
+      'originalUrl': serializer.toJson<String>(originalUrl),
+      'normalizedUrl': serializer.toJson<String>(normalizedUrl),
+      'canonicalUrl': serializer.toJson<String?>(canonicalUrl),
+      'urlHash': serializer.toJson<String>(urlHash),
       'domain': serializer.toJson<String>(domain),
       'description': serializer.toJson<String>(description),
+      'note': serializer.toJson<String>(note),
       'sourceImageUrl': serializer.toJson<String?>(sourceImageUrl),
+      'faviconUrl': serializer.toJson<String?>(faviconUrl),
       'readingTime': serializer.toJson<String>(readingTime),
+      'contentType': serializer.toJson<String>(contentType),
+      'status': serializer.toJson<String>(status),
+      'isFavourite': serializer.toJson<bool>(isFavourite),
+      'isPinned': serializer.toJson<bool>(isPinned),
       'isArchived': serializer.toJson<bool>(isArchived),
+      'metadataStatus': serializer.toJson<String>(metadataStatus),
+      'offlineStatus': serializer.toJson<String>(offlineStatus),
+      'linkHealthStatus': serializer.toJson<String>(linkHealthStatus),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'lastOpenedAt': serializer.toJson<DateTime?>(lastOpenedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'metadataFetchedAt': serializer.toJson<DateTime?>(metadataFetchedAt),
+      'linkCheckedAt': serializer.toJson<DateTime?>(linkCheckedAt),
+      'manualSortOrder': serializer.toJson<int>(manualSortOrder),
     };
   }
 
@@ -375,47 +989,136 @@ class Link extends DataClass implements Insertable<Link> {
     int? id,
     String? title,
     String? url,
+    String? originalUrl,
+    String? normalizedUrl,
+    Value<String?> canonicalUrl = const Value.absent(),
+    String? urlHash,
     String? domain,
     String? description,
+    String? note,
     Value<String?> sourceImageUrl = const Value.absent(),
+    Value<String?> faviconUrl = const Value.absent(),
     String? readingTime,
+    String? contentType,
+    String? status,
+    bool? isFavourite,
+    bool? isPinned,
     bool? isArchived,
+    String? metadataStatus,
+    String? offlineStatus,
+    String? linkHealthStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
+    Value<DateTime?> lastOpenedAt = const Value.absent(),
+    Value<DateTime?> archivedAt = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<DateTime?> metadataFetchedAt = const Value.absent(),
+    Value<DateTime?> linkCheckedAt = const Value.absent(),
+    int? manualSortOrder,
   }) => Link(
     id: id ?? this.id,
     title: title ?? this.title,
     url: url ?? this.url,
+    originalUrl: originalUrl ?? this.originalUrl,
+    normalizedUrl: normalizedUrl ?? this.normalizedUrl,
+    canonicalUrl: canonicalUrl.present ? canonicalUrl.value : this.canonicalUrl,
+    urlHash: urlHash ?? this.urlHash,
     domain: domain ?? this.domain,
     description: description ?? this.description,
+    note: note ?? this.note,
     sourceImageUrl: sourceImageUrl.present
         ? sourceImageUrl.value
         : this.sourceImageUrl,
+    faviconUrl: faviconUrl.present ? faviconUrl.value : this.faviconUrl,
     readingTime: readingTime ?? this.readingTime,
+    contentType: contentType ?? this.contentType,
+    status: status ?? this.status,
+    isFavourite: isFavourite ?? this.isFavourite,
+    isPinned: isPinned ?? this.isPinned,
     isArchived: isArchived ?? this.isArchived,
+    metadataStatus: metadataStatus ?? this.metadataStatus,
+    offlineStatus: offlineStatus ?? this.offlineStatus,
+    linkHealthStatus: linkHealthStatus ?? this.linkHealthStatus,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
+    lastOpenedAt: lastOpenedAt.present ? lastOpenedAt.value : this.lastOpenedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    metadataFetchedAt: metadataFetchedAt.present
+        ? metadataFetchedAt.value
+        : this.metadataFetchedAt,
+    linkCheckedAt: linkCheckedAt.present
+        ? linkCheckedAt.value
+        : this.linkCheckedAt,
+    manualSortOrder: manualSortOrder ?? this.manualSortOrder,
   );
   Link copyWithCompanion(LinksCompanion data) {
     return Link(
       id: data.id.present ? data.id.value : this.id,
       title: data.title.present ? data.title.value : this.title,
       url: data.url.present ? data.url.value : this.url,
+      originalUrl: data.originalUrl.present
+          ? data.originalUrl.value
+          : this.originalUrl,
+      normalizedUrl: data.normalizedUrl.present
+          ? data.normalizedUrl.value
+          : this.normalizedUrl,
+      canonicalUrl: data.canonicalUrl.present
+          ? data.canonicalUrl.value
+          : this.canonicalUrl,
+      urlHash: data.urlHash.present ? data.urlHash.value : this.urlHash,
       domain: data.domain.present ? data.domain.value : this.domain,
       description: data.description.present
           ? data.description.value
           : this.description,
+      note: data.note.present ? data.note.value : this.note,
       sourceImageUrl: data.sourceImageUrl.present
           ? data.sourceImageUrl.value
           : this.sourceImageUrl,
+      faviconUrl: data.faviconUrl.present
+          ? data.faviconUrl.value
+          : this.faviconUrl,
       readingTime: data.readingTime.present
           ? data.readingTime.value
           : this.readingTime,
+      contentType: data.contentType.present
+          ? data.contentType.value
+          : this.contentType,
+      status: data.status.present ? data.status.value : this.status,
+      isFavourite: data.isFavourite.present
+          ? data.isFavourite.value
+          : this.isFavourite,
+      isPinned: data.isPinned.present ? data.isPinned.value : this.isPinned,
       isArchived: data.isArchived.present
           ? data.isArchived.value
           : this.isArchived,
+      metadataStatus: data.metadataStatus.present
+          ? data.metadataStatus.value
+          : this.metadataStatus,
+      offlineStatus: data.offlineStatus.present
+          ? data.offlineStatus.value
+          : this.offlineStatus,
+      linkHealthStatus: data.linkHealthStatus.present
+          ? data.linkHealthStatus.value
+          : this.linkHealthStatus,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      lastOpenedAt: data.lastOpenedAt.present
+          ? data.lastOpenedAt.value
+          : this.lastOpenedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      metadataFetchedAt: data.metadataFetchedAt.present
+          ? data.metadataFetchedAt.value
+          : this.metadataFetchedAt,
+      linkCheckedAt: data.linkCheckedAt.present
+          ? data.linkCheckedAt.value
+          : this.linkCheckedAt,
+      manualSortOrder: data.manualSortOrder.present
+          ? data.manualSortOrder.value
+          : this.manualSortOrder,
     );
   }
 
@@ -425,30 +1128,68 @@ class Link extends DataClass implements Insertable<Link> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('url: $url, ')
+          ..write('originalUrl: $originalUrl, ')
+          ..write('normalizedUrl: $normalizedUrl, ')
+          ..write('canonicalUrl: $canonicalUrl, ')
+          ..write('urlHash: $urlHash, ')
           ..write('domain: $domain, ')
           ..write('description: $description, ')
+          ..write('note: $note, ')
           ..write('sourceImageUrl: $sourceImageUrl, ')
+          ..write('faviconUrl: $faviconUrl, ')
           ..write('readingTime: $readingTime, ')
+          ..write('contentType: $contentType, ')
+          ..write('status: $status, ')
+          ..write('isFavourite: $isFavourite, ')
+          ..write('isPinned: $isPinned, ')
           ..write('isArchived: $isArchived, ')
+          ..write('metadataStatus: $metadataStatus, ')
+          ..write('offlineStatus: $offlineStatus, ')
+          ..write('linkHealthStatus: $linkHealthStatus, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('lastOpenedAt: $lastOpenedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('metadataFetchedAt: $metadataFetchedAt, ')
+          ..write('linkCheckedAt: $linkCheckedAt, ')
+          ..write('manualSortOrder: $manualSortOrder')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
     title,
     url,
+    originalUrl,
+    normalizedUrl,
+    canonicalUrl,
+    urlHash,
     domain,
     description,
+    note,
     sourceImageUrl,
+    faviconUrl,
     readingTime,
+    contentType,
+    status,
+    isFavourite,
+    isPinned,
     isArchived,
+    metadataStatus,
+    offlineStatus,
+    linkHealthStatus,
     createdAt,
     updatedAt,
-  );
+    lastOpenedAt,
+    archivedAt,
+    deletedAt,
+    metadataFetchedAt,
+    linkCheckedAt,
+    manualSortOrder,
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -456,49 +1197,125 @@ class Link extends DataClass implements Insertable<Link> {
           other.id == this.id &&
           other.title == this.title &&
           other.url == this.url &&
+          other.originalUrl == this.originalUrl &&
+          other.normalizedUrl == this.normalizedUrl &&
+          other.canonicalUrl == this.canonicalUrl &&
+          other.urlHash == this.urlHash &&
           other.domain == this.domain &&
           other.description == this.description &&
+          other.note == this.note &&
           other.sourceImageUrl == this.sourceImageUrl &&
+          other.faviconUrl == this.faviconUrl &&
           other.readingTime == this.readingTime &&
+          other.contentType == this.contentType &&
+          other.status == this.status &&
+          other.isFavourite == this.isFavourite &&
+          other.isPinned == this.isPinned &&
           other.isArchived == this.isArchived &&
+          other.metadataStatus == this.metadataStatus &&
+          other.offlineStatus == this.offlineStatus &&
+          other.linkHealthStatus == this.linkHealthStatus &&
           other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
+          other.updatedAt == this.updatedAt &&
+          other.lastOpenedAt == this.lastOpenedAt &&
+          other.archivedAt == this.archivedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.metadataFetchedAt == this.metadataFetchedAt &&
+          other.linkCheckedAt == this.linkCheckedAt &&
+          other.manualSortOrder == this.manualSortOrder);
 }
 
 class LinksCompanion extends UpdateCompanion<Link> {
   final Value<int> id;
   final Value<String> title;
   final Value<String> url;
+  final Value<String> originalUrl;
+  final Value<String> normalizedUrl;
+  final Value<String?> canonicalUrl;
+  final Value<String> urlHash;
   final Value<String> domain;
   final Value<String> description;
+  final Value<String> note;
   final Value<String?> sourceImageUrl;
+  final Value<String?> faviconUrl;
   final Value<String> readingTime;
+  final Value<String> contentType;
+  final Value<String> status;
+  final Value<bool> isFavourite;
+  final Value<bool> isPinned;
   final Value<bool> isArchived;
+  final Value<String> metadataStatus;
+  final Value<String> offlineStatus;
+  final Value<String> linkHealthStatus;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+  final Value<DateTime?> lastOpenedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime?> metadataFetchedAt;
+  final Value<DateTime?> linkCheckedAt;
+  final Value<int> manualSortOrder;
   const LinksCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.url = const Value.absent(),
+    this.originalUrl = const Value.absent(),
+    this.normalizedUrl = const Value.absent(),
+    this.canonicalUrl = const Value.absent(),
+    this.urlHash = const Value.absent(),
     this.domain = const Value.absent(),
     this.description = const Value.absent(),
+    this.note = const Value.absent(),
     this.sourceImageUrl = const Value.absent(),
+    this.faviconUrl = const Value.absent(),
     this.readingTime = const Value.absent(),
+    this.contentType = const Value.absent(),
+    this.status = const Value.absent(),
+    this.isFavourite = const Value.absent(),
+    this.isPinned = const Value.absent(),
     this.isArchived = const Value.absent(),
+    this.metadataStatus = const Value.absent(),
+    this.offlineStatus = const Value.absent(),
+    this.linkHealthStatus = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.lastOpenedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.metadataFetchedAt = const Value.absent(),
+    this.linkCheckedAt = const Value.absent(),
+    this.manualSortOrder = const Value.absent(),
   });
   LinksCompanion.insert({
     this.id = const Value.absent(),
     required String title,
     required String url,
+    this.originalUrl = const Value.absent(),
+    this.normalizedUrl = const Value.absent(),
+    this.canonicalUrl = const Value.absent(),
+    this.urlHash = const Value.absent(),
     required String domain,
     this.description = const Value.absent(),
+    this.note = const Value.absent(),
     this.sourceImageUrl = const Value.absent(),
+    this.faviconUrl = const Value.absent(),
     this.readingTime = const Value.absent(),
+    this.contentType = const Value.absent(),
+    this.status = const Value.absent(),
+    this.isFavourite = const Value.absent(),
+    this.isPinned = const Value.absent(),
     this.isArchived = const Value.absent(),
+    this.metadataStatus = const Value.absent(),
+    this.offlineStatus = const Value.absent(),
+    this.linkHealthStatus = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.lastOpenedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.metadataFetchedAt = const Value.absent(),
+    this.linkCheckedAt = const Value.absent(),
+    this.manualSortOrder = const Value.absent(),
   }) : title = Value(title),
        url = Value(url),
        domain = Value(domain);
@@ -506,25 +1323,63 @@ class LinksCompanion extends UpdateCompanion<Link> {
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? url,
+    Expression<String>? originalUrl,
+    Expression<String>? normalizedUrl,
+    Expression<String>? canonicalUrl,
+    Expression<String>? urlHash,
     Expression<String>? domain,
     Expression<String>? description,
+    Expression<String>? note,
     Expression<String>? sourceImageUrl,
+    Expression<String>? faviconUrl,
     Expression<String>? readingTime,
+    Expression<String>? contentType,
+    Expression<String>? status,
+    Expression<bool>? isFavourite,
+    Expression<bool>? isPinned,
     Expression<bool>? isArchived,
+    Expression<String>? metadataStatus,
+    Expression<String>? offlineStatus,
+    Expression<String>? linkHealthStatus,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
+    Expression<DateTime>? lastOpenedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? metadataFetchedAt,
+    Expression<DateTime>? linkCheckedAt,
+    Expression<int>? manualSortOrder,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (url != null) 'url': url,
+      if (originalUrl != null) 'original_url': originalUrl,
+      if (normalizedUrl != null) 'normalized_url': normalizedUrl,
+      if (canonicalUrl != null) 'canonical_url': canonicalUrl,
+      if (urlHash != null) 'url_hash': urlHash,
       if (domain != null) 'domain': domain,
       if (description != null) 'description': description,
+      if (note != null) 'note': note,
       if (sourceImageUrl != null) 'source_image_url': sourceImageUrl,
+      if (faviconUrl != null) 'favicon_url': faviconUrl,
       if (readingTime != null) 'reading_time': readingTime,
+      if (contentType != null) 'content_type': contentType,
+      if (status != null) 'status': status,
+      if (isFavourite != null) 'is_favourite': isFavourite,
+      if (isPinned != null) 'is_pinned': isPinned,
       if (isArchived != null) 'is_archived': isArchived,
+      if (metadataStatus != null) 'metadata_status': metadataStatus,
+      if (offlineStatus != null) 'offline_status': offlineStatus,
+      if (linkHealthStatus != null) 'link_health_status': linkHealthStatus,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (lastOpenedAt != null) 'last_opened_at': lastOpenedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (metadataFetchedAt != null) 'metadata_fetched_at': metadataFetchedAt,
+      if (linkCheckedAt != null) 'link_checked_at': linkCheckedAt,
+      if (manualSortOrder != null) 'manual_sort_order': manualSortOrder,
     });
   }
 
@@ -532,25 +1387,63 @@ class LinksCompanion extends UpdateCompanion<Link> {
     Value<int>? id,
     Value<String>? title,
     Value<String>? url,
+    Value<String>? originalUrl,
+    Value<String>? normalizedUrl,
+    Value<String?>? canonicalUrl,
+    Value<String>? urlHash,
     Value<String>? domain,
     Value<String>? description,
+    Value<String>? note,
     Value<String?>? sourceImageUrl,
+    Value<String?>? faviconUrl,
     Value<String>? readingTime,
+    Value<String>? contentType,
+    Value<String>? status,
+    Value<bool>? isFavourite,
+    Value<bool>? isPinned,
     Value<bool>? isArchived,
+    Value<String>? metadataStatus,
+    Value<String>? offlineStatus,
+    Value<String>? linkHealthStatus,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
+    Value<DateTime?>? lastOpenedAt,
+    Value<DateTime?>? archivedAt,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime?>? metadataFetchedAt,
+    Value<DateTime?>? linkCheckedAt,
+    Value<int>? manualSortOrder,
   }) {
     return LinksCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       url: url ?? this.url,
+      originalUrl: originalUrl ?? this.originalUrl,
+      normalizedUrl: normalizedUrl ?? this.normalizedUrl,
+      canonicalUrl: canonicalUrl ?? this.canonicalUrl,
+      urlHash: urlHash ?? this.urlHash,
       domain: domain ?? this.domain,
       description: description ?? this.description,
+      note: note ?? this.note,
       sourceImageUrl: sourceImageUrl ?? this.sourceImageUrl,
+      faviconUrl: faviconUrl ?? this.faviconUrl,
       readingTime: readingTime ?? this.readingTime,
+      contentType: contentType ?? this.contentType,
+      status: status ?? this.status,
+      isFavourite: isFavourite ?? this.isFavourite,
+      isPinned: isPinned ?? this.isPinned,
       isArchived: isArchived ?? this.isArchived,
+      metadataStatus: metadataStatus ?? this.metadataStatus,
+      offlineStatus: offlineStatus ?? this.offlineStatus,
+      linkHealthStatus: linkHealthStatus ?? this.linkHealthStatus,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      lastOpenedAt: lastOpenedAt ?? this.lastOpenedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      metadataFetchedAt: metadataFetchedAt ?? this.metadataFetchedAt,
+      linkCheckedAt: linkCheckedAt ?? this.linkCheckedAt,
+      manualSortOrder: manualSortOrder ?? this.manualSortOrder,
     );
   }
 
@@ -566,26 +1459,83 @@ class LinksCompanion extends UpdateCompanion<Link> {
     if (url.present) {
       map['url'] = Variable<String>(url.value);
     }
+    if (originalUrl.present) {
+      map['original_url'] = Variable<String>(originalUrl.value);
+    }
+    if (normalizedUrl.present) {
+      map['normalized_url'] = Variable<String>(normalizedUrl.value);
+    }
+    if (canonicalUrl.present) {
+      map['canonical_url'] = Variable<String>(canonicalUrl.value);
+    }
+    if (urlHash.present) {
+      map['url_hash'] = Variable<String>(urlHash.value);
+    }
     if (domain.present) {
       map['domain'] = Variable<String>(domain.value);
     }
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
     if (sourceImageUrl.present) {
       map['source_image_url'] = Variable<String>(sourceImageUrl.value);
+    }
+    if (faviconUrl.present) {
+      map['favicon_url'] = Variable<String>(faviconUrl.value);
     }
     if (readingTime.present) {
       map['reading_time'] = Variable<String>(readingTime.value);
     }
+    if (contentType.present) {
+      map['content_type'] = Variable<String>(contentType.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (isFavourite.present) {
+      map['is_favourite'] = Variable<bool>(isFavourite.value);
+    }
+    if (isPinned.present) {
+      map['is_pinned'] = Variable<bool>(isPinned.value);
+    }
     if (isArchived.present) {
       map['is_archived'] = Variable<bool>(isArchived.value);
+    }
+    if (metadataStatus.present) {
+      map['metadata_status'] = Variable<String>(metadataStatus.value);
+    }
+    if (offlineStatus.present) {
+      map['offline_status'] = Variable<String>(offlineStatus.value);
+    }
+    if (linkHealthStatus.present) {
+      map['link_health_status'] = Variable<String>(linkHealthStatus.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (lastOpenedAt.present) {
+      map['last_opened_at'] = Variable<DateTime>(lastOpenedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (metadataFetchedAt.present) {
+      map['metadata_fetched_at'] = Variable<DateTime>(metadataFetchedAt.value);
+    }
+    if (linkCheckedAt.present) {
+      map['link_checked_at'] = Variable<DateTime>(linkCheckedAt.value);
+    }
+    if (manualSortOrder.present) {
+      map['manual_sort_order'] = Variable<int>(manualSortOrder.value);
     }
     return map;
   }
@@ -596,13 +1546,32 @@ class LinksCompanion extends UpdateCompanion<Link> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('url: $url, ')
+          ..write('originalUrl: $originalUrl, ')
+          ..write('normalizedUrl: $normalizedUrl, ')
+          ..write('canonicalUrl: $canonicalUrl, ')
+          ..write('urlHash: $urlHash, ')
           ..write('domain: $domain, ')
           ..write('description: $description, ')
+          ..write('note: $note, ')
           ..write('sourceImageUrl: $sourceImageUrl, ')
+          ..write('faviconUrl: $faviconUrl, ')
           ..write('readingTime: $readingTime, ')
+          ..write('contentType: $contentType, ')
+          ..write('status: $status, ')
+          ..write('isFavourite: $isFavourite, ')
+          ..write('isPinned: $isPinned, ')
           ..write('isArchived: $isArchived, ')
+          ..write('metadataStatus: $metadataStatus, ')
+          ..write('offlineStatus: $offlineStatus, ')
+          ..write('linkHealthStatus: $linkHealthStatus, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('lastOpenedAt: $lastOpenedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('metadataFetchedAt: $metadataFetchedAt, ')
+          ..write('linkCheckedAt: $linkCheckedAt, ')
+          ..write('manualSortOrder: $manualSortOrder')
           ..write(')'))
         .toString();
   }
@@ -1692,12 +2661,69 @@ class $CollectionsTable extends Collections
     requiredDuringInsert: false,
     defaultValue: const Constant(''),
   );
+  static const VerificationMeta _isFavouriteMeta = const VerificationMeta(
+    'isFavourite',
+  );
+  @override
+  late final GeneratedColumn<bool> isFavourite = GeneratedColumn<bool>(
+    'is_favourite',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_favourite" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isPinnedMeta = const VerificationMeta(
+    'isPinned',
+  );
+  @override
+  late final GeneratedColumn<bool> isPinned = GeneratedColumn<bool>(
+    'is_pinned',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_pinned" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isArchivedMeta = const VerificationMeta(
+    'isArchived',
+  );
+  @override
+  late final GeneratedColumn<bool> isArchived = GeneratedColumn<bool>(
+    'is_archived',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_archived" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
     'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
     aliasedName,
     false,
     type: DriftSqlType.dateTime,
@@ -1711,7 +2737,11 @@ class $CollectionsTable extends Collections
     type,
     iconKey,
     tagName,
+    isFavourite,
+    isPinned,
+    isArchived,
     createdAt,
+    updatedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1756,10 +2786,37 @@ class $CollectionsTable extends Collections
         tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
       );
     }
+    if (data.containsKey('is_favourite')) {
+      context.handle(
+        _isFavouriteMeta,
+        isFavourite.isAcceptableOrUnknown(
+          data['is_favourite']!,
+          _isFavouriteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_pinned')) {
+      context.handle(
+        _isPinnedMeta,
+        isPinned.isAcceptableOrUnknown(data['is_pinned']!, _isPinnedMeta),
+      );
+    }
+    if (data.containsKey('is_archived')) {
+      context.handle(
+        _isArchivedMeta,
+        isArchived.isAcceptableOrUnknown(data['is_archived']!, _isArchivedMeta),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
       );
     }
     return context;
@@ -1791,9 +2848,25 @@ class $CollectionsTable extends Collections
         DriftSqlType.string,
         data['${effectivePrefix}tag_name'],
       )!,
+      isFavourite: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_favourite'],
+      )!,
+      isPinned: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_pinned'],
+      )!,
+      isArchived: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_archived'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
       )!,
     );
   }
@@ -1810,14 +2883,22 @@ class Collection extends DataClass implements Insertable<Collection> {
   final String type;
   final String iconKey;
   final String tagName;
+  final bool isFavourite;
+  final bool isPinned;
+  final bool isArchived;
   final DateTime createdAt;
+  final DateTime updatedAt;
   const Collection({
     required this.id,
     required this.title,
     required this.type,
     required this.iconKey,
     required this.tagName,
+    required this.isFavourite,
+    required this.isPinned,
+    required this.isArchived,
     required this.createdAt,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1827,7 +2908,11 @@ class Collection extends DataClass implements Insertable<Collection> {
     map['type'] = Variable<String>(type);
     map['icon_key'] = Variable<String>(iconKey);
     map['tag_name'] = Variable<String>(tagName);
+    map['is_favourite'] = Variable<bool>(isFavourite);
+    map['is_pinned'] = Variable<bool>(isPinned);
+    map['is_archived'] = Variable<bool>(isArchived);
     map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -1838,7 +2923,11 @@ class Collection extends DataClass implements Insertable<Collection> {
       type: Value(type),
       iconKey: Value(iconKey),
       tagName: Value(tagName),
+      isFavourite: Value(isFavourite),
+      isPinned: Value(isPinned),
+      isArchived: Value(isArchived),
       createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -1853,7 +2942,11 @@ class Collection extends DataClass implements Insertable<Collection> {
       type: serializer.fromJson<String>(json['type']),
       iconKey: serializer.fromJson<String>(json['iconKey']),
       tagName: serializer.fromJson<String>(json['tagName']),
+      isFavourite: serializer.fromJson<bool>(json['isFavourite']),
+      isPinned: serializer.fromJson<bool>(json['isPinned']),
+      isArchived: serializer.fromJson<bool>(json['isArchived']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -1865,7 +2958,11 @@ class Collection extends DataClass implements Insertable<Collection> {
       'type': serializer.toJson<String>(type),
       'iconKey': serializer.toJson<String>(iconKey),
       'tagName': serializer.toJson<String>(tagName),
+      'isFavourite': serializer.toJson<bool>(isFavourite),
+      'isPinned': serializer.toJson<bool>(isPinned),
+      'isArchived': serializer.toJson<bool>(isArchived),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -1875,14 +2972,22 @@ class Collection extends DataClass implements Insertable<Collection> {
     String? type,
     String? iconKey,
     String? tagName,
+    bool? isFavourite,
+    bool? isPinned,
+    bool? isArchived,
     DateTime? createdAt,
+    DateTime? updatedAt,
   }) => Collection(
     id: id ?? this.id,
     title: title ?? this.title,
     type: type ?? this.type,
     iconKey: iconKey ?? this.iconKey,
     tagName: tagName ?? this.tagName,
+    isFavourite: isFavourite ?? this.isFavourite,
+    isPinned: isPinned ?? this.isPinned,
+    isArchived: isArchived ?? this.isArchived,
     createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   Collection copyWithCompanion(CollectionsCompanion data) {
     return Collection(
@@ -1891,7 +2996,15 @@ class Collection extends DataClass implements Insertable<Collection> {
       type: data.type.present ? data.type.value : this.type,
       iconKey: data.iconKey.present ? data.iconKey.value : this.iconKey,
       tagName: data.tagName.present ? data.tagName.value : this.tagName,
+      isFavourite: data.isFavourite.present
+          ? data.isFavourite.value
+          : this.isFavourite,
+      isPinned: data.isPinned.present ? data.isPinned.value : this.isPinned,
+      isArchived: data.isArchived.present
+          ? data.isArchived.value
+          : this.isArchived,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -1903,13 +3016,28 @@ class Collection extends DataClass implements Insertable<Collection> {
           ..write('type: $type, ')
           ..write('iconKey: $iconKey, ')
           ..write('tagName: $tagName, ')
-          ..write('createdAt: $createdAt')
+          ..write('isFavourite: $isFavourite, ')
+          ..write('isPinned: $isPinned, ')
+          ..write('isArchived: $isArchived, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, type, iconKey, tagName, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    title,
+    type,
+    iconKey,
+    tagName,
+    isFavourite,
+    isPinned,
+    isArchived,
+    createdAt,
+    updatedAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1919,7 +3047,11 @@ class Collection extends DataClass implements Insertable<Collection> {
           other.type == this.type &&
           other.iconKey == this.iconKey &&
           other.tagName == this.tagName &&
-          other.createdAt == this.createdAt);
+          other.isFavourite == this.isFavourite &&
+          other.isPinned == this.isPinned &&
+          other.isArchived == this.isArchived &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class CollectionsCompanion extends UpdateCompanion<Collection> {
@@ -1928,14 +3060,22 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
   final Value<String> type;
   final Value<String> iconKey;
   final Value<String> tagName;
+  final Value<bool> isFavourite;
+  final Value<bool> isPinned;
+  final Value<bool> isArchived;
   final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   const CollectionsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.type = const Value.absent(),
     this.iconKey = const Value.absent(),
     this.tagName = const Value.absent(),
+    this.isFavourite = const Value.absent(),
+    this.isPinned = const Value.absent(),
+    this.isArchived = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   });
   CollectionsCompanion.insert({
     this.id = const Value.absent(),
@@ -1943,7 +3083,11 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     required String type,
     this.iconKey = const Value.absent(),
     this.tagName = const Value.absent(),
+    this.isFavourite = const Value.absent(),
+    this.isPinned = const Value.absent(),
+    this.isArchived = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   }) : title = Value(title),
        type = Value(type);
   static Insertable<Collection> custom({
@@ -1952,7 +3096,11 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     Expression<String>? type,
     Expression<String>? iconKey,
     Expression<String>? tagName,
+    Expression<bool>? isFavourite,
+    Expression<bool>? isPinned,
+    Expression<bool>? isArchived,
     Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1960,7 +3108,11 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
       if (type != null) 'type': type,
       if (iconKey != null) 'icon_key': iconKey,
       if (tagName != null) 'tag_name': tagName,
+      if (isFavourite != null) 'is_favourite': isFavourite,
+      if (isPinned != null) 'is_pinned': isPinned,
+      if (isArchived != null) 'is_archived': isArchived,
       if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
     });
   }
 
@@ -1970,7 +3122,11 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     Value<String>? type,
     Value<String>? iconKey,
     Value<String>? tagName,
+    Value<bool>? isFavourite,
+    Value<bool>? isPinned,
+    Value<bool>? isArchived,
     Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
   }) {
     return CollectionsCompanion(
       id: id ?? this.id,
@@ -1978,7 +3134,11 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
       type: type ?? this.type,
       iconKey: iconKey ?? this.iconKey,
       tagName: tagName ?? this.tagName,
+      isFavourite: isFavourite ?? this.isFavourite,
+      isPinned: isPinned ?? this.isPinned,
+      isArchived: isArchived ?? this.isArchived,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -2000,8 +3160,20 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     if (tagName.present) {
       map['tag_name'] = Variable<String>(tagName.value);
     }
+    if (isFavourite.present) {
+      map['is_favourite'] = Variable<bool>(isFavourite.value);
+    }
+    if (isPinned.present) {
+      map['is_pinned'] = Variable<bool>(isPinned.value);
+    }
+    if (isArchived.present) {
+      map['is_archived'] = Variable<bool>(isArchived.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
     return map;
   }
@@ -2014,7 +3186,11 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
           ..write('type: $type, ')
           ..write('iconKey: $iconKey, ')
           ..write('tagName: $tagName, ')
-          ..write('createdAt: $createdAt')
+          ..write('isFavourite: $isFavourite, ')
+          ..write('isPinned: $isPinned, ')
+          ..write('isArchived: $isArchived, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -2052,8 +3228,37 @@ class $CollectionLinksTable extends CollectionLinks
       'REFERENCES links (id) ON DELETE CASCADE',
     ),
   );
+  static const VerificationMeta _addedAtMeta = const VerificationMeta(
+    'addedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [collectionId, linkId];
+  late final GeneratedColumn<DateTime> addedAt = GeneratedColumn<DateTime>(
+    'added_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    collectionId,
+    linkId,
+    addedAt,
+    sortOrder,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2085,6 +3290,18 @@ class $CollectionLinksTable extends CollectionLinks
     } else if (isInserting) {
       context.missing(_linkIdMeta);
     }
+    if (data.containsKey('added_at')) {
+      context.handle(
+        _addedAtMeta,
+        addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
     return context;
   }
 
@@ -2102,6 +3319,14 @@ class $CollectionLinksTable extends CollectionLinks
         DriftSqlType.int,
         data['${effectivePrefix}link_id'],
       )!,
+      addedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}added_at'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
     );
   }
 
@@ -2114,12 +3339,21 @@ class $CollectionLinksTable extends CollectionLinks
 class CollectionLink extends DataClass implements Insertable<CollectionLink> {
   final int collectionId;
   final int linkId;
-  const CollectionLink({required this.collectionId, required this.linkId});
+  final DateTime addedAt;
+  final int sortOrder;
+  const CollectionLink({
+    required this.collectionId,
+    required this.linkId,
+    required this.addedAt,
+    required this.sortOrder,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['collection_id'] = Variable<int>(collectionId);
     map['link_id'] = Variable<int>(linkId);
+    map['added_at'] = Variable<DateTime>(addedAt);
+    map['sort_order'] = Variable<int>(sortOrder);
     return map;
   }
 
@@ -2127,6 +3361,8 @@ class CollectionLink extends DataClass implements Insertable<CollectionLink> {
     return CollectionLinksCompanion(
       collectionId: Value(collectionId),
       linkId: Value(linkId),
+      addedAt: Value(addedAt),
+      sortOrder: Value(sortOrder),
     );
   }
 
@@ -2138,6 +3374,8 @@ class CollectionLink extends DataClass implements Insertable<CollectionLink> {
     return CollectionLink(
       collectionId: serializer.fromJson<int>(json['collectionId']),
       linkId: serializer.fromJson<int>(json['linkId']),
+      addedAt: serializer.fromJson<DateTime>(json['addedAt']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
     );
   }
   @override
@@ -2146,12 +3384,21 @@ class CollectionLink extends DataClass implements Insertable<CollectionLink> {
     return <String, dynamic>{
       'collectionId': serializer.toJson<int>(collectionId),
       'linkId': serializer.toJson<int>(linkId),
+      'addedAt': serializer.toJson<DateTime>(addedAt),
+      'sortOrder': serializer.toJson<int>(sortOrder),
     };
   }
 
-  CollectionLink copyWith({int? collectionId, int? linkId}) => CollectionLink(
+  CollectionLink copyWith({
+    int? collectionId,
+    int? linkId,
+    DateTime? addedAt,
+    int? sortOrder,
+  }) => CollectionLink(
     collectionId: collectionId ?? this.collectionId,
     linkId: linkId ?? this.linkId,
+    addedAt: addedAt ?? this.addedAt,
+    sortOrder: sortOrder ?? this.sortOrder,
   );
   CollectionLink copyWithCompanion(CollectionLinksCompanion data) {
     return CollectionLink(
@@ -2159,6 +3406,8 @@ class CollectionLink extends DataClass implements Insertable<CollectionLink> {
           ? data.collectionId.value
           : this.collectionId,
       linkId: data.linkId.present ? data.linkId.value : this.linkId,
+      addedAt: data.addedAt.present ? data.addedAt.value : this.addedAt,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
     );
   }
 
@@ -2166,44 +3415,58 @@ class CollectionLink extends DataClass implements Insertable<CollectionLink> {
   String toString() {
     return (StringBuffer('CollectionLink(')
           ..write('collectionId: $collectionId, ')
-          ..write('linkId: $linkId')
+          ..write('linkId: $linkId, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('sortOrder: $sortOrder')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(collectionId, linkId);
+  int get hashCode => Object.hash(collectionId, linkId, addedAt, sortOrder);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CollectionLink &&
           other.collectionId == this.collectionId &&
-          other.linkId == this.linkId);
+          other.linkId == this.linkId &&
+          other.addedAt == this.addedAt &&
+          other.sortOrder == this.sortOrder);
 }
 
 class CollectionLinksCompanion extends UpdateCompanion<CollectionLink> {
   final Value<int> collectionId;
   final Value<int> linkId;
+  final Value<DateTime> addedAt;
+  final Value<int> sortOrder;
   final Value<int> rowid;
   const CollectionLinksCompanion({
     this.collectionId = const Value.absent(),
     this.linkId = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.sortOrder = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CollectionLinksCompanion.insert({
     required int collectionId,
     required int linkId,
+    this.addedAt = const Value.absent(),
+    this.sortOrder = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : collectionId = Value(collectionId),
        linkId = Value(linkId);
   static Insertable<CollectionLink> custom({
     Expression<int>? collectionId,
     Expression<int>? linkId,
+    Expression<DateTime>? addedAt,
+    Expression<int>? sortOrder,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (collectionId != null) 'collection_id': collectionId,
       if (linkId != null) 'link_id': linkId,
+      if (addedAt != null) 'added_at': addedAt,
+      if (sortOrder != null) 'sort_order': sortOrder,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2211,11 +3474,15 @@ class CollectionLinksCompanion extends UpdateCompanion<CollectionLink> {
   CollectionLinksCompanion copyWith({
     Value<int>? collectionId,
     Value<int>? linkId,
+    Value<DateTime>? addedAt,
+    Value<int>? sortOrder,
     Value<int>? rowid,
   }) {
     return CollectionLinksCompanion(
       collectionId: collectionId ?? this.collectionId,
       linkId: linkId ?? this.linkId,
+      addedAt: addedAt ?? this.addedAt,
+      sortOrder: sortOrder ?? this.sortOrder,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2229,6 +3496,12 @@ class CollectionLinksCompanion extends UpdateCompanion<CollectionLink> {
     if (linkId.present) {
       map['link_id'] = Variable<int>(linkId.value);
     }
+    if (addedAt.present) {
+      map['added_at'] = Variable<DateTime>(addedAt.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2240,7 +3513,1172 @@ class CollectionLinksCompanion extends UpdateCompanion<CollectionLink> {
     return (StringBuffer('CollectionLinksCompanion(')
           ..write('collectionId: $collectionId, ')
           ..write('linkId: $linkId, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('sortOrder: $sortOrder, ')
           ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BookmarkSnapshotsTable extends BookmarkSnapshots
+    with TableInfo<$BookmarkSnapshotsTable, BookmarkSnapshot> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BookmarkSnapshotsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _bookmarkIdMeta = const VerificationMeta(
+    'bookmarkId',
+  );
+  @override
+  late final GeneratedColumn<int> bookmarkId = GeneratedColumn<int>(
+    'bookmark_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'UNIQUE REFERENCES links (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _formatMeta = const VerificationMeta('format');
+  @override
+  late final GeneratedColumn<String> format = GeneratedColumn<String>(
+    'format',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _localPathMeta = const VerificationMeta(
+    'localPath',
+  );
+  @override
+  late final GeneratedColumn<String> localPath = GeneratedColumn<String>(
+    'local_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _textContentMeta = const VerificationMeta(
+    'textContent',
+  );
+  @override
+  late final GeneratedColumn<String> textContent = GeneratedColumn<String>(
+    'text_content',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _checksumMeta = const VerificationMeta(
+    'checksum',
+  );
+  @override
+  late final GeneratedColumn<String> checksum = GeneratedColumn<String>(
+    'checksum',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fileSizeMeta = const VerificationMeta(
+    'fileSize',
+  );
+  @override
+  late final GeneratedColumn<int> fileSize = GeneratedColumn<int>(
+    'file_size',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _lastErrorMeta = const VerificationMeta(
+    'lastError',
+  );
+  @override
+  late final GeneratedColumn<String> lastError = GeneratedColumn<String>(
+    'last_error',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    bookmarkId,
+    format,
+    localPath,
+    textContent,
+    checksum,
+    fileSize,
+    createdAt,
+    updatedAt,
+    lastError,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'bookmark_snapshots';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BookmarkSnapshot> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('bookmark_id')) {
+      context.handle(
+        _bookmarkIdMeta,
+        bookmarkId.isAcceptableOrUnknown(data['bookmark_id']!, _bookmarkIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bookmarkIdMeta);
+    }
+    if (data.containsKey('format')) {
+      context.handle(
+        _formatMeta,
+        format.isAcceptableOrUnknown(data['format']!, _formatMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_formatMeta);
+    }
+    if (data.containsKey('local_path')) {
+      context.handle(
+        _localPathMeta,
+        localPath.isAcceptableOrUnknown(data['local_path']!, _localPathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_localPathMeta);
+    }
+    if (data.containsKey('text_content')) {
+      context.handle(
+        _textContentMeta,
+        textContent.isAcceptableOrUnknown(
+          data['text_content']!,
+          _textContentMeta,
+        ),
+      );
+    }
+    if (data.containsKey('checksum')) {
+      context.handle(
+        _checksumMeta,
+        checksum.isAcceptableOrUnknown(data['checksum']!, _checksumMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_checksumMeta);
+    }
+    if (data.containsKey('file_size')) {
+      context.handle(
+        _fileSizeMeta,
+        fileSize.isAcceptableOrUnknown(data['file_size']!, _fileSizeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fileSizeMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('last_error')) {
+      context.handle(
+        _lastErrorMeta,
+        lastError.isAcceptableOrUnknown(data['last_error']!, _lastErrorMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BookmarkSnapshot map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BookmarkSnapshot(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      bookmarkId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}bookmark_id'],
+      )!,
+      format: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}format'],
+      )!,
+      localPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}local_path'],
+      )!,
+      textContent: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}text_content'],
+      ),
+      checksum: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}checksum'],
+      )!,
+      fileSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}file_size'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      lastError: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_error'],
+      ),
+    );
+  }
+
+  @override
+  $BookmarkSnapshotsTable createAlias(String alias) {
+    return $BookmarkSnapshotsTable(attachedDatabase, alias);
+  }
+}
+
+class BookmarkSnapshot extends DataClass
+    implements Insertable<BookmarkSnapshot> {
+  final int id;
+  final int bookmarkId;
+  final String format;
+  final String localPath;
+  final String? textContent;
+  final String checksum;
+  final int fileSize;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String? lastError;
+  const BookmarkSnapshot({
+    required this.id,
+    required this.bookmarkId,
+    required this.format,
+    required this.localPath,
+    this.textContent,
+    required this.checksum,
+    required this.fileSize,
+    required this.createdAt,
+    required this.updatedAt,
+    this.lastError,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['bookmark_id'] = Variable<int>(bookmarkId);
+    map['format'] = Variable<String>(format);
+    map['local_path'] = Variable<String>(localPath);
+    if (!nullToAbsent || textContent != null) {
+      map['text_content'] = Variable<String>(textContent);
+    }
+    map['checksum'] = Variable<String>(checksum);
+    map['file_size'] = Variable<int>(fileSize);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || lastError != null) {
+      map['last_error'] = Variable<String>(lastError);
+    }
+    return map;
+  }
+
+  BookmarkSnapshotsCompanion toCompanion(bool nullToAbsent) {
+    return BookmarkSnapshotsCompanion(
+      id: Value(id),
+      bookmarkId: Value(bookmarkId),
+      format: Value(format),
+      localPath: Value(localPath),
+      textContent: textContent == null && nullToAbsent
+          ? const Value.absent()
+          : Value(textContent),
+      checksum: Value(checksum),
+      fileSize: Value(fileSize),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      lastError: lastError == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastError),
+    );
+  }
+
+  factory BookmarkSnapshot.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BookmarkSnapshot(
+      id: serializer.fromJson<int>(json['id']),
+      bookmarkId: serializer.fromJson<int>(json['bookmarkId']),
+      format: serializer.fromJson<String>(json['format']),
+      localPath: serializer.fromJson<String>(json['localPath']),
+      textContent: serializer.fromJson<String?>(json['textContent']),
+      checksum: serializer.fromJson<String>(json['checksum']),
+      fileSize: serializer.fromJson<int>(json['fileSize']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      lastError: serializer.fromJson<String?>(json['lastError']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'bookmarkId': serializer.toJson<int>(bookmarkId),
+      'format': serializer.toJson<String>(format),
+      'localPath': serializer.toJson<String>(localPath),
+      'textContent': serializer.toJson<String?>(textContent),
+      'checksum': serializer.toJson<String>(checksum),
+      'fileSize': serializer.toJson<int>(fileSize),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'lastError': serializer.toJson<String?>(lastError),
+    };
+  }
+
+  BookmarkSnapshot copyWith({
+    int? id,
+    int? bookmarkId,
+    String? format,
+    String? localPath,
+    Value<String?> textContent = const Value.absent(),
+    String? checksum,
+    int? fileSize,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<String?> lastError = const Value.absent(),
+  }) => BookmarkSnapshot(
+    id: id ?? this.id,
+    bookmarkId: bookmarkId ?? this.bookmarkId,
+    format: format ?? this.format,
+    localPath: localPath ?? this.localPath,
+    textContent: textContent.present ? textContent.value : this.textContent,
+    checksum: checksum ?? this.checksum,
+    fileSize: fileSize ?? this.fileSize,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    lastError: lastError.present ? lastError.value : this.lastError,
+  );
+  BookmarkSnapshot copyWithCompanion(BookmarkSnapshotsCompanion data) {
+    return BookmarkSnapshot(
+      id: data.id.present ? data.id.value : this.id,
+      bookmarkId: data.bookmarkId.present
+          ? data.bookmarkId.value
+          : this.bookmarkId,
+      format: data.format.present ? data.format.value : this.format,
+      localPath: data.localPath.present ? data.localPath.value : this.localPath,
+      textContent: data.textContent.present
+          ? data.textContent.value
+          : this.textContent,
+      checksum: data.checksum.present ? data.checksum.value : this.checksum,
+      fileSize: data.fileSize.present ? data.fileSize.value : this.fileSize,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      lastError: data.lastError.present ? data.lastError.value : this.lastError,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookmarkSnapshot(')
+          ..write('id: $id, ')
+          ..write('bookmarkId: $bookmarkId, ')
+          ..write('format: $format, ')
+          ..write('localPath: $localPath, ')
+          ..write('textContent: $textContent, ')
+          ..write('checksum: $checksum, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('lastError: $lastError')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    bookmarkId,
+    format,
+    localPath,
+    textContent,
+    checksum,
+    fileSize,
+    createdAt,
+    updatedAt,
+    lastError,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BookmarkSnapshot &&
+          other.id == this.id &&
+          other.bookmarkId == this.bookmarkId &&
+          other.format == this.format &&
+          other.localPath == this.localPath &&
+          other.textContent == this.textContent &&
+          other.checksum == this.checksum &&
+          other.fileSize == this.fileSize &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.lastError == this.lastError);
+}
+
+class BookmarkSnapshotsCompanion extends UpdateCompanion<BookmarkSnapshot> {
+  final Value<int> id;
+  final Value<int> bookmarkId;
+  final Value<String> format;
+  final Value<String> localPath;
+  final Value<String?> textContent;
+  final Value<String> checksum;
+  final Value<int> fileSize;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<String?> lastError;
+  const BookmarkSnapshotsCompanion({
+    this.id = const Value.absent(),
+    this.bookmarkId = const Value.absent(),
+    this.format = const Value.absent(),
+    this.localPath = const Value.absent(),
+    this.textContent = const Value.absent(),
+    this.checksum = const Value.absent(),
+    this.fileSize = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+  });
+  BookmarkSnapshotsCompanion.insert({
+    this.id = const Value.absent(),
+    required int bookmarkId,
+    required String format,
+    required String localPath,
+    this.textContent = const Value.absent(),
+    required String checksum,
+    required int fileSize,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+  }) : bookmarkId = Value(bookmarkId),
+       format = Value(format),
+       localPath = Value(localPath),
+       checksum = Value(checksum),
+       fileSize = Value(fileSize);
+  static Insertable<BookmarkSnapshot> custom({
+    Expression<int>? id,
+    Expression<int>? bookmarkId,
+    Expression<String>? format,
+    Expression<String>? localPath,
+    Expression<String>? textContent,
+    Expression<String>? checksum,
+    Expression<int>? fileSize,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? lastError,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (bookmarkId != null) 'bookmark_id': bookmarkId,
+      if (format != null) 'format': format,
+      if (localPath != null) 'local_path': localPath,
+      if (textContent != null) 'text_content': textContent,
+      if (checksum != null) 'checksum': checksum,
+      if (fileSize != null) 'file_size': fileSize,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (lastError != null) 'last_error': lastError,
+    });
+  }
+
+  BookmarkSnapshotsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? bookmarkId,
+    Value<String>? format,
+    Value<String>? localPath,
+    Value<String?>? textContent,
+    Value<String>? checksum,
+    Value<int>? fileSize,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<String?>? lastError,
+  }) {
+    return BookmarkSnapshotsCompanion(
+      id: id ?? this.id,
+      bookmarkId: bookmarkId ?? this.bookmarkId,
+      format: format ?? this.format,
+      localPath: localPath ?? this.localPath,
+      textContent: textContent ?? this.textContent,
+      checksum: checksum ?? this.checksum,
+      fileSize: fileSize ?? this.fileSize,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      lastError: lastError ?? this.lastError,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (bookmarkId.present) {
+      map['bookmark_id'] = Variable<int>(bookmarkId.value);
+    }
+    if (format.present) {
+      map['format'] = Variable<String>(format.value);
+    }
+    if (localPath.present) {
+      map['local_path'] = Variable<String>(localPath.value);
+    }
+    if (textContent.present) {
+      map['text_content'] = Variable<String>(textContent.value);
+    }
+    if (checksum.present) {
+      map['checksum'] = Variable<String>(checksum.value);
+    }
+    if (fileSize.present) {
+      map['file_size'] = Variable<int>(fileSize.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (lastError.present) {
+      map['last_error'] = Variable<String>(lastError.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookmarkSnapshotsCompanion(')
+          ..write('id: $id, ')
+          ..write('bookmarkId: $bookmarkId, ')
+          ..write('format: $format, ')
+          ..write('localPath: $localPath, ')
+          ..write('textContent: $textContent, ')
+          ..write('checksum: $checksum, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('lastError: $lastError')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PendingTasksTable extends PendingTasks
+    with TableInfo<$PendingTasksTable, PendingTask> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PendingTasksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _bookmarkIdMeta = const VerificationMeta(
+    'bookmarkId',
+  );
+  @override
+  late final GeneratedColumn<int> bookmarkId = GeneratedColumn<int>(
+    'bookmark_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES links (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _taskTypeMeta = const VerificationMeta(
+    'taskType',
+  );
+  @override
+  late final GeneratedColumn<String> taskType = GeneratedColumn<String>(
+    'task_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
+  static const VerificationMeta _attemptCountMeta = const VerificationMeta(
+    'attemptCount',
+  );
+  @override
+  late final GeneratedColumn<int> attemptCount = GeneratedColumn<int>(
+    'attempt_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _nextRetryAtMeta = const VerificationMeta(
+    'nextRetryAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextRetryAt = GeneratedColumn<DateTime>(
+    'next_retry_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _lastErrorMeta = const VerificationMeta(
+    'lastError',
+  );
+  @override
+  late final GeneratedColumn<String> lastError = GeneratedColumn<String>(
+    'last_error',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    bookmarkId,
+    taskType,
+    status,
+    attemptCount,
+    nextRetryAt,
+    lastError,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pending_tasks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PendingTask> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('bookmark_id')) {
+      context.handle(
+        _bookmarkIdMeta,
+        bookmarkId.isAcceptableOrUnknown(data['bookmark_id']!, _bookmarkIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bookmarkIdMeta);
+    }
+    if (data.containsKey('task_type')) {
+      context.handle(
+        _taskTypeMeta,
+        taskType.isAcceptableOrUnknown(data['task_type']!, _taskTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_taskTypeMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('attempt_count')) {
+      context.handle(
+        _attemptCountMeta,
+        attemptCount.isAcceptableOrUnknown(
+          data['attempt_count']!,
+          _attemptCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('next_retry_at')) {
+      context.handle(
+        _nextRetryAtMeta,
+        nextRetryAt.isAcceptableOrUnknown(
+          data['next_retry_at']!,
+          _nextRetryAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_error')) {
+      context.handle(
+        _lastErrorMeta,
+        lastError.isAcceptableOrUnknown(data['last_error']!, _lastErrorMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {bookmarkId, taskType},
+  ];
+  @override
+  PendingTask map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PendingTask(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      bookmarkId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}bookmark_id'],
+      )!,
+      taskType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}task_type'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      attemptCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}attempt_count'],
+      )!,
+      nextRetryAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_retry_at'],
+      )!,
+      lastError: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_error'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PendingTasksTable createAlias(String alias) {
+    return $PendingTasksTable(attachedDatabase, alias);
+  }
+}
+
+class PendingTask extends DataClass implements Insertable<PendingTask> {
+  final int id;
+  final int bookmarkId;
+  final String taskType;
+  final String status;
+  final int attemptCount;
+  final DateTime nextRetryAt;
+  final String? lastError;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const PendingTask({
+    required this.id,
+    required this.bookmarkId,
+    required this.taskType,
+    required this.status,
+    required this.attemptCount,
+    required this.nextRetryAt,
+    this.lastError,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['bookmark_id'] = Variable<int>(bookmarkId);
+    map['task_type'] = Variable<String>(taskType);
+    map['status'] = Variable<String>(status);
+    map['attempt_count'] = Variable<int>(attemptCount);
+    map['next_retry_at'] = Variable<DateTime>(nextRetryAt);
+    if (!nullToAbsent || lastError != null) {
+      map['last_error'] = Variable<String>(lastError);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  PendingTasksCompanion toCompanion(bool nullToAbsent) {
+    return PendingTasksCompanion(
+      id: Value(id),
+      bookmarkId: Value(bookmarkId),
+      taskType: Value(taskType),
+      status: Value(status),
+      attemptCount: Value(attemptCount),
+      nextRetryAt: Value(nextRetryAt),
+      lastError: lastError == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastError),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory PendingTask.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PendingTask(
+      id: serializer.fromJson<int>(json['id']),
+      bookmarkId: serializer.fromJson<int>(json['bookmarkId']),
+      taskType: serializer.fromJson<String>(json['taskType']),
+      status: serializer.fromJson<String>(json['status']),
+      attemptCount: serializer.fromJson<int>(json['attemptCount']),
+      nextRetryAt: serializer.fromJson<DateTime>(json['nextRetryAt']),
+      lastError: serializer.fromJson<String?>(json['lastError']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'bookmarkId': serializer.toJson<int>(bookmarkId),
+      'taskType': serializer.toJson<String>(taskType),
+      'status': serializer.toJson<String>(status),
+      'attemptCount': serializer.toJson<int>(attemptCount),
+      'nextRetryAt': serializer.toJson<DateTime>(nextRetryAt),
+      'lastError': serializer.toJson<String?>(lastError),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  PendingTask copyWith({
+    int? id,
+    int? bookmarkId,
+    String? taskType,
+    String? status,
+    int? attemptCount,
+    DateTime? nextRetryAt,
+    Value<String?> lastError = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => PendingTask(
+    id: id ?? this.id,
+    bookmarkId: bookmarkId ?? this.bookmarkId,
+    taskType: taskType ?? this.taskType,
+    status: status ?? this.status,
+    attemptCount: attemptCount ?? this.attemptCount,
+    nextRetryAt: nextRetryAt ?? this.nextRetryAt,
+    lastError: lastError.present ? lastError.value : this.lastError,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  PendingTask copyWithCompanion(PendingTasksCompanion data) {
+    return PendingTask(
+      id: data.id.present ? data.id.value : this.id,
+      bookmarkId: data.bookmarkId.present
+          ? data.bookmarkId.value
+          : this.bookmarkId,
+      taskType: data.taskType.present ? data.taskType.value : this.taskType,
+      status: data.status.present ? data.status.value : this.status,
+      attemptCount: data.attemptCount.present
+          ? data.attemptCount.value
+          : this.attemptCount,
+      nextRetryAt: data.nextRetryAt.present
+          ? data.nextRetryAt.value
+          : this.nextRetryAt,
+      lastError: data.lastError.present ? data.lastError.value : this.lastError,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingTask(')
+          ..write('id: $id, ')
+          ..write('bookmarkId: $bookmarkId, ')
+          ..write('taskType: $taskType, ')
+          ..write('status: $status, ')
+          ..write('attemptCount: $attemptCount, ')
+          ..write('nextRetryAt: $nextRetryAt, ')
+          ..write('lastError: $lastError, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    bookmarkId,
+    taskType,
+    status,
+    attemptCount,
+    nextRetryAt,
+    lastError,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PendingTask &&
+          other.id == this.id &&
+          other.bookmarkId == this.bookmarkId &&
+          other.taskType == this.taskType &&
+          other.status == this.status &&
+          other.attemptCount == this.attemptCount &&
+          other.nextRetryAt == this.nextRetryAt &&
+          other.lastError == this.lastError &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class PendingTasksCompanion extends UpdateCompanion<PendingTask> {
+  final Value<int> id;
+  final Value<int> bookmarkId;
+  final Value<String> taskType;
+  final Value<String> status;
+  final Value<int> attemptCount;
+  final Value<DateTime> nextRetryAt;
+  final Value<String?> lastError;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  const PendingTasksCompanion({
+    this.id = const Value.absent(),
+    this.bookmarkId = const Value.absent(),
+    this.taskType = const Value.absent(),
+    this.status = const Value.absent(),
+    this.attemptCount = const Value.absent(),
+    this.nextRetryAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  });
+  PendingTasksCompanion.insert({
+    this.id = const Value.absent(),
+    required int bookmarkId,
+    required String taskType,
+    this.status = const Value.absent(),
+    this.attemptCount = const Value.absent(),
+    this.nextRetryAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  }) : bookmarkId = Value(bookmarkId),
+       taskType = Value(taskType);
+  static Insertable<PendingTask> custom({
+    Expression<int>? id,
+    Expression<int>? bookmarkId,
+    Expression<String>? taskType,
+    Expression<String>? status,
+    Expression<int>? attemptCount,
+    Expression<DateTime>? nextRetryAt,
+    Expression<String>? lastError,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (bookmarkId != null) 'bookmark_id': bookmarkId,
+      if (taskType != null) 'task_type': taskType,
+      if (status != null) 'status': status,
+      if (attemptCount != null) 'attempt_count': attemptCount,
+      if (nextRetryAt != null) 'next_retry_at': nextRetryAt,
+      if (lastError != null) 'last_error': lastError,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+    });
+  }
+
+  PendingTasksCompanion copyWith({
+    Value<int>? id,
+    Value<int>? bookmarkId,
+    Value<String>? taskType,
+    Value<String>? status,
+    Value<int>? attemptCount,
+    Value<DateTime>? nextRetryAt,
+    Value<String?>? lastError,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+  }) {
+    return PendingTasksCompanion(
+      id: id ?? this.id,
+      bookmarkId: bookmarkId ?? this.bookmarkId,
+      taskType: taskType ?? this.taskType,
+      status: status ?? this.status,
+      attemptCount: attemptCount ?? this.attemptCount,
+      nextRetryAt: nextRetryAt ?? this.nextRetryAt,
+      lastError: lastError ?? this.lastError,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (bookmarkId.present) {
+      map['bookmark_id'] = Variable<int>(bookmarkId.value);
+    }
+    if (taskType.present) {
+      map['task_type'] = Variable<String>(taskType.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (attemptCount.present) {
+      map['attempt_count'] = Variable<int>(attemptCount.value);
+    }
+    if (nextRetryAt.present) {
+      map['next_retry_at'] = Variable<DateTime>(nextRetryAt.value);
+    }
+    if (lastError.present) {
+      map['last_error'] = Variable<String>(lastError.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingTasksCompanion(')
+          ..write('id: $id, ')
+          ..write('bookmarkId: $bookmarkId, ')
+          ..write('taskType: $taskType, ')
+          ..write('status: $status, ')
+          ..write('attemptCount: $attemptCount, ')
+          ..write('nextRetryAt: $nextRetryAt, ')
+          ..write('lastError: $lastError, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -4369,6 +6807,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CollectionLinksTable collectionLinks = $CollectionLinksTable(
     this,
   );
+  late final $BookmarkSnapshotsTable bookmarkSnapshots =
+      $BookmarkSnapshotsTable(this);
+  late final $PendingTasksTable pendingTasks = $PendingTasksTable(this);
   late final $UserProfilesTable userProfiles = $UserProfilesTable(this);
   late final $ProfileMetricsTable profileMetrics = $ProfileMetricsTable(this);
   late final $SettingItemsTable settingItems = $SettingItemsTable(this);
@@ -4389,6 +6830,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     linkTags,
     collections,
     collectionLinks,
+    bookmarkSnapshots,
+    pendingTasks,
     userProfiles,
     profileMetrics,
     settingItems,
@@ -4434,6 +6877,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'links',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('bookmark_snapshots', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'links',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('pending_tasks', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'user_profiles',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -4447,26 +6904,64 @@ typedef $$LinksTableCreateCompanionBuilder =
       Value<int> id,
       required String title,
       required String url,
+      Value<String> originalUrl,
+      Value<String> normalizedUrl,
+      Value<String?> canonicalUrl,
+      Value<String> urlHash,
       required String domain,
       Value<String> description,
+      Value<String> note,
       Value<String?> sourceImageUrl,
+      Value<String?> faviconUrl,
       Value<String> readingTime,
+      Value<String> contentType,
+      Value<String> status,
+      Value<bool> isFavourite,
+      Value<bool> isPinned,
       Value<bool> isArchived,
+      Value<String> metadataStatus,
+      Value<String> offlineStatus,
+      Value<String> linkHealthStatus,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
+      Value<DateTime?> lastOpenedAt,
+      Value<DateTime?> archivedAt,
+      Value<DateTime?> deletedAt,
+      Value<DateTime?> metadataFetchedAt,
+      Value<DateTime?> linkCheckedAt,
+      Value<int> manualSortOrder,
     });
 typedef $$LinksTableUpdateCompanionBuilder =
     LinksCompanion Function({
       Value<int> id,
       Value<String> title,
       Value<String> url,
+      Value<String> originalUrl,
+      Value<String> normalizedUrl,
+      Value<String?> canonicalUrl,
+      Value<String> urlHash,
       Value<String> domain,
       Value<String> description,
+      Value<String> note,
       Value<String?> sourceImageUrl,
+      Value<String?> faviconUrl,
       Value<String> readingTime,
+      Value<String> contentType,
+      Value<String> status,
+      Value<bool> isFavourite,
+      Value<bool> isPinned,
       Value<bool> isArchived,
+      Value<String> metadataStatus,
+      Value<String> offlineStatus,
+      Value<String> linkHealthStatus,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
+      Value<DateTime?> lastOpenedAt,
+      Value<DateTime?> archivedAt,
+      Value<DateTime?> deletedAt,
+      Value<DateTime?> metadataFetchedAt,
+      Value<DateTime?> linkCheckedAt,
+      Value<int> manualSortOrder,
     });
 
 final class $$LinksTableReferences
@@ -4529,6 +7024,48 @@ final class $$LinksTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$BookmarkSnapshotsTable, List<BookmarkSnapshot>>
+  _bookmarkSnapshotsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.bookmarkSnapshots,
+        aliasName: $_aliasNameGenerator(
+          db.links.id,
+          db.bookmarkSnapshots.bookmarkId,
+        ),
+      );
+
+  $$BookmarkSnapshotsTableProcessedTableManager get bookmarkSnapshotsRefs {
+    final manager = $$BookmarkSnapshotsTableTableManager(
+      $_db,
+      $_db.bookmarkSnapshots,
+    ).filter((f) => f.bookmarkId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _bookmarkSnapshotsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$PendingTasksTable, List<PendingTask>>
+  _pendingTasksRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.pendingTasks,
+    aliasName: $_aliasNameGenerator(db.links.id, db.pendingTasks.bookmarkId),
+  );
+
+  $$PendingTasksTableProcessedTableManager get pendingTasksRefs {
+    final manager = $$PendingTasksTableTableManager(
+      $_db,
+      $_db.pendingTasks,
+    ).filter((f) => f.bookmarkId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_pendingTasksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$LinksTableFilterComposer extends Composer<_$AppDatabase, $LinksTable> {
@@ -4554,6 +7091,26 @@ class $$LinksTableFilterComposer extends Composer<_$AppDatabase, $LinksTable> {
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get originalUrl => $composableBuilder(
+    column: $table.originalUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get normalizedUrl => $composableBuilder(
+    column: $table.normalizedUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get canonicalUrl => $composableBuilder(
+    column: $table.canonicalUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get urlHash => $composableBuilder(
+    column: $table.urlHash,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get domain => $composableBuilder(
     column: $table.domain,
     builder: (column) => ColumnFilters(column),
@@ -4564,8 +7121,18 @@ class $$LinksTableFilterComposer extends Composer<_$AppDatabase, $LinksTable> {
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get sourceImageUrl => $composableBuilder(
     column: $table.sourceImageUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get faviconUrl => $composableBuilder(
+    column: $table.faviconUrl,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4574,8 +7141,43 @@ class $$LinksTableFilterComposer extends Composer<_$AppDatabase, $LinksTable> {
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get contentType => $composableBuilder(
+    column: $table.contentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isFavourite => $composableBuilder(
+    column: $table.isFavourite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPinned => $composableBuilder(
+    column: $table.isPinned,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<bool> get isArchived => $composableBuilder(
     column: $table.isArchived,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get metadataStatus => $composableBuilder(
+    column: $table.metadataStatus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get offlineStatus => $composableBuilder(
+    column: $table.offlineStatus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get linkHealthStatus => $composableBuilder(
+    column: $table.linkHealthStatus,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4586,6 +7188,36 @@ class $$LinksTableFilterComposer extends Composer<_$AppDatabase, $LinksTable> {
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastOpenedAt => $composableBuilder(
+    column: $table.lastOpenedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get metadataFetchedAt => $composableBuilder(
+    column: $table.metadataFetchedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get linkCheckedAt => $composableBuilder(
+    column: $table.linkCheckedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get manualSortOrder => $composableBuilder(
+    column: $table.manualSortOrder,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4663,6 +7295,56 @@ class $$LinksTableFilterComposer extends Composer<_$AppDatabase, $LinksTable> {
     );
     return f(composer);
   }
+
+  Expression<bool> bookmarkSnapshotsRefs(
+    Expression<bool> Function($$BookmarkSnapshotsTableFilterComposer f) f,
+  ) {
+    final $$BookmarkSnapshotsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.bookmarkSnapshots,
+      getReferencedColumn: (t) => t.bookmarkId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BookmarkSnapshotsTableFilterComposer(
+            $db: $db,
+            $table: $db.bookmarkSnapshots,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> pendingTasksRefs(
+    Expression<bool> Function($$PendingTasksTableFilterComposer f) f,
+  ) {
+    final $$PendingTasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.pendingTasks,
+      getReferencedColumn: (t) => t.bookmarkId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PendingTasksTableFilterComposer(
+            $db: $db,
+            $table: $db.pendingTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$LinksTableOrderingComposer
@@ -4689,6 +7371,26 @@ class $$LinksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get originalUrl => $composableBuilder(
+    column: $table.originalUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get normalizedUrl => $composableBuilder(
+    column: $table.normalizedUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get canonicalUrl => $composableBuilder(
+    column: $table.canonicalUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get urlHash => $composableBuilder(
+    column: $table.urlHash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get domain => $composableBuilder(
     column: $table.domain,
     builder: (column) => ColumnOrderings(column),
@@ -4699,8 +7401,18 @@ class $$LinksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get sourceImageUrl => $composableBuilder(
     column: $table.sourceImageUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get faviconUrl => $composableBuilder(
+    column: $table.faviconUrl,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4709,8 +7421,43 @@ class $$LinksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get contentType => $composableBuilder(
+    column: $table.contentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isFavourite => $composableBuilder(
+    column: $table.isFavourite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPinned => $composableBuilder(
+    column: $table.isPinned,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get isArchived => $composableBuilder(
     column: $table.isArchived,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get metadataStatus => $composableBuilder(
+    column: $table.metadataStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get offlineStatus => $composableBuilder(
+    column: $table.offlineStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get linkHealthStatus => $composableBuilder(
+    column: $table.linkHealthStatus,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4721,6 +7468,36 @@ class $$LinksTableOrderingComposer
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastOpenedAt => $composableBuilder(
+    column: $table.lastOpenedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get metadataFetchedAt => $composableBuilder(
+    column: $table.metadataFetchedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get linkCheckedAt => $composableBuilder(
+    column: $table.linkCheckedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get manualSortOrder => $composableBuilder(
+    column: $table.manualSortOrder,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -4743,6 +7520,24 @@ class $$LinksTableAnnotationComposer
   GeneratedColumn<String> get url =>
       $composableBuilder(column: $table.url, builder: (column) => column);
 
+  GeneratedColumn<String> get originalUrl => $composableBuilder(
+    column: $table.originalUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get normalizedUrl => $composableBuilder(
+    column: $table.normalizedUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get canonicalUrl => $composableBuilder(
+    column: $table.canonicalUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get urlHash =>
+      $composableBuilder(column: $table.urlHash, builder: (column) => column);
+
   GeneratedColumn<String> get domain =>
       $composableBuilder(column: $table.domain, builder: (column) => column);
 
@@ -4751,8 +7546,16 @@ class $$LinksTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
   GeneratedColumn<String> get sourceImageUrl => $composableBuilder(
     column: $table.sourceImageUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get faviconUrl => $composableBuilder(
+    column: $table.faviconUrl,
     builder: (column) => column,
   );
 
@@ -4761,8 +7564,39 @@ class $$LinksTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get contentType => $composableBuilder(
+    column: $table.contentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<bool> get isFavourite => $composableBuilder(
+    column: $table.isFavourite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isPinned =>
+      $composableBuilder(column: $table.isPinned, builder: (column) => column);
+
   GeneratedColumn<bool> get isArchived => $composableBuilder(
     column: $table.isArchived,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get metadataStatus => $composableBuilder(
+    column: $table.metadataStatus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get offlineStatus => $composableBuilder(
+    column: $table.offlineStatus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get linkHealthStatus => $composableBuilder(
+    column: $table.linkHealthStatus,
     builder: (column) => column,
   );
 
@@ -4771,6 +7605,34 @@ class $$LinksTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastOpenedAt => $composableBuilder(
+    column: $table.lastOpenedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get metadataFetchedAt => $composableBuilder(
+    column: $table.metadataFetchedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get linkCheckedAt => $composableBuilder(
+    column: $table.linkCheckedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get manualSortOrder => $composableBuilder(
+    column: $table.manualSortOrder,
+    builder: (column) => column,
+  );
 
   Expression<T> linkPreviewsRefs<T extends Object>(
     Expression<T> Function($$LinkPreviewsTableAnnotationComposer a) f,
@@ -4846,6 +7708,57 @@ class $$LinksTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> bookmarkSnapshotsRefs<T extends Object>(
+    Expression<T> Function($$BookmarkSnapshotsTableAnnotationComposer a) f,
+  ) {
+    final $$BookmarkSnapshotsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.bookmarkSnapshots,
+          getReferencedColumn: (t) => t.bookmarkId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$BookmarkSnapshotsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.bookmarkSnapshots,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> pendingTasksRefs<T extends Object>(
+    Expression<T> Function($$PendingTasksTableAnnotationComposer a) f,
+  ) {
+    final $$PendingTasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.pendingTasks,
+      getReferencedColumn: (t) => t.bookmarkId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PendingTasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.pendingTasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$LinksTableTableManager
@@ -4865,6 +7778,8 @@ class $$LinksTableTableManager
             bool linkPreviewsRefs,
             bool linkTagsRefs,
             bool collectionLinksRefs,
+            bool bookmarkSnapshotsRefs,
+            bool pendingTasksRefs,
           })
         > {
   $$LinksTableTableManager(_$AppDatabase db, $LinksTable table)
@@ -4883,48 +7798,124 @@ class $$LinksTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<String> url = const Value.absent(),
+                Value<String> originalUrl = const Value.absent(),
+                Value<String> normalizedUrl = const Value.absent(),
+                Value<String?> canonicalUrl = const Value.absent(),
+                Value<String> urlHash = const Value.absent(),
                 Value<String> domain = const Value.absent(),
                 Value<String> description = const Value.absent(),
+                Value<String> note = const Value.absent(),
                 Value<String?> sourceImageUrl = const Value.absent(),
+                Value<String?> faviconUrl = const Value.absent(),
                 Value<String> readingTime = const Value.absent(),
+                Value<String> contentType = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<bool> isFavourite = const Value.absent(),
+                Value<bool> isPinned = const Value.absent(),
                 Value<bool> isArchived = const Value.absent(),
+                Value<String> metadataStatus = const Value.absent(),
+                Value<String> offlineStatus = const Value.absent(),
+                Value<String> linkHealthStatus = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> lastOpenedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime?> metadataFetchedAt = const Value.absent(),
+                Value<DateTime?> linkCheckedAt = const Value.absent(),
+                Value<int> manualSortOrder = const Value.absent(),
               }) => LinksCompanion(
                 id: id,
                 title: title,
                 url: url,
+                originalUrl: originalUrl,
+                normalizedUrl: normalizedUrl,
+                canonicalUrl: canonicalUrl,
+                urlHash: urlHash,
                 domain: domain,
                 description: description,
+                note: note,
                 sourceImageUrl: sourceImageUrl,
+                faviconUrl: faviconUrl,
                 readingTime: readingTime,
+                contentType: contentType,
+                status: status,
+                isFavourite: isFavourite,
+                isPinned: isPinned,
                 isArchived: isArchived,
+                metadataStatus: metadataStatus,
+                offlineStatus: offlineStatus,
+                linkHealthStatus: linkHealthStatus,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                lastOpenedAt: lastOpenedAt,
+                archivedAt: archivedAt,
+                deletedAt: deletedAt,
+                metadataFetchedAt: metadataFetchedAt,
+                linkCheckedAt: linkCheckedAt,
+                manualSortOrder: manualSortOrder,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String title,
                 required String url,
+                Value<String> originalUrl = const Value.absent(),
+                Value<String> normalizedUrl = const Value.absent(),
+                Value<String?> canonicalUrl = const Value.absent(),
+                Value<String> urlHash = const Value.absent(),
                 required String domain,
                 Value<String> description = const Value.absent(),
+                Value<String> note = const Value.absent(),
                 Value<String?> sourceImageUrl = const Value.absent(),
+                Value<String?> faviconUrl = const Value.absent(),
                 Value<String> readingTime = const Value.absent(),
+                Value<String> contentType = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<bool> isFavourite = const Value.absent(),
+                Value<bool> isPinned = const Value.absent(),
                 Value<bool> isArchived = const Value.absent(),
+                Value<String> metadataStatus = const Value.absent(),
+                Value<String> offlineStatus = const Value.absent(),
+                Value<String> linkHealthStatus = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> lastOpenedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime?> metadataFetchedAt = const Value.absent(),
+                Value<DateTime?> linkCheckedAt = const Value.absent(),
+                Value<int> manualSortOrder = const Value.absent(),
               }) => LinksCompanion.insert(
                 id: id,
                 title: title,
                 url: url,
+                originalUrl: originalUrl,
+                normalizedUrl: normalizedUrl,
+                canonicalUrl: canonicalUrl,
+                urlHash: urlHash,
                 domain: domain,
                 description: description,
+                note: note,
                 sourceImageUrl: sourceImageUrl,
+                faviconUrl: faviconUrl,
                 readingTime: readingTime,
+                contentType: contentType,
+                status: status,
+                isFavourite: isFavourite,
+                isPinned: isPinned,
                 isArchived: isArchived,
+                metadataStatus: metadataStatus,
+                offlineStatus: offlineStatus,
+                linkHealthStatus: linkHealthStatus,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                lastOpenedAt: lastOpenedAt,
+                archivedAt: archivedAt,
+                deletedAt: deletedAt,
+                metadataFetchedAt: metadataFetchedAt,
+                linkCheckedAt: linkCheckedAt,
+                manualSortOrder: manualSortOrder,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -4937,6 +7928,8 @@ class $$LinksTableTableManager
                 linkPreviewsRefs = false,
                 linkTagsRefs = false,
                 collectionLinksRefs = false,
+                bookmarkSnapshotsRefs = false,
+                pendingTasksRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -4944,6 +7937,8 @@ class $$LinksTableTableManager
                     if (linkPreviewsRefs) db.linkPreviews,
                     if (linkTagsRefs) db.linkTags,
                     if (collectionLinksRefs) db.collectionLinks,
+                    if (bookmarkSnapshotsRefs) db.bookmarkSnapshots,
+                    if (pendingTasksRefs) db.pendingTasks,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -5007,6 +8002,48 @@ class $$LinksTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (bookmarkSnapshotsRefs)
+                        await $_getPrefetchedData<
+                          Link,
+                          $LinksTable,
+                          BookmarkSnapshot
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LinksTableReferences
+                              ._bookmarkSnapshotsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LinksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).bookmarkSnapshotsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bookmarkId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (pendingTasksRefs)
+                        await $_getPrefetchedData<
+                          Link,
+                          $LinksTable,
+                          PendingTask
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LinksTableReferences
+                              ._pendingTasksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LinksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).pendingTasksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bookmarkId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -5031,6 +8068,8 @@ typedef $$LinksTableProcessedTableManager =
         bool linkPreviewsRefs,
         bool linkTagsRefs,
         bool collectionLinksRefs,
+        bool bookmarkSnapshotsRefs,
+        bool pendingTasksRefs,
       })
     >;
 typedef $$LinkPreviewsTableCreateCompanionBuilder =
@@ -6027,7 +9066,11 @@ typedef $$CollectionsTableCreateCompanionBuilder =
       required String type,
       Value<String> iconKey,
       Value<String> tagName,
+      Value<bool> isFavourite,
+      Value<bool> isPinned,
+      Value<bool> isArchived,
       Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
     });
 typedef $$CollectionsTableUpdateCompanionBuilder =
     CollectionsCompanion Function({
@@ -6036,7 +9079,11 @@ typedef $$CollectionsTableUpdateCompanionBuilder =
       Value<String> type,
       Value<String> iconKey,
       Value<String> tagName,
+      Value<bool> isFavourite,
+      Value<bool> isPinned,
+      Value<bool> isArchived,
       Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
     });
 
 final class $$CollectionsTableReferences
@@ -6101,8 +9148,28 @@ class $$CollectionsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<bool> get isFavourite => $composableBuilder(
+    column: $table.isFavourite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPinned => $composableBuilder(
+    column: $table.isPinned,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6166,8 +9233,28 @@ class $$CollectionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isFavourite => $composableBuilder(
+    column: $table.isFavourite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPinned => $composableBuilder(
+    column: $table.isPinned,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -6196,8 +9283,24 @@ class $$CollectionsTableAnnotationComposer
   GeneratedColumn<String> get tagName =>
       $composableBuilder(column: $table.tagName, builder: (column) => column);
 
+  GeneratedColumn<bool> get isFavourite => $composableBuilder(
+    column: $table.isFavourite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isPinned =>
+      $composableBuilder(column: $table.isPinned, builder: (column) => column);
+
+  GeneratedColumn<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> collectionLinksRefs<T extends Object>(
     Expression<T> Function($$CollectionLinksTableAnnotationComposer a) f,
@@ -6258,14 +9361,22 @@ class $$CollectionsTableTableManager
                 Value<String> type = const Value.absent(),
                 Value<String> iconKey = const Value.absent(),
                 Value<String> tagName = const Value.absent(),
+                Value<bool> isFavourite = const Value.absent(),
+                Value<bool> isPinned = const Value.absent(),
+                Value<bool> isArchived = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
               }) => CollectionsCompanion(
                 id: id,
                 title: title,
                 type: type,
                 iconKey: iconKey,
                 tagName: tagName,
+                isFavourite: isFavourite,
+                isPinned: isPinned,
+                isArchived: isArchived,
                 createdAt: createdAt,
+                updatedAt: updatedAt,
               ),
           createCompanionCallback:
               ({
@@ -6274,14 +9385,22 @@ class $$CollectionsTableTableManager
                 required String type,
                 Value<String> iconKey = const Value.absent(),
                 Value<String> tagName = const Value.absent(),
+                Value<bool> isFavourite = const Value.absent(),
+                Value<bool> isPinned = const Value.absent(),
+                Value<bool> isArchived = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
               }) => CollectionsCompanion.insert(
                 id: id,
                 title: title,
                 type: type,
                 iconKey: iconKey,
                 tagName: tagName,
+                isFavourite: isFavourite,
+                isPinned: isPinned,
+                isArchived: isArchived,
                 createdAt: createdAt,
+                updatedAt: updatedAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -6347,12 +9466,16 @@ typedef $$CollectionLinksTableCreateCompanionBuilder =
     CollectionLinksCompanion Function({
       required int collectionId,
       required int linkId,
+      Value<DateTime> addedAt,
+      Value<int> sortOrder,
       Value<int> rowid,
     });
 typedef $$CollectionLinksTableUpdateCompanionBuilder =
     CollectionLinksCompanion Function({
       Value<int> collectionId,
       Value<int> linkId,
+      Value<DateTime> addedAt,
+      Value<int> sortOrder,
       Value<int> rowid,
     });
 
@@ -6415,6 +9538,16 @@ class $$CollectionLinksTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<DateTime> get addedAt => $composableBuilder(
+    column: $table.addedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$CollectionsTableFilterComposer get collectionId {
     final $$CollectionsTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -6471,6 +9604,16 @@ class $$CollectionLinksTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<DateTime> get addedAt => $composableBuilder(
+    column: $table.addedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$CollectionsTableOrderingComposer get collectionId {
     final $$CollectionsTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -6527,6 +9670,12 @@ class $$CollectionLinksTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<DateTime> get addedAt =>
+      $composableBuilder(column: $table.addedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
   $$CollectionsTableAnnotationComposer get collectionId {
     final $$CollectionsTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -6606,20 +9755,28 @@ class $$CollectionLinksTableTableManager
               ({
                 Value<int> collectionId = const Value.absent(),
                 Value<int> linkId = const Value.absent(),
+                Value<DateTime> addedAt = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CollectionLinksCompanion(
                 collectionId: collectionId,
                 linkId: linkId,
+                addedAt: addedAt,
+                sortOrder: sortOrder,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required int collectionId,
                 required int linkId,
+                Value<DateTime> addedAt = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CollectionLinksCompanion.insert(
                 collectionId: collectionId,
                 linkId: linkId,
+                addedAt: addedAt,
+                sortOrder: sortOrder,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -6705,6 +9862,823 @@ typedef $$CollectionLinksTableProcessedTableManager =
       (CollectionLink, $$CollectionLinksTableReferences),
       CollectionLink,
       PrefetchHooks Function({bool collectionId, bool linkId})
+    >;
+typedef $$BookmarkSnapshotsTableCreateCompanionBuilder =
+    BookmarkSnapshotsCompanion Function({
+      Value<int> id,
+      required int bookmarkId,
+      required String format,
+      required String localPath,
+      Value<String?> textContent,
+      required String checksum,
+      required int fileSize,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<String?> lastError,
+    });
+typedef $$BookmarkSnapshotsTableUpdateCompanionBuilder =
+    BookmarkSnapshotsCompanion Function({
+      Value<int> id,
+      Value<int> bookmarkId,
+      Value<String> format,
+      Value<String> localPath,
+      Value<String?> textContent,
+      Value<String> checksum,
+      Value<int> fileSize,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<String?> lastError,
+    });
+
+final class $$BookmarkSnapshotsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $BookmarkSnapshotsTable,
+          BookmarkSnapshot
+        > {
+  $$BookmarkSnapshotsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $LinksTable _bookmarkIdTable(_$AppDatabase db) => db.links.createAlias(
+    $_aliasNameGenerator(db.bookmarkSnapshots.bookmarkId, db.links.id),
+  );
+
+  $$LinksTableProcessedTableManager get bookmarkId {
+    final $_column = $_itemColumn<int>('bookmark_id')!;
+
+    final manager = $$LinksTableTableManager(
+      $_db,
+      $_db.links,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bookmarkIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$BookmarkSnapshotsTableFilterComposer
+    extends Composer<_$AppDatabase, $BookmarkSnapshotsTable> {
+  $$BookmarkSnapshotsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get format => $composableBuilder(
+    column: $table.format,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get localPath => $composableBuilder(
+    column: $table.localPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get textContent => $composableBuilder(
+    column: $table.textContent,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get checksum => $composableBuilder(
+    column: $table.checksum,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$LinksTableFilterComposer get bookmarkId {
+    final $$LinksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bookmarkId,
+      referencedTable: $db.links,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinksTableFilterComposer(
+            $db: $db,
+            $table: $db.links,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BookmarkSnapshotsTableOrderingComposer
+    extends Composer<_$AppDatabase, $BookmarkSnapshotsTable> {
+  $$BookmarkSnapshotsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get format => $composableBuilder(
+    column: $table.format,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get localPath => $composableBuilder(
+    column: $table.localPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get textContent => $composableBuilder(
+    column: $table.textContent,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get checksum => $composableBuilder(
+    column: $table.checksum,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$LinksTableOrderingComposer get bookmarkId {
+    final $$LinksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bookmarkId,
+      referencedTable: $db.links,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinksTableOrderingComposer(
+            $db: $db,
+            $table: $db.links,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BookmarkSnapshotsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BookmarkSnapshotsTable> {
+  $$BookmarkSnapshotsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get format =>
+      $composableBuilder(column: $table.format, builder: (column) => column);
+
+  GeneratedColumn<String> get localPath =>
+      $composableBuilder(column: $table.localPath, builder: (column) => column);
+
+  GeneratedColumn<String> get textContent => $composableBuilder(
+    column: $table.textContent,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get checksum =>
+      $composableBuilder(column: $table.checksum, builder: (column) => column);
+
+  GeneratedColumn<int> get fileSize =>
+      $composableBuilder(column: $table.fileSize, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get lastError =>
+      $composableBuilder(column: $table.lastError, builder: (column) => column);
+
+  $$LinksTableAnnotationComposer get bookmarkId {
+    final $$LinksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bookmarkId,
+      referencedTable: $db.links,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.links,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BookmarkSnapshotsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BookmarkSnapshotsTable,
+          BookmarkSnapshot,
+          $$BookmarkSnapshotsTableFilterComposer,
+          $$BookmarkSnapshotsTableOrderingComposer,
+          $$BookmarkSnapshotsTableAnnotationComposer,
+          $$BookmarkSnapshotsTableCreateCompanionBuilder,
+          $$BookmarkSnapshotsTableUpdateCompanionBuilder,
+          (BookmarkSnapshot, $$BookmarkSnapshotsTableReferences),
+          BookmarkSnapshot,
+          PrefetchHooks Function({bool bookmarkId})
+        > {
+  $$BookmarkSnapshotsTableTableManager(
+    _$AppDatabase db,
+    $BookmarkSnapshotsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BookmarkSnapshotsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BookmarkSnapshotsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BookmarkSnapshotsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> bookmarkId = const Value.absent(),
+                Value<String> format = const Value.absent(),
+                Value<String> localPath = const Value.absent(),
+                Value<String?> textContent = const Value.absent(),
+                Value<String> checksum = const Value.absent(),
+                Value<int> fileSize = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+              }) => BookmarkSnapshotsCompanion(
+                id: id,
+                bookmarkId: bookmarkId,
+                format: format,
+                localPath: localPath,
+                textContent: textContent,
+                checksum: checksum,
+                fileSize: fileSize,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                lastError: lastError,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int bookmarkId,
+                required String format,
+                required String localPath,
+                Value<String?> textContent = const Value.absent(),
+                required String checksum,
+                required int fileSize,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+              }) => BookmarkSnapshotsCompanion.insert(
+                id: id,
+                bookmarkId: bookmarkId,
+                format: format,
+                localPath: localPath,
+                textContent: textContent,
+                checksum: checksum,
+                fileSize: fileSize,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                lastError: lastError,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$BookmarkSnapshotsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({bookmarkId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (bookmarkId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bookmarkId,
+                                referencedTable:
+                                    $$BookmarkSnapshotsTableReferences
+                                        ._bookmarkIdTable(db),
+                                referencedColumn:
+                                    $$BookmarkSnapshotsTableReferences
+                                        ._bookmarkIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$BookmarkSnapshotsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BookmarkSnapshotsTable,
+      BookmarkSnapshot,
+      $$BookmarkSnapshotsTableFilterComposer,
+      $$BookmarkSnapshotsTableOrderingComposer,
+      $$BookmarkSnapshotsTableAnnotationComposer,
+      $$BookmarkSnapshotsTableCreateCompanionBuilder,
+      $$BookmarkSnapshotsTableUpdateCompanionBuilder,
+      (BookmarkSnapshot, $$BookmarkSnapshotsTableReferences),
+      BookmarkSnapshot,
+      PrefetchHooks Function({bool bookmarkId})
+    >;
+typedef $$PendingTasksTableCreateCompanionBuilder =
+    PendingTasksCompanion Function({
+      Value<int> id,
+      required int bookmarkId,
+      required String taskType,
+      Value<String> status,
+      Value<int> attemptCount,
+      Value<DateTime> nextRetryAt,
+      Value<String?> lastError,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+    });
+typedef $$PendingTasksTableUpdateCompanionBuilder =
+    PendingTasksCompanion Function({
+      Value<int> id,
+      Value<int> bookmarkId,
+      Value<String> taskType,
+      Value<String> status,
+      Value<int> attemptCount,
+      Value<DateTime> nextRetryAt,
+      Value<String?> lastError,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+    });
+
+final class $$PendingTasksTableReferences
+    extends BaseReferences<_$AppDatabase, $PendingTasksTable, PendingTask> {
+  $$PendingTasksTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $LinksTable _bookmarkIdTable(_$AppDatabase db) => db.links.createAlias(
+    $_aliasNameGenerator(db.pendingTasks.bookmarkId, db.links.id),
+  );
+
+  $$LinksTableProcessedTableManager get bookmarkId {
+    final $_column = $_itemColumn<int>('bookmark_id')!;
+
+    final manager = $$LinksTableTableManager(
+      $_db,
+      $_db.links,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bookmarkIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PendingTasksTableFilterComposer
+    extends Composer<_$AppDatabase, $PendingTasksTable> {
+  $$PendingTasksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get taskType => $composableBuilder(
+    column: $table.taskType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get attemptCount => $composableBuilder(
+    column: $table.attemptCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextRetryAt => $composableBuilder(
+    column: $table.nextRetryAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$LinksTableFilterComposer get bookmarkId {
+    final $$LinksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bookmarkId,
+      referencedTable: $db.links,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinksTableFilterComposer(
+            $db: $db,
+            $table: $db.links,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PendingTasksTableOrderingComposer
+    extends Composer<_$AppDatabase, $PendingTasksTable> {
+  $$PendingTasksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get taskType => $composableBuilder(
+    column: $table.taskType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get attemptCount => $composableBuilder(
+    column: $table.attemptCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get nextRetryAt => $composableBuilder(
+    column: $table.nextRetryAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$LinksTableOrderingComposer get bookmarkId {
+    final $$LinksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bookmarkId,
+      referencedTable: $db.links,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinksTableOrderingComposer(
+            $db: $db,
+            $table: $db.links,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PendingTasksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PendingTasksTable> {
+  $$PendingTasksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get taskType =>
+      $composableBuilder(column: $table.taskType, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<int> get attemptCount => $composableBuilder(
+    column: $table.attemptCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get nextRetryAt => $composableBuilder(
+    column: $table.nextRetryAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastError =>
+      $composableBuilder(column: $table.lastError, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$LinksTableAnnotationComposer get bookmarkId {
+    final $$LinksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bookmarkId,
+      referencedTable: $db.links,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.links,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PendingTasksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PendingTasksTable,
+          PendingTask,
+          $$PendingTasksTableFilterComposer,
+          $$PendingTasksTableOrderingComposer,
+          $$PendingTasksTableAnnotationComposer,
+          $$PendingTasksTableCreateCompanionBuilder,
+          $$PendingTasksTableUpdateCompanionBuilder,
+          (PendingTask, $$PendingTasksTableReferences),
+          PendingTask,
+          PrefetchHooks Function({bool bookmarkId})
+        > {
+  $$PendingTasksTableTableManager(_$AppDatabase db, $PendingTasksTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PendingTasksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PendingTasksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PendingTasksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> bookmarkId = const Value.absent(),
+                Value<String> taskType = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<int> attemptCount = const Value.absent(),
+                Value<DateTime> nextRetryAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+              }) => PendingTasksCompanion(
+                id: id,
+                bookmarkId: bookmarkId,
+                taskType: taskType,
+                status: status,
+                attemptCount: attemptCount,
+                nextRetryAt: nextRetryAt,
+                lastError: lastError,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int bookmarkId,
+                required String taskType,
+                Value<String> status = const Value.absent(),
+                Value<int> attemptCount = const Value.absent(),
+                Value<DateTime> nextRetryAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+              }) => PendingTasksCompanion.insert(
+                id: id,
+                bookmarkId: bookmarkId,
+                taskType: taskType,
+                status: status,
+                attemptCount: attemptCount,
+                nextRetryAt: nextRetryAt,
+                lastError: lastError,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$PendingTasksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({bookmarkId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (bookmarkId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bookmarkId,
+                                referencedTable: $$PendingTasksTableReferences
+                                    ._bookmarkIdTable(db),
+                                referencedColumn: $$PendingTasksTableReferences
+                                    ._bookmarkIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PendingTasksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PendingTasksTable,
+      PendingTask,
+      $$PendingTasksTableFilterComposer,
+      $$PendingTasksTableOrderingComposer,
+      $$PendingTasksTableAnnotationComposer,
+      $$PendingTasksTableCreateCompanionBuilder,
+      $$PendingTasksTableUpdateCompanionBuilder,
+      (PendingTask, $$PendingTasksTableReferences),
+      PendingTask,
+      PrefetchHooks Function({bool bookmarkId})
     >;
 typedef $$UserProfilesTableCreateCompanionBuilder =
     UserProfilesCompanion Function({
@@ -8082,6 +12056,10 @@ class $AppDatabaseManager {
       $$CollectionsTableTableManager(_db, _db.collections);
   $$CollectionLinksTableTableManager get collectionLinks =>
       $$CollectionLinksTableTableManager(_db, _db.collectionLinks);
+  $$BookmarkSnapshotsTableTableManager get bookmarkSnapshots =>
+      $$BookmarkSnapshotsTableTableManager(_db, _db.bookmarkSnapshots);
+  $$PendingTasksTableTableManager get pendingTasks =>
+      $$PendingTasksTableTableManager(_db, _db.pendingTasks);
   $$UserProfilesTableTableManager get userProfiles =>
       $$UserProfilesTableTableManager(_db, _db.userProfiles);
   $$ProfileMetricsTableTableManager get profileMetrics =>

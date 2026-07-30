@@ -12,10 +12,11 @@ class ThemeModeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const options = [
-      (AppThemePreference.light, 'LIGHT'),
-      (AppThemePreference.dark, 'DARK'),
-      (AppThemePreference.system, 'SYSTEM'),
+    final strings = linkVaultLocalizationsOf(context);
+    final options = [
+      (AppThemePreference.light, strings.light),
+      (AppThemePreference.dark, strings.dark),
+      (AppThemePreference.system, strings.system),
     ];
 
     return SegmentedSettingsControl<AppThemePreference>(

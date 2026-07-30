@@ -14,7 +14,10 @@ class _PreviewErrorContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          (host == null || host.isEmpty ? 'LINK_INPUT' : host).toUpperCase(),
+          (host == null || host.isEmpty
+                  ? linkVaultLocalizationsOf(context).linkUrlHint
+                  : host)
+              .toUpperCase(),
           style: textTheme.labelLarge?.copyWith(
             color: LinkVaultColors.secondary,
             fontSize: 13,
@@ -22,12 +25,12 @@ class _PreviewErrorContent extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          'METADATA_UNAVAILABLE',
+          linkVaultLocalizationsOf(context).metadataUnavailable,
           style: textTheme.titleMedium?.copyWith(fontSize: 17),
         ),
         const SizedBox(height: 10),
         Text(
-          'The link can still be saved. Metadata will be fetched again on save.',
+          linkVaultLocalizationsOf(context).metadataRetryMessage,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: textTheme.bodyMedium?.copyWith(

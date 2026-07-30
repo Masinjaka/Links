@@ -11,36 +11,47 @@ class _PreviewVisual extends StatelessWidget {
       AsyncData(:final value) => value,
       _ => null,
     };
+    final previewImageUrl = metadata?.imageUrl;
     final iconUrl = metadata?.siteIconUrl;
 
     return Container(
-      width: 96,
-      height: 96,
+      key: const Key('add-link-metadata-image'),
+      width: double.infinity,
+      height: 145,
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        border: Border.all(color: LinkVaultColors.primary),
-        color: LinkVaultThemeTokens.surface(context),
-        borderRadius: LinkVaultThemeTokens.componentRadius,
-      ),
-      child: iconUrl != null && iconUrl.isNotEmpty
-          ? Center(
-              child: SizedBox(
-                width: 48,
-                height: 48,
-                child: Image.network(
-                  iconUrl,
-                  width: 48,
-                  height: 48,
-                  fit: BoxFit.contain,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.none,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const _PreviewFallbackIcon();
-                  },
-                ),
-              ),
+      decoration: BoxDecoration(color: LinkVaultThemeTokens.surface(context)),
+      child: previewImageUrl != null && previewImageUrl.isNotEmpty
+          ? Image.network(
+              previewImageUrl,
+              key: const Key('add-link-metadata-preview-image'),
+              width: double.infinity,
+              height: 145,
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => _siteIcon(iconUrl),
             )
-          : const _PreviewFallbackIcon(),
+          : _siteIcon(iconUrl),
+    );
+  }
+
+  Widget _siteIcon(String? iconUrl) {
+    if (iconUrl == null || iconUrl.isEmpty) {
+      return const _PreviewFallbackIcon();
+    }
+
+    return Center(
+      child: SizedBox(
+        width: 48,
+        height: 48,
+        child: Image.network(
+          iconUrl,
+          width: 48,
+          height: 48,
+          fit: BoxFit.contain,
+          alignment: Alignment.center,
+          filterQuality: FilterQuality.none,
+          errorBuilder: (_, _, _) => const _PreviewFallbackIcon(),
+        ),
+      ),
     );
   }
 }

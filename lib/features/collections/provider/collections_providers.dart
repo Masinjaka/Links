@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:linkvault/core/database/app_database.dart';
 import 'package:linkvault/core/database/providers/database_providers.dart';
 import 'package:linkvault/features/collections/repository/collections_repository.dart';
+import 'package:linkvault/features/collections/repository/drift_collections_repository.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
 
 part 'collections_providers.g.dart';
@@ -58,6 +59,16 @@ Stream<List<CollectionMetricPoint>> collectionsVelocityMetrics(Ref ref) async* {
 }
 
 const allCollectionsFilter = 'ALL_COLLECTIONS';
+
+enum CollectionSort { recentlyCreated, alphabetical, linkCount }
+
+@riverpod
+class SelectedCollectionSort extends _$SelectedCollectionSort {
+  @override
+  CollectionSort build() => CollectionSort.recentlyCreated;
+
+  void select(CollectionSort value) => state = value;
+}
 
 @riverpod
 class CollectionSelectionMode extends _$CollectionSelectionMode {
@@ -130,7 +141,10 @@ AsyncValue<List<String>> collectionFilters(Ref ref) {
   return tags.whenData((items) {
     final values = <String>[
       allCollectionsFilter,
-      ...items.map((tag) => tag.name),
+      ...items.map((tag) => tag.name).where((name) {
+        final normalized = name.trim().toUpperCase();
+        return normalized != 'ARCHIVE' && normalized != 'ARCHIVED';
+      }),
     ];
 
     return values.toSet().toList(growable: false);
@@ -141,25 +155,36 @@ AsyncValue<List<String>> collectionFilters(Ref ref) {
 AsyncValue<List<CollectionWithCount>> visibleCollections(Ref ref) {
   final collections = ref.watch(collectionsProvider);
   final selectedTag = ref.watch(selectedCollectionTagProvider);
+  final sort = ref.watch(selectedCollectionSortProvider);
   final query = ref.watch(collectionSearchQueryProvider).trim().toLowerCase();
 
   return collections.whenData((items) {
-    return items
-        .where((item) {
-          final collection = item.collection;
-          final matchesSearch =
-              query.isEmpty ||
-              collection.title.toLowerCase().contains(query) ||
-              collection.type.toLowerCase().contains(query) ||
-              collection.tagName.toLowerCase().contains(query) ||
-              item.count.toString().contains(query);
+    final visible = items.where((item) {
+      final collection = item.collection;
+      final matchesSearch =
+          query.isEmpty ||
+          collection.title.toLowerCase().contains(query) ||
+          collection.type.toLowerCase().contains(query) ||
+          collection.tagName.toLowerCase().contains(query) ||
+          item.count.toString().contains(query);
 
-          final matchesFilter =
-              selectedTag == allCollectionsFilter ||
-              collection.tagName == selectedTag;
+      final matchesFilter =
+          selectedTag == allCollectionsFilter ||
+          collection.tagName == selectedTag;
 
-          return matchesSearch && matchesFilter;
-        })
-        .toList(growable: false);
+      return matchesSearch && matchesFilter;
+    }).toList();
+    visible.sort((left, right) {
+      return switch (sort) {
+        CollectionSort.recentlyCreated => right.collection.createdAt.compareTo(
+          left.collection.createdAt,
+        ),
+        CollectionSort.alphabetical => left.collection.title.compareTo(
+          right.collection.title,
+        ),
+        CollectionSort.linkCount => right.count.compareTo(left.count),
+      };
+    });
+    return visible;
   });
 }

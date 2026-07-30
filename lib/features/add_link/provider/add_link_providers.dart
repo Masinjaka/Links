@@ -1,18 +1,15 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:linkvault/core/database/providers/database_providers.dart';
-import 'package:linkvault/features/add_link/provider/add_link_metadata_providers.dart';
 import 'package:linkvault/features/add_link/repository/add_link_repository.dart';
+import 'package:linkvault/features/add_link/repository/drift_add_link_repository.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
 
 part 'add_link_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 AddLinkRepository addLinkRepository(Ref ref) {
-  return DriftAddLinkRepository(
-    ref.watch(appDatabaseProvider),
-    ref.watch(addLinkMetadataRepositoryProvider),
-  );
+  return DriftAddLinkRepository(ref.watch(appDatabaseProvider));
 }
 
 @Riverpod(keepAlive: true)
@@ -22,6 +19,10 @@ class AddLinkOptimisticTags extends _$AddLinkOptimisticTags {
 
   void add(String tag) {
     state = {...state, tag};
+  }
+
+  void removeAll(Iterable<String> tags) {
+    state = {...state}..removeAll(tags);
   }
 }
 

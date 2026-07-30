@@ -20,7 +20,7 @@ class CsvActionButton extends StatelessWidget {
         minimumSize: Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: Text(label),
+      child: Text(label.toLowerCase()),
     );
   }
 }

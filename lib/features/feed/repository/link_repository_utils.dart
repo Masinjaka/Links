@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import 'package:linkvault/core/database/app_database.dart';
+import 'package:linkvault/features/add_link/domain/normalized_url.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
 
 Future<LinkWithTags> hydrateLink(AppDatabase db, Link link) async {
@@ -59,10 +60,5 @@ List<LinkWithTags> applyLinkFilters(
 }
 
 String normalizeUrl(String url) {
-  final trimmed = url.trim();
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
-    return trimmed;
-  }
-
-  return 'https://$trimmed';
+  return const UrlNormalizer().normalize(url).normalized;
 }

@@ -1,6 +1,6 @@
 part of 'collections_widgets.dart';
 
-class CollectionFeedCard extends StatefulWidget {
+class CollectionFeedCard extends StatelessWidget {
   const CollectionFeedCard({
     super.key,
     required this.group,
@@ -17,137 +17,164 @@ class CollectionFeedCard extends StatefulWidget {
   final VoidCallback? onToggleSelection;
 
   @override
-  State<CollectionFeedCard> createState() => _CollectionFeedCardState();
-}
-
-class _CollectionFeedCardState extends State<CollectionFeedCard> {
-  static const _releaseDelay = Duration(milliseconds: 70);
-  var _pressed = false;
-
-  Future<void> _releasePressed() async {
-    await Future<void>.delayed(_releaseDelay);
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _pressed = false;
-    });
+  Widget build(BuildContext context) {
+    final collection = group.collection;
+    final onTap = selectionMode ? onToggleSelection : onOpen;
+    return Material(
+      key: const Key('collection-feed-card-surface'),
+      color: LinkVaultThemeTokens.surface(context),
+      borderRadius: BorderRadius.circular(22),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: selectionMode ? null : onToggleSelection,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Container(
+              constraints: const BoxConstraints(minHeight: 104),
+              padding: const EdgeInsets.all(10),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: CollectionPreviewStack.size.height,
+                    child: constraints.maxWidth < 280
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: _CollectionCompactCardContent(
+                                        group: group,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    _collectionIcon(
+                                      context,
+                                      collection.iconKey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              CollectionPreviewStack(
+                                iconKey: collection.iconKey,
+                                imageUrls: group.previewImageUrls,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(child: _content(context)),
+                                    const SizedBox(width: 8),
+                                    _collectionIcon(
+                                      context,
+                                      collection.iconKey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                  if (selectionMode)
+                    Positioned(
+                      left: 0,
+                      top: 0,
+                      child: _CollectionSelectionCheckbox(selected: selected),
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final ink = LinkVaultThemeTokens.ink(context);
-    final onTap = widget.selectionMode
-        ? widget.onToggleSelection
-        : widget.onOpen;
-
-    return Container(
-          decoration: BoxDecoration(
-            color: LinkVaultThemeTokens.surface(context),
-            borderRadius: LinkVaultThemeTokens.componentRadius,
+  Widget _content(BuildContext context) {
+    final collection = group.collection;
+    final localizations = linkVaultLocalizationsOf(context);
+    return Column(
+      key: const Key('collection-card-content'),
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          collection.title.sentenceDisplayText,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontSize: 21,
+            fontWeight: FontWeight.w800,
           ),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: LinkVaultThemeTokens.componentRadius,
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: LinkVaultThemeTokens.componentRadius,
-              onTapDown: onTap == null
-                  ? null
-                  : (_) {
-                      setState(() {
-                        _pressed = true;
-                      });
-                    },
-              onTapUp: onTap == null
-                  ? null
-                  : (_) {
-                      _releasePressed();
-                    },
-              onTapCancel: onTap == null
-                  ? null
-                  : () {
-                      _releasePressed();
-                    },
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      children: [
-                        if (widget.selectionMode) ...[
-                          _CollectionSelectionCheckbox(
-                            selected: widget.selected,
-                          ),
-                          const SizedBox(width: 12),
-                        ],
-                        Text(
-                          '${widget.group.count} Links',
-                          style: textTheme.bodyLarge?.copyWith(
-                            color: LinkVaultThemeTokens.secondaryInk(context),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Icon(
-                              _collectionIcon(widget.group.collection.iconKey),
-                              color: ink,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      widget.group.collection.title.toUpperCase().displayText,
-                      style: GoogleFonts.openSans(
-                        textStyle: textTheme.labelLarge,
-                        color: ink,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Spacer(),
-                    if (widget.group.collection.tagName.isNotEmpty)
-                      Row(
-                        children: [
-                          Flexible(
-                            child: MetaBadge(
-                              label: widget.group.collection.tagName,
-                              filled: true,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 7,
-                              ),
-                              fontSize: 12,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                  ],
+        ),
+        const SizedBox(height: 9),
+        Row(
+          children: [
+            Flexible(child: _tag(context, collection.tagName)),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Text(
+                localizations.linkCount(group.count),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: LinkVaultThemeTokens.ink(context),
+                  fontWeight: FontWeight.w400,
+                  height: 1.1,
                 ),
               ),
             ),
-          ),
-        )
-        .animate(target: _pressed ? 1 : 0)
-        .scaleXY(end: .96, duration: 110.ms, curve: Curves.easeOutCubic);
+          ],
+        ),
+      ],
+    );
   }
-}
 
-IconData _collectionIcon(String iconKey) {
-  return collectionIconForKey(iconKey);
+  Widget _tag(BuildContext context, String tagName) {
+    final label = tagName.trim().isEmpty
+        ? linkVaultLocalizationsOf(context).general
+        : tagName.sentenceDisplayText;
+    return Container(
+      constraints: const BoxConstraints(minWidth: 48),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+      decoration: BoxDecoration(
+        color: LinkVaultThemeTokens.ink(context),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          color: LinkVaultThemeTokens.onInk(context),
+          height: 1.1,
+        ),
+      ),
+    );
+  }
+
+  Widget _collectionIcon(BuildContext context, String iconKey) {
+    return Container(
+      key: const Key('collection-card-icon'),
+      width: 34,
+      height: 34,
+      decoration: BoxDecoration(
+        color: LinkVaultThemeTokens.background(context).withValues(alpha: .48),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        collectionIconForKey(iconKey),
+        size: 19,
+        color: LinkVaultThemeTokens.ink(context),
+      ),
+    );
+  }
 }

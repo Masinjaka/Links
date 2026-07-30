@@ -1,7 +1,7 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linkvault/core/database/app_database.dart';
-import 'package:linkvault/features/collections/repository/collections_repository.dart';
+import 'package:linkvault/features/collections/repository/drift_collections_repository.dart';
 import 'package:linkvault/features/feed/repository/feed_repository.dart';
 
 void main() {
@@ -114,4 +114,34 @@ void main() {
       );
     },
   );
+
+  test('bulk removal only deletes collection relationships', () async {
+    final database = AppDatabase(NativeDatabase.memory());
+    addTearDown(database.close);
+    await database.seedIfEmpty();
+
+    final repository = DriftCollectionsRepository(database);
+    final linksBefore = await database.select(database.links).get();
+    final linkIds = linksBefore.take(2).map((link) => link.id).toList();
+    final collectionId = await repository.create(
+      'REMOVE_TEST',
+      'CUSTOM',
+      'folder',
+    );
+    for (final linkId in linkIds) {
+      await repository.addLink(collectionId, linkId);
+    }
+
+    await repository.removeLinks(collectionId, linkIds);
+
+    final remainingRelationships = await (database.select(
+      database.collectionLinks,
+    )..where((row) => row.collectionId.equals(collectionId))).get();
+    final linksAfter = await database.select(database.links).get();
+    expect(remainingRelationships, isEmpty);
+    expect(
+      linksAfter.map((link) => link.id),
+      linksBefore.map((link) => link.id),
+    );
+  });
 }

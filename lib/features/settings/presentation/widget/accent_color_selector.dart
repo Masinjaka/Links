@@ -12,11 +12,12 @@ class AccentColorSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const options = [
-      (AppAccentTone.red, 'RED'),
-      (AppAccentTone.green, 'GREEN'),
-      (AppAccentTone.blue, 'BLUE'),
-      (AppAccentTone.orange, 'ORANGE'),
+    final strings = linkVaultLocalizationsOf(context);
+    final options = [
+      (AppAccentTone.red, strings.red),
+      (AppAccentTone.green, strings.green),
+      (AppAccentTone.blue, strings.blue),
+      (AppAccentTone.purple, strings.purple),
     ];
 
     return SegmentedSettingsControl<AppAccentTone>(

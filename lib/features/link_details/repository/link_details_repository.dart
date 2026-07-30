@@ -6,6 +6,7 @@ import 'package:linkvault/features/feed/repository/link_repository_utils.dart';
 
 abstract interface class LinkDetailsRepository {
   Stream<LinkWithTags?> watchLink(int? linkId);
+  Stream<Collection?> watchCollection(int linkId);
   Future<void> archive(int id);
 }
 
@@ -40,6 +41,20 @@ class DriftLinkDetailsRepository implements LinkDetailsRepository {
 
       return hydrateLink(_db, link);
     });
+  }
+
+  @override
+  Stream<Collection?> watchCollection(int linkId) {
+    final query = _db.select(_db.collections).join([
+      innerJoin(
+        _db.collectionLinks,
+        _db.collectionLinks.collectionId.equalsExp(_db.collections.id),
+      ),
+    ])..where(_db.collectionLinks.linkId.equals(linkId));
+    query.limit(1);
+    return query.watchSingleOrNull().map(
+      (row) => row?.readTable(_db.collections),
+    );
   }
 
   @override

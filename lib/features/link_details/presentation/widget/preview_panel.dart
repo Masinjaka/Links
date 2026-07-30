@@ -16,43 +16,18 @@ class PreviewPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final previewImageUrl = link.preview?.imageUrl ?? link.link.sourceImageUrl;
 
-    return ClipRRect(
-      borderRadius: BorderRadiusGeometry.circular(12),
-      child: VelocityPanel(
-        borderColor: LinkVaultColors.onPrimary,
-        redRight: false,
-        redBottom: false,
-        padding: EdgeInsets.zero,
-        child: AspectRatio(
-          aspectRatio: 1.75,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: CachedNetworkImage(
-                  imageUrl: previewImageUrl!,
-                  cacheManager: _previewImageCacheManager,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) {
-                    return CustomPaint(painter: _PreviewPainter());
-                  },
-                ),
-              ),
-              const Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Color(0xB3000000)],
-                      stops: [0.45, 1],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return AspectRatio(
+      aspectRatio: 2.4,
+      child: previewImageUrl == null || previewImageUrl.isEmpty
+          ? CustomPaint(painter: _PreviewPainter())
+          : CachedNetworkImage(
+              imageUrl: previewImageUrl,
+              cacheManager: _previewImageCacheManager,
+              fit: BoxFit.cover,
+              errorWidget: (_, _, _) {
+                return CustomPaint(painter: _PreviewPainter());
+              },
+            ),
     );
   }
 }

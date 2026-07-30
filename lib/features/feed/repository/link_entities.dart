@@ -21,6 +21,7 @@ class LinkDraft {
     required this.url,
     this.title,
     this.description,
+    this.note,
     this.tags = const [],
     this.collectionIds = const [],
   });
@@ -28,8 +29,13 @@ class LinkDraft {
   final String url;
   final String? title;
   final String? description;
+  final String? note;
   final List<String> tags;
   final List<int> collectionIds;
+}
+
+extension LinkDisplayFields on Link {
+  String get displayUrl => originalUrl.isEmpty ? url : originalUrl;
 }
 
 class LinkFilters {

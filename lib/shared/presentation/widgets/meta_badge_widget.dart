@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/shared/presentation/formatters/display_text.dart';
@@ -37,8 +36,8 @@ class MetaBadge extends StatelessWidget {
         label.displayText,
         maxLines: maxLines,
         overflow: overflow,
-        style: GoogleFonts.openSans(
-          textStyle: Theme.of(context).textTheme.labelLarge,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+          fontFamily: 'OpenSans',
           color: filled
               ? LinkVaultThemeTokens.onInk(context)
               : LinkVaultThemeTokens.secondaryInk(context),

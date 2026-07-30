@@ -97,6 +97,102 @@ final class AddLinkMetadataRepositoryProvider
 String _$addLinkMetadataRepositoryHash() =>
     r'5d7f929349464f4bd15dc03cd5723eadfdc6dc54';
 
+@ProviderFor(metadataTaskProcessor)
+final metadataTaskProcessorProvider = MetadataTaskProcessorProvider._();
+
+final class MetadataTaskProcessorProvider
+    extends
+        $FunctionalProvider<
+          MetadataTaskProcessor,
+          MetadataTaskProcessor,
+          MetadataTaskProcessor
+        >
+    with $Provider<MetadataTaskProcessor> {
+  MetadataTaskProcessorProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'metadataTaskProcessorProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$metadataTaskProcessorHash();
+
+  @$internal
+  @override
+  $ProviderElement<MetadataTaskProcessor> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  MetadataTaskProcessor create(Ref ref) {
+    return metadataTaskProcessor(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MetadataTaskProcessor value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MetadataTaskProcessor>(value),
+    );
+  }
+}
+
+String _$metadataTaskProcessorHash() =>
+    r'e5416d4fb3b38e06859c6e799a55ab23978447e7';
+
+@ProviderFor(metadataTaskRunner)
+final metadataTaskRunnerProvider = MetadataTaskRunnerProvider._();
+
+final class MetadataTaskRunnerProvider
+    extends
+        $FunctionalProvider<
+          MetadataTaskRunner,
+          MetadataTaskRunner,
+          MetadataTaskRunner
+        >
+    with $Provider<MetadataTaskRunner> {
+  MetadataTaskRunnerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'metadataTaskRunnerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$metadataTaskRunnerHash();
+
+  @$internal
+  @override
+  $ProviderElement<MetadataTaskRunner> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  MetadataTaskRunner create(Ref ref) {
+    return metadataTaskRunner(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MetadataTaskRunner value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MetadataTaskRunner>(value),
+    );
+  }
+}
+
+String _$metadataTaskRunnerHash() =>
+    r'0e4d40b0ab815ac394f1cbec3b967941720028b8';
+
 @ProviderFor(AddLinkUrlDraft)
 final addLinkUrlDraftProvider = AddLinkUrlDraftProvider._();
 

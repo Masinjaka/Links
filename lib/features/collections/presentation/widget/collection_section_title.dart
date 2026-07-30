@@ -15,8 +15,8 @@ class CollectionSectionTitle extends StatelessWidget {
       children: [
         Text(
           title.displayText,
-          style: GoogleFonts.openSans(
-            textStyle: textTheme.labelLarge,
+          style: textTheme.labelLarge?.copyWith(
+            fontFamily: 'OpenSans',
             color: LinkVaultThemeTokens.ink(context),
             fontSize: titleSize,
             fontWeight: FontWeight.w800,

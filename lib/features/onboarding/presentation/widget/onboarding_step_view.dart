@@ -13,6 +13,13 @@ class OnboardingStepView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final strings = linkVaultLocalizationsOf(context);
+    final (title, description) = switch (step.stepNumber) {
+      '01' => (strings.captureEverything, strings.captureEverythingDescription),
+      '02' => (strings.shareFromAnywhere, strings.shareFromAnywhereDescription),
+      '03' => (strings.velocitySearch, strings.velocitySearchDescription),
+      _ => (step.title.displayText, step.description.displayText),
+    };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,12 +74,12 @@ class OnboardingStepView extends StatelessWidget {
         ),
         const SizedBox(height: 48),
         Text(
-          step.title.displayText,
+          title,
           style: textTheme.headlineLarge?.copyWith(fontSize: 32, height: 1),
         ),
         const SizedBox(height: 26),
         Text(
-          step.description.displayText,
+          description,
           style: textTheme.bodyLarge?.copyWith(
             color: LinkVaultColors.secondary,
             fontSize: 15,
@@ -82,7 +89,7 @@ class OnboardingStepView extends StatelessWidget {
           const SizedBox(height: 52),
           Center(
             child: Text(
-              'SUPPORTED_PLATFORMS'.displayText,
+              strings.supportedPlatforms,
               style: textTheme.labelLarge?.copyWith(
                 color: LinkVaultColors.secondary,
                 fontSize: 13,

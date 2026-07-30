@@ -115,7 +115,10 @@ class _SegmentedSettingsControlState<T>
           unselectedLabelStyle: Theme.of(
             context,
           ).textTheme.labelLarge?.copyWith(fontSize: 13),
-          tabs: [for (final option in widget.options) Tab(text: option.$2)],
+          tabs: [
+            for (final option in widget.options)
+              Tab(text: option.$2.lowerDisplayText),
+          ],
         ),
       ),
     );

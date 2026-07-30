@@ -15,7 +15,7 @@ class SettingsHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Settings',
+              'settings',
               style: textTheme.titleLarge?.copyWith(
                 color: LinkVaultThemeTokens.ink(context),
                 fontSize: 22,

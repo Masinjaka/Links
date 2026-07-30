@@ -19,7 +19,7 @@ class CollectionLinkEntry extends StatelessWidget {
       onOpen: onOpen,
       trailing: SquareButton(
         onPressed: onRemove,
-        tooltip: 'REMOVE_FROM_COLLECTION',
+        tooltip: linkVaultLocalizationsOf(context).removeFromCollection,
         icon: Icons.remove_rounded,
         size: 38,
         backgroundColor: LinkVaultThemeTokens.surface(context),

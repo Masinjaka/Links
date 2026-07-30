@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/features/feed/presentation/widgets/link_card_action_button.dart';
+import 'package:linkvault/features/feed/presentation/widgets/link_card_display_formatters.dart';
+import 'package:linkvault/features/feed/presentation/widgets/link_preview_thumbnail.dart';
+import 'package:linkvault/features/feed/presentation/widgets/link_tag_pill.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 import 'package:linkvault/shared/presentation/formatters/display_text.dart';
-import 'package:linkvault/shared/presentation/widgets/meta_badge_widget.dart';
 
-class KineticLinkCard extends StatefulWidget {
+class KineticLinkCard extends StatelessWidget {
   const KineticLinkCard({
     super.key,
     required this.link,
     this.onOpen,
+    this.onLongPress,
+    this.onFavourite,
+    this.onPin,
     this.trailing,
     this.leading,
     this.selected = false,
@@ -19,145 +24,108 @@ class KineticLinkCard extends StatefulWidget {
 
   final LinkWithTags link;
   final VoidCallback? onOpen;
+  final VoidCallback? onLongPress;
+  final VoidCallback? onFavourite;
+  final VoidCallback? onPin;
   final Widget? trailing;
   final Widget? leading;
   final bool selected;
 
   @override
-  State<KineticLinkCard> createState() => _KineticLinkCardState();
-}
-
-class _KineticLinkCardState extends State<KineticLinkCard> {
-  static const _cardHeight = 200.0;
-  static const _releaseDelay = Duration(milliseconds: 70);
-  var _pressed = false;
-
-  Future<void> _releasePressed() async {
-    await Future<void>.delayed(_releaseDelay);
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _pressed = false;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final ink = LinkVaultThemeTokens.ink(context);
-    final titleSize = textTheme.labelLarge?.fontSize;
-
-    return SizedBox(
-          height: _cardHeight,
-          child: Container(
-            decoration: BoxDecoration(
-              color: LinkVaultThemeTokens.surface(context),
-              // border: Border.all(
-              //   color: widget.selected ? LinkVaultColors.primary : ink,
-              //   width: widget.selected ? 2 : 0.5,
-              // ),
-              // boxShadow: [
-              //   BoxShadow(color: _feedInk, offset: Offset(3, 3), blurRadius: 0),
-              // ],
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              borderRadius: LinkVaultThemeTokens.componentRadius,
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: widget.onOpen,
-                borderRadius: LinkVaultThemeTokens.componentRadius,
-                onTapDown: (_) {
-                  setState(() {
-                    _pressed = true;
-                  });
-                },
-                onTapUp: (_) {
-                  _releasePressed();
-                },
-                onTapCancel: () {
-                  _releasePressed();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.leading != null) ...[
-                            widget.leading!,
-                            const SizedBox(width: 14),
-                          ],
-                          Expanded(
-                            child: Text(
-                              widget.link.link.title.toUpperCase().displayText,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.openSans(
-                                textStyle: textTheme.labelLarge,
-                                color: ink,
-                                fontSize: titleSize,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ),
-                          if (widget.trailing != null) ...[
-                            const SizedBox(width: 16),
-                            widget.trailing!,
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        widget.link.link.url.replaceFirst(
-                          RegExp(r'^https?://'),
-                          '',
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodyLarge?.copyWith(
-                          color: LinkVaultThemeTokens.secondaryInk(context),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const Spacer(),
-                      Wrap(
-                        spacing: 16,
-                        runSpacing: 10,
-                        children: [
-                          MetaBadge(
-                            label: widget.link.primaryTag,
-                            filled: true,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 7,
-                            ),
-                            fontSize: 12,
-                          ),
-                          MetaBadge(
-                            label: 'SAVED ${widget.link.savedDate}',
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 7,
-                            ),
-                            fontSize: 12,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+    return Material(
+      color: LinkVaultThemeTokens.surface(context),
+      borderRadius: BorderRadius.circular(22),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onOpen,
+        onLongPress: onLongPress,
+        child: Stack(
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: LinkPreviewThumbnail.size + 20,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    LinkPreviewThumbnail(imageUrl: linkPreviewImageUrl(link)),
+                    const SizedBox(width: 10),
+                    Expanded(child: _content(context)),
+                  ],
                 ),
               ),
             ),
+            if (leading != null) Positioned(left: 4, top: 4, child: leading!),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _content(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final ink = LinkVaultThemeTokens.ink(context);
+
+    return SizedBox(
+      height: LinkPreviewThumbnail.size,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  link.link.displayUrl,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: LinkVaultThemeTokens.secondaryInk(context),
+                    height: 1.1,
+                  ),
+                ),
+              ),
+              if (onPin != null || link.link.isPinned) ...[
+                const SizedBox(width: 4),
+                LinkCardActionButton(
+                  icon: link.link.isPinned
+                      ? Icons.push_pin_rounded
+                      : Icons.push_pin_outlined,
+                  tooltip: linkVaultLocalizationsOf(context).pinLinkTooltip,
+                  onPressed: onPin,
+                ),
+              ],
+              if (onFavourite != null || link.link.isFavourite) ...[
+                const SizedBox(width: 4),
+                LinkCardActionButton(
+                  icon: link.link.isFavourite
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded,
+                  tooltip: linkVaultLocalizationsOf(
+                    context,
+                  ).favoriteLinkTooltip,
+                  onPressed: onFavourite,
+                ),
+              ],
+              if (trailing != null) ...[const SizedBox(width: 4), trailing!],
+            ],
           ),
-        )
-        .animate(target: _pressed ? 1 : 0)
-        .scaleXY(end: .96, duration: 110.ms, curve: Curves.easeOutCubic);
+          const SizedBox(height: 4),
+          Text(
+            link.link.title.sentenceDisplayText,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: textTheme.bodyMedium?.copyWith(
+              color: ink,
+              fontWeight: FontWeight.w800,
+              height: 1.05,
+            ),
+          ),
+          const Spacer(),
+          if (link.tags.isNotEmpty) LinkTagPill(label: link.tags.first.name),
+        ],
+      ),
+    );
   }
 }

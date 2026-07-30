@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/settings/provider/settings_providers.dart';
 import 'package:linkvault/shared/presentation/formatters/display_text.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 
 part 'settings_header.dart';
 part 'settings_section.dart';

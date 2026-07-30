@@ -10,7 +10,13 @@ class SkeletonBar extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: widthFactor,
       alignment: Alignment.centerLeft,
-      child: Container(height: 22, color: LinkVaultColors.primary),
+      child: Container(
+        height: 18,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
     );
   }
 }

@@ -1,0 +1,37 @@
+part of 'linkvault_test_harness.dart';
+
+final secondaryLink = LinkWithTags(
+  link: Link(
+    id: 2,
+    title: 'INTERACTION DESIGN NOTES',
+    url: 'https://design.example.com/notes',
+    originalUrl: 'https://design.example.com/notes',
+    normalizedUrl: 'https://design.example.com/notes',
+    urlHash: 'secondary-fixture',
+    domain: 'design.example.com',
+    description: 'Interaction design reference.',
+    note: '',
+    readingTime: '',
+    contentType: 'webpage',
+    status: 'active',
+    isFavourite: false,
+    isPinned: false,
+    isArchived: false,
+    metadataStatus: 'completed',
+    offlineStatus: 'unavailable',
+    linkHealthStatus: 'unknown',
+    manualSortOrder: 1,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+  ),
+  preview: LinkPreview(
+    id: 2,
+    linkId: 2,
+    previewTitle: 'INTERACTION DESIGN NOTES',
+    previewDescription: 'Interaction design reference.',
+    imageLabel: 'DESIGN_NOTES.JPG',
+    imageDimensions: '1200 x 800',
+    fetchedAt: updatedAt,
+  ),
+  tags: [Tag(id: 3, name: 'DESIGN', category: 'GENERAL', createdAt: createdAt)],
+);

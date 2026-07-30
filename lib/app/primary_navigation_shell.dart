@@ -1,143 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/app/widgets/primary_add_button.dart';
+import 'package:linkvault/app/widgets/primary_add_menu.dart';
+import 'package:linkvault/app/widgets/primary_navigation_bar.dart';
+import 'package:linkvault/features/add_link/presentation/show_add_link_sheet.dart';
+import 'package:linkvault/features/collections/presentation/show_add_collection_sheet.dart';
+import 'package:linkvault/features/collections/provider/collections_providers.dart';
+import 'package:linkvault/features/feed/provider/feed_providers.dart';
 
-class PrimaryNavigationShell extends StatelessWidget {
+class PrimaryNavigationShell extends ConsumerStatefulWidget {
   const PrimaryNavigationShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
-  static const _destinations = <_ShellDestination>[
-    _ShellDestination(
-      label: 'Links',
-      icon: Icons.link_outlined,
-      selectedIcon: Icons.link_rounded,
-    ),
-    _ShellDestination(
-      label: 'Collections',
-      icon: Icons.folder_copy_outlined,
-      selectedIcon: Icons.folder_copy_rounded,
-    ),
-    _ShellDestination(
-      label: 'Settings',
-      icon: Icons.settings_outlined,
-      selectedIcon: Icons.settings_rounded,
-    ),
-  ];
+  @override
+  ConsumerState<PrimaryNavigationShell> createState() =>
+      _PrimaryNavigationShellState();
+}
+
+class _PrimaryNavigationShellState
+    extends ConsumerState<PrimaryNavigationShell> {
+  var _addMenuOpen = false;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final background = LinkVaultThemeTokens.background(context);
-    final selectedColor = isDark ? Colors.white : Colors.black;
-    final unselectedColor = selectedColor.withValues(alpha: .42);
-    final borderColor = LinkVaultThemeTokens.ink(
-      context,
-    ).withValues(alpha: .18);
+    final selecting =
+        ref.watch(feedSelectionModeProvider) ||
+        ref.watch(collectionSelectionModeProvider);
+    final settings = widget.navigationShell.currentIndex == 2;
 
     return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Container(
-          decoration: BoxDecoration(
-            color: background,
-            border: Border(top: BorderSide(color: borderColor, width: 1)),
-          ),
-          child: SizedBox(
-            height: 72,
-            child: Row(
-              children: [
-                for (final (index, destination) in _destinations.indexed)
-                  Expanded(
-                    child: _ShellNavItem(
-                      destination: destination,
-                      selected: navigationShell.currentIndex == index,
-                      selectedColor: selectedColor,
-                      unselectedColor: unselectedColor,
-                      onTap: () {
-                        navigationShell.goBranch(
-                          index,
-                          initialLocation:
-                              index == navigationShell.currentIndex,
-                        );
-                      },
-                    ),
+      extendBody: true,
+      body: widget.navigationShell,
+      bottomNavigationBar: selecting
+          ? null
+          : SafeArea(
+              top: false,
+              minimum: const EdgeInsets.fromLTRB(36, 0, 36, 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 220),
+                    reverseDuration: const Duration(milliseconds: 180),
+                    transitionBuilder: (child, animation) {
+                      final offset = Tween(
+                        begin: const Offset(0, .18),
+                        end: Offset.zero,
+                      ).animate(animation);
+                      return FadeTransition(
+                        opacity: animation,
+                        child: SlideTransition(position: offset, child: child),
+                      );
+                    },
+                    child: settings && _addMenuOpen
+                        ? PrimaryAddMenu(
+                            onAddLink: _openAddLink,
+                            onAddCollection: _openAddCollection,
+                          )
+                        : const SizedBox.shrink(),
                   ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ShellDestination {
-  const _ShellDestination({
-    required this.label,
-    required this.icon,
-    required this.selectedIcon,
-  });
-
-  final String label;
-  final IconData icon;
-  final IconData selectedIcon;
-}
-
-class _ShellNavItem extends StatelessWidget {
-  const _ShellNavItem({
-    required this.destination,
-    required this.selected,
-    required this.selectedColor,
-    required this.unselectedColor,
-    required this.onTap,
-  });
-
-  final _ShellDestination destination;
-  final bool selected;
-  final Color selectedColor;
-  final Color unselectedColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = selected ? selectedColor : unselectedColor;
-
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: destination.label,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-                  selected ? destination.selectedIcon : destination.icon,
-                  color: color,
-                  size: 24,
-                )
-                .animate(target: selected ? 1 : 0)
-                .scaleXY(
-                  end: 1.12,
-                  duration: 180.ms,
-                  curve: Curves.easeOutCubic,
-                ),
-            const SizedBox(height: 6),
-            Text(
-              destination.label,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: color,
-                fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+                  if (settings && _addMenuOpen) const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PrimaryNavigationBar(
+                          currentIndex: widget.navigationShell.currentIndex,
+                          onDestinationSelected: _goTo,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      PrimaryAddButton(
+                        expanded: settings && _addMenuOpen,
+                        onPressed: () => _handleAdd(settings),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
+  }
+
+  void _goTo(int index) {
+    if (_addMenuOpen) setState(() => _addMenuOpen = false);
+    widget.navigationShell.goBranch(
+      index,
+      initialLocation: index == widget.navigationShell.currentIndex,
+    );
+  }
+
+  void _handleAdd(bool settings) {
+    if (settings) {
+      setState(() => _addMenuOpen = !_addMenuOpen);
+      return;
+    }
+    if (widget.navigationShell.currentIndex == 1) {
+      showAddCollectionSheet(context);
+      return;
+    }
+    showAddLinkSheet(context);
+  }
+
+  void _openAddLink() {
+    setState(() => _addMenuOpen = false);
+    showAddLinkSheet(context);
+  }
+
+  void _openAddCollection() {
+    setState(() => _addMenuOpen = false);
+    showAddCollectionSheet(context);
   }
 }

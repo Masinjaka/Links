@@ -2,14 +2,13 @@ part of 'profile_widgets.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key, required this.snapshot});
-
   final ProfileSnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final profile = snapshot.profile;
-
+    final strings = linkVaultLocalizationsOf(context);
     return VelocityPage(
       bottomInset: 64,
       children: [
@@ -75,7 +74,7 @@ class ProfileBody extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'STORAGE_CAPACITY',
+                    strings.storageCapacity,
                     style: textTheme.headlineMedium,
                   ),
                 ),
@@ -119,7 +118,7 @@ class ProfileBody extends StatelessWidget {
           children: [
             Expanded(
               child: VelocityStatBox(
-                label: 'LINKS_SAVED',
+                label: strings.linksSaved,
                 value: profile.linksSaved.toString(),
                 suffix: 'OBJ',
               ),
@@ -127,7 +126,7 @@ class ProfileBody extends StatelessWidget {
             const SizedBox(width: 32),
             Expanded(
               child: VelocityStatBox(
-                label: 'DATA_USED',
+                label: strings.dataUsed,
                 value: profile.dataUsedMb.toStringAsFixed(1),
                 suffix: 'MB',
               ),
@@ -137,7 +136,7 @@ class ProfileBody extends StatelessWidget {
         Column(
           children: [
             Text(
-              'LINK_VELOCITY_30D',
+              strings.linkVelocity30d,
               style: textTheme.labelLarge?.copyWith(
                 color: LinkVaultColors.secondary,
                 fontSize: 13,
@@ -151,38 +150,38 @@ class ProfileBody extends StatelessWidget {
           ],
         ),
         Text(
-          'SYSTEM_PREFERENCES',
+          strings.systemPreferences,
           style: textTheme.labelLarge?.copyWith(
             color: LinkVaultColors.primary,
             fontSize: 15,
           ),
         ),
-        const Column(
+        Column(
           children: [
             VelocitySettingRow(
               icon: Icons.person_rounded,
-              title: 'Identity Profile',
-              subtitle: 'Manage your digital signature',
+              title: strings.identityProfile,
+              subtitle: strings.identityProfileDescription,
             ),
             VelocitySettingRow(
               icon: Icons.security_rounded,
-              title: 'Encryption Keys',
-              subtitle: 'Vault security & 2FA',
+              title: strings.encryptionKeys,
+              subtitle: strings.encryptionKeysDescription,
             ),
             VelocitySettingRow(
               icon: Icons.notifications_active_rounded,
-              title: 'Pulse Alerts',
-              subtitle: 'Sync and link notifications',
+              title: strings.pulseAlerts,
+              subtitle: strings.pulseAlertsDescription,
             ),
             VelocitySettingRow(
               icon: Icons.cloud_sync_rounded,
-              title: 'Data Export',
-              subtitle: 'Download vault archive (.json)',
+              title: strings.dataExport,
+              subtitle: strings.dataExportDescription,
             ),
           ],
         ),
-        const VelocityButton(
-          label: 'TERMINATE_SESSION',
+        VelocityButton(
+          label: strings.terminateSession,
           icon: Icons.logout_rounded,
           filled: false,
         ),

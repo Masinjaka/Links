@@ -14,25 +14,20 @@ class AddLinkMetadataPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final surface = LinkVaultThemeTokens.surface(context);
-    final ink = LinkVaultThemeTokens.ink(context);
 
     return Container(
-      padding: const EdgeInsets.all(32),
+      key: const Key('add-link-metadata-card'),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: surface,
-        borderRadius: LinkVaultThemeTokens.componentRadius,
-        border: Border(
-          top: BorderSide(color: ink),
-          left: BorderSide(color: ink),
-          right: BorderSide(color: ink, width: 4),
-          bottom: BorderSide(color: ink, width: 4),
-        ),
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _PreviewVisual(preview: preview),
-          const SizedBox(width: 32),
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
             child: preview.when(
               data: (metadata) => _PreviewResolvedContent(
                 metadata: metadata,

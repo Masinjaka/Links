@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/shared/presentation/formatters/display_text.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 
 class PageTitle extends StatelessWidget {
   const PageTitle({super.key, this.title, this.subtitle});
@@ -28,7 +29,7 @@ class PageTitle extends StatelessWidget {
             color: LinkVaultColors.primary,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             child: Text(
-              (subtitle ?? 'LINKS').displayText,
+              (subtitle ?? linkVaultLocalizationsOf(context).links).displayText,
               style: textTheme.headlineMedium?.copyWith(
                 color: LinkVaultColors.onPrimary,
               ),

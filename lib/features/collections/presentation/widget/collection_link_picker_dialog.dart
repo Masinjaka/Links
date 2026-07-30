@@ -42,12 +42,14 @@ class _CollectionLinkPickerDialogState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ADD_LINKS'.displayText,
+                        linkVaultLocalizationsOf(context).addLink,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'Select existing saved links to attach to this collection.',
+                        linkVaultLocalizationsOf(
+                          context,
+                        ).selectExistingLinksDescription,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: LinkVaultColors.secondary,
                         ),
@@ -62,7 +64,7 @@ class _CollectionLinkPickerDialogState
                   icon: Icons.close_sharp,
                   iconColor: LinkVaultColors.primary,
                   shadowed: false,
-                  tooltip: 'CLOSE',
+                  tooltip: linkVaultLocalizationsOf(context).close,
                   size: 45,
                   borderColor: LinkVaultColors.ink,
                 ),
@@ -76,7 +78,7 @@ class _CollectionLinkPickerDialogState
                   if (items.isEmpty) {
                     return Center(
                       child: Text(
-                        'NO_AVAILABLE_LINKS'.displayText,
+                        linkVaultLocalizationsOf(context).noAvailableLinks,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     );
@@ -108,7 +110,7 @@ class _CollectionLinkPickerDialogState
                 },
                 error: (_, _) => Center(
                   child: Text(
-                    'DATABASE_ERROR'.displayText,
+                    linkVaultLocalizationsOf(context).databaseError,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
@@ -122,8 +124,10 @@ class _CollectionLinkPickerDialogState
             const SizedBox(height: 24),
             VelocityButton(
               label: _selectedLinkIds.isEmpty
-                  ? 'SELECT_LINKS_TO_ADD'
-                  : 'ADD_SELECTED_${_selectedLinkIds.length}',
+                  ? linkVaultLocalizationsOf(context).selectLinks
+                  : linkVaultLocalizationsOf(
+                      context,
+                    ).selectedDone(_selectedLinkIds.length),
               icon: Icons.add_link_rounded,
               onPressed: _selectedLinkIds.isEmpty
                   ? null

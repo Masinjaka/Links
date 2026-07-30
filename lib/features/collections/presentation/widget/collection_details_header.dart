@@ -31,7 +31,7 @@ class CollectionDetailsHeader extends StatelessWidget {
               icon: Icons.arrow_back_ios_new_rounded,
               iconColor: LinkVaultColors.primary,
               shadowed: false,
-              tooltip: 'BACK',
+              tooltip: linkVaultLocalizationsOf(context).back,
               size: 45,
               borderColor: LinkVaultColors.ink,
             ),
@@ -42,14 +42,14 @@ class CollectionDetailsHeader extends StatelessWidget {
                   backgroundColor: LinkVaultThemeTokens.surface(context),
                   icon: Icons.edit_note_rounded,
                   shadowed: false,
-                  tooltip: 'EDIT',
+                  tooltip: linkVaultLocalizationsOf(context).edit,
                   size: 45,
                   borderColor: LinkVaultColors.ink,
                 ),
                 const SizedBox(width: 12),
                 SquareButton(
                   onPressed: onArchive,
-                  tooltip: 'ARCHIVE',
+                  tooltip: linkVaultLocalizationsOf(context).archive,
                   icon: Icons.archive_outlined,
                   size: 45,
                   shadowed: false,
@@ -87,7 +87,7 @@ class CollectionDetailsHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'COLLECTION'.displayText,
+                          linkVaultLocalizationsOf(context).collection,
                           style: textTheme.labelLarge?.copyWith(
                             color: LinkVaultColors.secondary,
                             fontSize: 13,
@@ -109,7 +109,9 @@ class CollectionDetailsHeader extends StatelessWidget {
                 runSpacing: 12,
                 children: [
                   VelocityChip(
-                    label: '${collection.count}_LINKS',
+                    label: linkVaultLocalizationsOf(
+                      context,
+                    ).linkCount(collection.count),
                     selected: true,
                   ),
                   VelocityChip(label: collection.collection.type),

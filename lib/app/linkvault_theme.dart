@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'package:linkvault/app/linkvault_text_theme.dart';
+
+export 'package:linkvault/app/linkvault_theme_tokens.dart';
 
 class LinkVaultColors {
-  static const Color _defaultPrimary = Color(0xFFD90429);
+  static const Color _defaultPrimary = Color(0xFFFF6262);
   static const Color _lightOnPrimary = Color(0xFFEDF2F4);
   static const Color _darkOnPrimary = Color(0xFF000000);
 
@@ -13,7 +16,7 @@ class LinkVaultColors {
   static Color get onPrimary => _onPrimary;
   static const secondary = Color(0xFF8D99AE);
   static const background = Color(0xFFFFFFFF);
-  static const surface = Color(0xFFE5E5E5);
+  static const surface = Color(0xFFEDEDED);
   static const ink = Color(0xFF000000);
   static const success = Color(0xFF30D158);
 
@@ -60,8 +63,7 @@ class LinkVaultTheme {
     required Color onPrimary,
   }) {
     final base = ThemeData(useMaterial3: true, brightness: brightness);
-    // final fontFamily = GoogleFonts.jersey25().fontFamily;
-    final fontFamily = GoogleFonts.nunito().fontFamily;
+    final textTheme = buildLinkVaultTextTheme(ink: ink, secondary: secondary);
 
     return base.copyWith(
       scaffoldBackgroundColor: background,
@@ -77,138 +79,19 @@ class LinkVaultTheme {
             onSurface: ink,
             error: accentColor,
           ),
-      textTheme: TextTheme(
-        headlineLarge: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 30,
-          fontWeight: FontWeight.w700,
-          height: 1,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        headlineMedium: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          height: 1.1,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        titleLarge: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        titleMedium: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-          height: 1.2,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        bodyLarge: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          height: 1.4,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        bodyMedium: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          height: 1.4,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        bodySmall: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          height: 1.4,
-          letterSpacing: 0,
-          color: secondary,
-        ),
-        labelLarge: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        labelMedium: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-          letterSpacing: 0,
-          color: ink,
-        ),
-        labelSmall: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-          letterSpacing: 0,
-          color: ink,
-        ),
-      ),
+      textTheme: textTheme,
       inputDecorationTheme: InputDecorationTheme(
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
         focusedBorder: InputBorder.none,
         isCollapsed: true,
-        hintStyle: TextStyle(
-          color: secondary,
-          fontFamily: fontFamily,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0,
-        ),
+        hintStyle: textTheme.bodyLarge?.copyWith(color: secondary),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: ink,
+        selectionColor: ink.withValues(alpha: .20),
+        selectionHandleColor: ink,
       ),
     );
   }
-}
-
-class LinkVaultThemeTokens {
-  static const double componentRadiusValue = 20;
-
-  static Color primary(BuildContext context) {
-    return Theme.of(context).colorScheme.primary;
-  }
-
-  static Color onPrimary(BuildContext context) {
-    return Theme.of(context).colorScheme.onPrimary;
-  }
-
-  static Color onInk(BuildContext context) {
-    return ThemeData.estimateBrightnessForColor(ink(context)) == Brightness.dark
-        ? Colors.white
-        : Colors.black;
-  }
-
-  static Color background(BuildContext context) {
-    return Theme.of(context).scaffoldBackgroundColor;
-  }
-
-  static Color surface(BuildContext context) {
-    return Theme.of(context).colorScheme.surface;
-  }
-
-  static Color ink(BuildContext context) {
-    return Theme.of(context).colorScheme.onSurface;
-  }
-
-  static Color secondaryInk(BuildContext context, {double alpha = .72}) {
-    return ink(context).withValues(alpha: alpha);
-  }
-
-  static BorderRadius get componentRadius =>
-      BorderRadius.circular(componentRadiusValue);
 }

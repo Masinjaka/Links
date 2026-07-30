@@ -2,12 +2,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:linkvault/core/database/providers/database_providers.dart';
 import 'package:linkvault/features/add_link/provider/add_link_providers.dart';
+import 'package:linkvault/features/feed/domain/bookmark_state.dart';
+import 'package:linkvault/features/feed/domain/feed_query.dart';
+import 'package:linkvault/features/feed/provider/feed_filter_providers.dart';
 import 'package:linkvault/features/feed/repository/feed_repository.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
 
 part 'feed_providers.g.dart';
 
 const allAssetsFilter = 'ALL_ASSETS';
+const inboxFilter = 'INBOX';
+const favouritesFilter = 'FAVOURITES';
+const archiveFilter = 'ARCHIVE';
+const trashFilter = 'TRASH';
 
 @riverpod
 class FeedSelectionMode extends _$FeedSelectionMode {
@@ -71,10 +78,10 @@ AsyncValue<List<String>> feedFilters(Ref ref) {
   return tags.whenData((items) {
     final values = <String>[
       allAssetsFilter,
-      'DESIGN',
-      'DEV_LOGS',
-      'ARCHIVE',
-      ...items,
+      inboxFilter,
+      favouritesFilter,
+      trashFilter,
+      ...items.where((tag) => !_isArchiveLabel(tag)),
     ];
 
     return values.toSet().toList(growable: false);
@@ -102,31 +109,52 @@ class FeedSearchQuery extends _$FeedSearchQuery {
 }
 
 @riverpod
-AsyncValue<List<LinkWithTags>> visibleFeedLinks(Ref ref) {
-  final links = ref.watch(feedLinksProvider);
+class SelectedFeedSort extends _$SelectedFeedSort {
+  @override
+  FeedSort build() => FeedSort.recentlyAdded;
+
+  void select(FeedSort value) => state = value;
+}
+
+@riverpod
+Stream<List<LinkWithTags>> visibleFeedLinks(Ref ref) async* {
+  await ref.watch(seedDatabaseProvider.future);
   final selectedFilter = ref.watch(selectedFeedFilterProvider);
-  final query = ref.watch(feedSearchQueryProvider).trim().toLowerCase();
+  final text = ref.watch(feedSearchQueryProvider);
+  final sort = ref.watch(selectedFeedSortProvider);
+  final advanced = ref.watch(advancedFeedFilterStateProvider);
+  final scope = switch (selectedFilter) {
+    inboxFilter => BookmarkScope.inbox,
+    archiveFilter => BookmarkScope.archived,
+    trashFilter => BookmarkScope.trashed,
+    _ => BookmarkScope.library,
+  };
+  final query = FeedQuery(
+    text: text,
+    scope: scope,
+    favourite: selectedFilter == favouritesFilter ? true : null,
+    tag: _systemFilters.contains(selectedFilter) ? null : selectedFilter,
+    collectionId: advanced.collectionId,
+    domain: advanced.domain,
+    contentType: advanced.contentType,
+    availableOffline: advanced.availableOffline,
+    broken: advanced.broken,
+    addedFrom: advanced.addedFrom,
+    addedTo: advanced.addedTo,
+    sort: sort,
+  );
+  yield* ref.watch(feedRepositoryProvider).watchLinks(query);
+}
 
-  return links.whenData((items) {
-    return items
-        .where((item) {
-          final link = item.link;
-          final matchesSearch =
-              query.isEmpty ||
-              link.title.toLowerCase().contains(query) ||
-              link.url.toLowerCase().contains(query) ||
-              link.domain.toLowerCase().contains(query) ||
-              item.tags.any((tag) => tag.name.toLowerCase().contains(query));
+const _systemFilters = {
+  allAssetsFilter,
+  inboxFilter,
+  favouritesFilter,
+  archiveFilter,
+  trashFilter,
+};
 
-          final matchesFilter = switch (selectedFilter) {
-            allAssetsFilter => true,
-            'DEV_LOGS' => item.tags.any((tag) => tag.name == 'DEV'),
-            'ARCHIVE' => link.isArchived,
-            _ => item.tags.any((tag) => tag.name == selectedFilter),
-          };
-
-          return matchesSearch && matchesFilter;
-        })
-        .toList(growable: false);
-  });
+bool _isArchiveLabel(String value) {
+  final normalized = value.trim().toUpperCase();
+  return normalized == archiveFilter || normalized == 'ARCHIVED';
 }

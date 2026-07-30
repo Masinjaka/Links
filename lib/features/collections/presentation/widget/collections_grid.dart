@@ -18,44 +18,27 @@ class CollectionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const crossAxisCount = 2;
-        const spacing = 16.0;
-        final width = constraints.maxWidth;
-        final cardWidth =
-            (width - (spacing * (crossAxisCount - 1))) / crossAxisCount;
-        final cardHeight = cardWidth * .92;
-        final ratio = cardWidth / cardHeight;
-
-        return GridView.builder(
-          shrinkWrap: true,
-          primary: false,
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: items.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            crossAxisSpacing: spacing,
-            mainAxisSpacing: spacing,
-            childAspectRatio: ratio,
-          ),
-          itemBuilder: (context, index) {
-            final item = items[index];
-            return CollectionFeedCard(
-                  group: item,
-                  onOpen: onOpen == null ? null : () => onOpen!(item),
-                  selectionMode: selectionMode,
-                  selected: selectedIds.contains(item.collection.id),
-                  onToggleSelection: onToggleSelection == null
-                      ? null
-                      : () => onToggleSelection!(item),
-                )
-                .animate(delay: (70 * index).ms)
-                .fadeIn(duration: 280.ms)
-                .slideY(begin: .08, end: 0, curve: Curves.easeOutCubic);
-          },
-        );
+    return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
+      padding: EdgeInsets.zero,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      separatorBuilder: (_, _) => const SizedBox(height: 16),
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return CollectionFeedCard(
+              group: item,
+              onOpen: onOpen == null ? null : () => onOpen!(item),
+              selectionMode: selectionMode,
+              selected: selectedIds.contains(item.collection.id),
+              onToggleSelection: onToggleSelection == null
+                  ? null
+                  : () => onToggleSelection!(item),
+            )
+            .animate(delay: (60 * index).ms)
+            .fadeIn(duration: 240.ms)
+            .slideY(begin: .05, end: 0, curve: Curves.easeOutCubic);
       },
     );
   }

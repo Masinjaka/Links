@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/shared/presentation/formatters/display_text.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 
 class FeedFilterChip extends StatelessWidget {
   const FeedFilterChip({
@@ -18,10 +18,11 @@ class FeedFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ink = LinkVaultThemeTokens.ink(context);
-    final textStyle = GoogleFonts.openSans(
-      textStyle: Theme.of(context).textTheme.labelLarge,
+    final textStyle = Theme.of(context).textTheme.labelLarge?.copyWith(
+      fontFamily: 'OpenSans',
       color: selected ? LinkVaultColors.onPrimary : ink,
-      fontWeight: FontWeight.w800,
+      fontSize: 13,
+      fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
     );
 
     return Material(
@@ -33,29 +34,26 @@ class FeedFilterChip extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: 42,
-          constraints: const BoxConstraints(minWidth: 96),
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          decoration: BoxDecoration(
-            // border: Border.all(color: selected ? Colors.transparent : ink),
-            borderRadius: BorderRadius.circular(20),
-          ),
+          height: 30,
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (selected) ...[
-                Icon(
-                  Icons.check_rounded,
-                  color: LinkVaultColors.onPrimary,
-                  size: 18,
-                ),
-                const SizedBox(width: 8),
-              ],
-              Text(label.displayText, style: textStyle),
-            ],
+            children: [Text(_displayLabel(context, label), style: textStyle)],
           ),
         ),
       ),
     );
+  }
+
+  String _displayLabel(BuildContext context, String value) {
+    final strings = linkVaultLocalizationsOf(context);
+    if (value == 'ALL_ASSETS' || value == 'ALL_COLLECTIONS') {
+      return strings.all;
+    }
+    if (value == 'INBOX') return strings.inbox;
+    if (value == 'FAVOURITES') return strings.favorites;
+    if (value == 'TRASH') return strings.trash;
+    return value.sentenceDisplayText;
   }
 }

@@ -1,20 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'dart:async';
 
-import 'package:linkvault/app/linkvault_theme.dart';
-import 'package:linkvault/features/feed/presentation/widgets/feed_empty_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:linkvault/features/link_details/presentation/show_link_details_sheet.dart';
 import 'package:linkvault/features/feed/presentation/widgets/feed_filter_rail.dart';
 import 'package:linkvault/features/feed/presentation/widgets/feed_header_widget.dart';
+import 'package:linkvault/features/feed/presentation/widgets/feed_links_sliver.dart';
 import 'package:linkvault/features/feed/presentation/widgets/feed_search_strip.dart';
-import 'package:linkvault/features/feed/presentation/widgets/kinetic_link_card.dart';
-import 'package:linkvault/features/feed/presentation/widgets/quick_action_widget.dart';
+import 'package:linkvault/features/feed/presentation/widgets/feed_sort_button.dart';
+import 'package:linkvault/features/feed/presentation/widgets/feed_selection_overlay.dart';
 import 'package:linkvault/features/feed/provider/feed_providers.dart';
 import 'package:linkvault/features/feed/repository/link_entities.dart';
-import 'package:linkvault/shared/presentation/formatters/display_text.dart';
-import 'package:linkvault/shared/presentation/widgets/square_button_widget.dart';
-import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
+import 'package:linkvault/shared/presentation/widgets/pinned_search_filter_app_bar.dart';
+import 'package:linkvault/shared/presentation/widgets/select_all_strip.dart';
+import 'package:linkvault/shared/presentation/widgets/library_circle_button.dart';
+import 'package:linkvault/shared/presentation/widgets/velocity_sliver_page.dart';
 
 class FeedPage extends ConsumerWidget {
   const FeedPage({super.key});
@@ -22,163 +24,136 @@ class FeedPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final links = ref.watch(visibleFeedLinksProvider);
-    final List<LinkWithTags> visibleLinks = links.maybeWhen(
-      data: (items) => items,
-      orElse: () => const <LinkWithTags>[],
-    );
+    final visibleLinks = links.value ?? const <LinkWithTags>[];
     final filters =
         ref.watch(feedFiltersProvider).value ?? const [allAssetsFilter];
     final selectedFilter = ref.watch(selectedFeedFilterProvider);
     final searchQuery = ref.watch(feedSearchQueryProvider);
+    final selectedSort = ref.watch(selectedFeedSortProvider);
     final selectionMode = ref.watch(feedSelectionModeProvider);
-    final selectedLinkIds = ref.watch(selectedFeedLinkIdsProvider);
+    final selectedIds = ref.watch(selectedFeedLinkIdsProvider);
     final visibleIds = visibleLinks
         .map((item) => item.link.id)
         .toList(growable: false);
     final allVisibleSelected =
         visibleIds.isNotEmpty &&
-        visibleIds.every((id) => selectedLinkIds.contains(id));
+        visibleIds.every((id) => selectedIds.contains(id));
+    final selectedLinks = visibleLinks
+        .where((item) => selectedIds.contains(item.link.id))
+        .toList(growable: false);
+    final allSelectedFavourite =
+        selectedLinks.isNotEmpty &&
+        selectedLinks.length == selectedIds.length &&
+        selectedLinks.every((item) => item.link.isFavourite);
+    final allSelectedPinned =
+        selectedLinks.isNotEmpty &&
+        selectedLinks.length == selectedIds.length &&
+        selectedLinks.every((item) => item.link.isPinned);
     final overlay = selectionMode
-        ? (selectedLinkIds.isEmpty
-              ? null
-              : FeedQuickActions(
-                  onArchive: () => _archiveSelectedLinks(context, ref),
-                ))
-        : FeedQuickActions(onAdd: () => context.go('/add'));
-    final overlayWidgets = overlay == null ? const <Widget>[] : [overlay];
+        ? FeedSelectionOverlay(
+            selectedFilter: selectedFilter,
+            allFavourite: allSelectedFavourite,
+            allPinned: allSelectedPinned,
+          )
+        : null;
 
-    return Scaffold(
-      backgroundColor: LinkVaultThemeTokens.background(context),
-      body: Stack(
-        children: [
-          const Positioned.fill(
-            child: IgnorePointer(child: VelocityKineticBackground()),
-          ),
-          Positioned.fill(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(32, 32, 32, 168),
-              children: [
-                const FeedHeader(),
-                const SizedBox(height: 32),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: selectionMode
-                          ? _FeedSelectAllStrip(
-                              selected: allVisibleSelected,
-                              onTap: () => _toggleVisibleSelections(
-                                ref,
-                                visibleIds,
-                                allVisibleSelected,
-                              ),
-                              onCancel: () => _exitSelectionMode(ref),
-                            )
-                          : FeedSearchStrip(
-                              onChanged: (value) {
-                                ref
-                                    .read(feedSearchQueryProvider.notifier)
-                                    .update(value);
-                              },
-                            ),
-                    ),
-                    if (!selectionMode) ...[
-                      const SizedBox(width: 16),
-                      SquareButton(
-                        onPressed: () {
-                          ref.read(feedSelectionModeProvider.notifier).enable();
-                        },
-                        tooltip: 'SELECT_MULTIPLE',
-                        icon: Icons.checklist_sharp,
-                        size: 52,
-                        backgroundColor: LinkVaultThemeTokens.surface(context),
-                        iconColor: LinkVaultColors.primary,
-                        shadowed: false,
-                        borderColor: LinkVaultColors.ink,
-                      ),
-                    ],
-                  ],
-                ),
-                const SizedBox(height: 32),
-                FeedFilterRail(
-                  filters: filters,
-                  selectedFilter: selectedFilter,
-                  onSelected: (filter) {
-                    ref
-                        .read(selectedFeedFilterProvider.notifier)
-                        .select(filter);
+    return VelocitySliverPage(
+      overlay: overlay,
+      slivers: [
+        const SliverPadding(
+          padding: EdgeInsets.fromLTRB(36, 32, 36, 0),
+          sliver: SliverToBoxAdapter(child: FeedHeader()),
+        ),
+        PinnedSearchFilterAppBar(
+          search: selectionMode
+              ? SelectAllStrip(
+                  selected: allVisibleSelected,
+                  onTap: () => _toggleVisibleSelections(
+                    ref,
+                    visibleIds,
+                    allVisibleSelected,
+                  ),
+                  onCancel: () => _exitSelectionMode(ref),
+                )
+              : FeedSearchStrip(
+                  onChanged: (value) {
+                    ref.read(feedSearchQueryProvider.notifier).update(value);
                   },
                 ),
-                const SizedBox(height: 32),
-                ...links.when(
-                  data: (items) => [
-                    if (items.isEmpty)
-                      const FeedEmptyState()
-                    else
-                      for (final (index, link) in items.indexed) ...[
-                        KineticLinkCard(
-                              key: ValueKey(
-                                'feed-link-${link.link.id}-$selectionMode-${selectedLinkIds.contains(link.link.id)}',
-                              ),
-                              link: link,
-                              selected: selectedLinkIds.contains(link.link.id),
-                              leading: selectionMode
-                                  ? _FeedSelectionCheckbox(
-                                      selected: selectedLinkIds.contains(
-                                        link.link.id,
-                                      ),
-                                    )
-                                  : null,
-                              onOpen: () {
-                                if (selectionMode) {
-                                  ref
-                                      .read(
-                                        selectedFeedLinkIdsProvider.notifier,
-                                      )
-                                      .toggle(link.link.id);
-                                  return;
-                                }
-
-                                context.go('/details?id=${link.link.id}');
-                              },
-                            )
-                            .animate(
-                              key: ValueKey(
-                                'feed-card-$selectedFilter-$searchQuery-$selectionMode-${link.link.id}',
-                              ),
-                              delay: (70 * index).ms,
-                            )
-                            .fadeIn(duration: 280.ms)
-                            .slideY(
-                              begin: .08,
-                              end: 0,
-                              curve: Curves.easeOutCubic,
-                            ),
-                        if (index != items.length - 1)
-                          const SizedBox(height: 16),
-                      ],
-                  ],
-                  error: (error, stackTrace) => [
-                    Text(
-                      'DATABASE_ERROR'.displayText,
-                      style: Theme.of(context).textTheme.labelLarge,
+          action: selectionMode
+              ? null
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FeedSortButton(
+                      selected: selectedSort,
+                      onSelected: (value) {
+                        ref
+                            .read(selectedFeedSortProvider.notifier)
+                            .select(value);
+                      },
                     ),
-                  ],
-                  loading: () => [
-                    Center(
-                      child: CircularProgressIndicator(
-                        color: LinkVaultColors.primary,
-                      ),
+                    const SizedBox(width: 8),
+                    LibraryCircleButton(
+                      icon: Icons.checklist_rounded,
+                      tooltip: linkVaultLocalizationsOf(context).selectMultiple,
+                      onPressed: () {
+                        ref.read(feedSelectionModeProvider.notifier).enable();
+                      },
                     ),
                   ],
                 ),
-              ],
+          filters: FeedFilterRail(
+            filters: filters,
+            selectedFilter: selectedFilter,
+            onSelected: (filter) {
+              ref.read(selectedFeedFilterProvider.notifier).select(filter);
+            },
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.fromLTRB(36, 28, 36, selectionMode ? 80 : 152),
+          sliver: FeedLinksSliver(
+            links: links,
+            selectedFilter: selectedFilter,
+            searchQuery: searchQuery,
+            selectionMode: selectionMode,
+            selectedIds: selectedIds,
+            onOpen: (link) => _openLink(context, ref, link, selectionMode),
+            onSelect: (link) {
+              ref.read(feedSelectionModeProvider.notifier).enable();
+              ref
+                  .read(selectedFeedLinkIdsProvider.notifier)
+                  .toggle(link.link.id);
+            },
+            onFavourite: (link) => unawaited(
+              ref.read(feedRepositoryProvider).setFavourite([
+                link.link.id,
+              ], !link.link.isFavourite),
+            ),
+            onPin: (link) => unawaited(
+              ref.read(feedRepositoryProvider).setPinned([
+                link.link.id,
+              ], !link.link.isPinned),
             ),
           ),
-          ...overlayWidgets,
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  static void _openLink(
+    BuildContext context,
+    WidgetRef ref,
+    LinkWithTags link,
+    bool selectionMode,
+  ) {
+    if (selectionMode) {
+      ref.read(selectedFeedLinkIdsProvider.notifier).toggle(link.link.id);
+      return;
+    }
+    unawaited(ref.read(feedRepositoryProvider).markOpened(link.link.id));
+    unawaited(showLinkDetailsSheet(context: context, linkId: link.link.id));
   }
 
   static void _exitSelectionMode(WidgetRef ref) {
@@ -191,192 +166,10 @@ class FeedPage extends ConsumerWidget {
     List<int> visibleIds,
     bool allVisibleSelected,
   ) {
-    if (visibleIds.isEmpty) {
-      return;
-    }
-
+    if (visibleIds.isEmpty) return;
     final notifier = ref.read(selectedFeedLinkIdsProvider.notifier);
-    if (allVisibleSelected) {
-      notifier.removeAll(visibleIds);
-      return;
-    }
-
-    notifier.addAll(visibleIds);
+    allVisibleSelected
+        ? notifier.removeAll(visibleIds)
+        : notifier.addAll(visibleIds);
   }
-
-  static Future<void> _archiveSelectedLinks(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
-    final selectedIds = ref.read(selectedFeedLinkIdsProvider);
-    if (selectedIds.isEmpty) {
-      return;
-    }
-
-    final confirmed = await showArchiveLinksDialog(context, selectedIds.length);
-    if (!confirmed) {
-      return;
-    }
-
-    await ref.read(feedRepositoryProvider).archiveLinks(selectedIds);
-    _exitSelectionMode(ref);
-  }
-}
-
-class _FeedSelectAllStrip extends StatelessWidget {
-  const _FeedSelectAllStrip({
-    required this.selected,
-    required this.onTap,
-    required this.onCancel,
-  });
-
-  final bool selected;
-  final VoidCallback onTap;
-  final VoidCallback onCancel;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final ink = LinkVaultThemeTokens.ink(context);
-
-    return Material(
-      color: Colors.transparent,
-      borderRadius: LinkVaultThemeTokens.componentRadius,
-      clipBehavior: Clip.antiAlias,
-      child: Container(
-        height: 52,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: LinkVaultThemeTokens.surface(context),
-          // border: Border.all(color: ink),
-          borderRadius: LinkVaultThemeTokens.componentRadius,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                onTap: onTap,
-                borderRadius: LinkVaultThemeTokens.componentRadius,
-                child: Row(
-                  children: [
-                    _FeedSelectionCheckbox(selected: selected),
-                    const SizedBox(width: 14),
-                    Text(
-                      'SELECT_ALL'.displayText,
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: ink,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: onCancel,
-              style: TextButton.styleFrom(
-                foregroundColor: LinkVaultColors.primary,
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text('CANCEL'.displayText),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _FeedSelectionCheckbox extends StatelessWidget {
-  const _FeedSelectionCheckbox({required this.selected});
-
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    final ink = LinkVaultThemeTokens.ink(context);
-    return Container(
-      width: 20,
-      height: 20,
-      decoration: BoxDecoration(
-        color: selected
-            ? LinkVaultColors.primary
-            : LinkVaultThemeTokens.surface(context),
-        border: Border.all(
-          color: selected ? LinkVaultColors.primary : ink,
-          width: 2,
-        ),
-      ),
-      child: selected
-          ? Icon(
-              Icons.check_rounded,
-              size: 16,
-              color: LinkVaultColors.onPrimary,
-            )
-          : null,
-    );
-  }
-}
-
-Future<bool> showArchiveLinksDialog(
-  BuildContext context,
-  int selectionCount,
-) async {
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) {
-      final ink = LinkVaultThemeTokens.ink(context);
-      return Dialog(
-        backgroundColor: Colors.transparent,
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: LinkVaultThemeTokens.surface(context),
-            // border: Border.all(color: ink),
-            borderRadius: LinkVaultThemeTokens.componentRadius,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'ARCHIVE_LINKS'.displayText,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Archive $selectionCount selected link${selectionCount == 1 ? '' : 's'}? Archived links will leave the active feed and move to archive.',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: VelocityButton(
-                      label: 'CANCEL',
-                      filled: false,
-                      borderColor: ink,
-                      foregroundColor: ink,
-                      onPressed: () => Navigator.of(context).pop(false),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: VelocityButton(
-                      label: 'ARCHIVE',
-                      onPressed: () => Navigator.of(context).pop(true),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
-
-  return confirmed == true;
 }

@@ -17,7 +17,7 @@ class AddCollectionPageHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Add collections',
+              linkVaultLocalizationsOf(context).addCollections,
               style: textTheme.titleLarge?.copyWith(
                 color: LinkVaultThemeTokens.ink(context),
                 fontSize: 22,
@@ -30,7 +30,7 @@ class AddCollectionPageHeader extends StatelessWidget {
               icon: Icons.close_sharp,
               iconColor: LinkVaultColors.primary,
               shadowed: false,
-              tooltip: 'CLOSE',
+              tooltip: linkVaultLocalizationsOf(context).close,
               size: 45,
               borderColor: LinkVaultColors.ink,
             ),

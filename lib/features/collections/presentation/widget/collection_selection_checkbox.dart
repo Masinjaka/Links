@@ -9,24 +9,33 @@ class _CollectionSelectionCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     final ink = LinkVaultThemeTokens.ink(context);
     return Container(
-      width: 22,
-      height: 22,
+      key: const Key('collection-selection-checkbox'),
+      width: 28,
+      height: 28,
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: selected
-            ? LinkVaultColors.primary
-            : LinkVaultThemeTokens.surface(context),
-        border: Border.all(
-          color: selected ? LinkVaultColors.primary : ink,
-          width: 2,
-        ),
+        color: LinkVaultThemeTokens.surface(context),
+        borderRadius: BorderRadius.circular(9),
       ),
-      child: selected
-          ? Icon(
-              Icons.check_rounded,
-              size: 16,
-              color: LinkVaultColors.onPrimary,
-            )
-          : null,
+      child: Container(
+        decoration: BoxDecoration(
+          color: selected
+              ? LinkVaultColors.primary
+              : LinkVaultThemeTokens.surface(context),
+          border: Border.all(
+            color: selected ? LinkVaultColors.primary : ink,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: selected
+            ? Icon(
+                Icons.check_rounded,
+                size: 16,
+                color: LinkVaultColors.onPrimary,
+              )
+            : null,
+      ),
     );
   }
 }

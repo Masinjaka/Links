@@ -6,6 +6,7 @@ import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/onboarding/presentation/widget/onboarding_widgets.dart';
 import 'package:linkvault/features/onboarding/provider/onboarding_providers.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 
 class OnboardingPage extends ConsumerWidget {
   const OnboardingPage({super.key});
@@ -44,7 +45,7 @@ class OnboardingPage extends ConsumerWidget {
                   ],
                 ),
                 VelocityButton(
-                  label: 'SKIP_INTRO',
+                  label: linkVaultLocalizationsOf(context).skipIntro,
                   filled: false,
                   height: 44,
                   onPressed: () => context.go('/'),
@@ -56,12 +57,12 @@ class OnboardingPage extends ConsumerWidget {
         for (final step in steps)
           OnboardingStepView(step: step, platforms: platforms),
         VelocityButton(
-          label: 'INITIALIZE_VAULT',
+          label: linkVaultLocalizationsOf(context).initializeVault,
           icon: Icons.arrow_forward_rounded,
           onPressed: () => context.go('/'),
         ),
         VelocityButton(
-          label: 'ALREADY_A_MEMBER?_SIGN_IN',
+          label: linkVaultLocalizationsOf(context).alreadyMemberSignIn,
           filled: false,
           onPressed: () => context.go('/'),
         ),

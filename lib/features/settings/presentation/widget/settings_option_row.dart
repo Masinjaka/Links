@@ -26,7 +26,10 @@ class SettingsOptionRow extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(right: 18),
-              child: _SettingsOptionCopy(title: title),
+              child: Text(
+                title.lowerDisplayText,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ),
           Flexible(
@@ -35,20 +38,6 @@ class SettingsOptionRow extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SettingsOptionCopy extends StatelessWidget {
-  const _SettingsOptionCopy({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title.displayText,
-      style: Theme.of(context).textTheme.titleMedium,
     );
   }
 }

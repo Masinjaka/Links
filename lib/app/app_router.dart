@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:linkvault/app/primary_navigation_shell.dart';
@@ -11,7 +12,10 @@ import 'package:linkvault/features/onboarding/presentation/onboarding_page.dart'
 import 'package:linkvault/features/profile/presentation/profile_page.dart';
 import 'package:linkvault/features/settings/presentation/settings_page.dart';
 
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final appRouter = GoRouter(
+  navigatorKey: rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -60,7 +64,11 @@ final appRouter = GoRouter(
         final collectionId = int.tryParse(
           state.uri.queryParameters['collectionId'] ?? '',
         );
-        return AddLinkPage(linkId: id, collectionId: collectionId);
+        return AddLinkPage(
+          linkId: id,
+          collectionId: collectionId,
+          initialUrl: state.uri.queryParameters['sharedUrl'],
+        );
       },
     ),
     GoRoute(

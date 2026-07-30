@@ -13,7 +13,6 @@ class CollectionIconSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final icon = collectionIconForKey(selectedIconKey);
-    final label = collectionIconLabelForKey(selectedIconKey);
     final surface = LinkVaultThemeTokens.surface(context);
     final ink = LinkVaultThemeTokens.ink(context);
 
@@ -47,7 +46,7 @@ class CollectionIconSelector extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'CURRENT_ICON',
+                      linkVaultLocalizationsOf(context).currentIcon,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: LinkVaultColors.secondary,
                         fontSize: 13,
@@ -55,7 +54,7 @@ class CollectionIconSelector extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      label,
+                      linkVaultLocalizationsOf(context).icon,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],

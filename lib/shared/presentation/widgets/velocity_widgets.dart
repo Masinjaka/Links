@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/shared/presentation/formatters/display_text.dart';
@@ -99,8 +98,8 @@ class VelocitySectionHeader extends StatelessWidget {
             Expanded(
               child: Text(
                 title.displayText,
-                style: GoogleFonts.openSans(
-                  textStyle: textTheme.labelLarge,
+                style: textTheme.labelLarge?.copyWith(
+                  fontFamily: 'OpenSans',
                   color: resolvedTitleColor,
                   fontSize: titleSize,
                   fontWeight: FontWeight.w800,
@@ -236,7 +235,6 @@ class VelocityTextInput extends StatelessWidget {
               onTapOutside: (_) {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
-              cursorColor: LinkVaultColors.primary,
               style: textTheme.bodyLarge?.copyWith(
                 color: ink,
                 fontSize: 16,
@@ -646,7 +644,7 @@ class _BarChartPainter extends CustomPainter {
         style: TextStyle(
           color: LinkVaultColors.secondary,
           fontSize: 12,
-          fontFamily: GoogleFonts.nunito().fontFamily,
+          fontFamily: 'Nunito',
         ),
       );
       labelPainter.layout();
@@ -723,7 +721,7 @@ class _LineChartPainter extends CustomPainter {
         style: TextStyle(
           color: LinkVaultColors.secondary,
           fontSize: 12,
-          fontFamily: GoogleFonts.nunito().fontFamily,
+          fontFamily: 'Nunito',
         ),
       );
       labelPainter.layout();

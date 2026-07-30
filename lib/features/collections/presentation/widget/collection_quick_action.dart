@@ -14,7 +14,7 @@ class CollectionQuickAction extends StatelessWidget {
       bottom: bottomInset + 24,
       child: SquareButton(
         onPressed: onPressed,
-        tooltip: 'Add collection',
+        tooltip: linkVaultLocalizationsOf(context).addCollection,
         icon: Icons.add_rounded,
         shadowed: false,
       ),

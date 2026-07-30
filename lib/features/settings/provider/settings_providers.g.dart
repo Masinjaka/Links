@@ -57,6 +57,54 @@ final class SettingsRepositoryProvider
 String _$settingsRepositoryHash() =>
     r'a69d11b66dc0d826953593045b4f011044931d9e';
 
+@ProviderFor(appPreferenceStore)
+final appPreferenceStoreProvider = AppPreferenceStoreProvider._();
+
+final class AppPreferenceStoreProvider
+    extends
+        $FunctionalProvider<
+          AppPreferenceStore,
+          AppPreferenceStore,
+          AppPreferenceStore
+        >
+    with $Provider<AppPreferenceStore> {
+  AppPreferenceStoreProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'appPreferenceStoreProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$appPreferenceStoreHash();
+
+  @$internal
+  @override
+  $ProviderElement<AppPreferenceStore> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AppPreferenceStore create(Ref ref) {
+    return appPreferenceStore(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AppPreferenceStore value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AppPreferenceStore>(value),
+    );
+  }
+}
+
+String _$appPreferenceStoreHash() =>
+    r'2c56ce0c5098d25af9d6273465054e2dc3a99bea';
+
 @ProviderFor(settings)
 final settingsProvider = SettingsProvider._();
 
@@ -144,7 +192,7 @@ final class SelectedAppThemePreferenceProvider
         argument: null,
         retry: null,
         name: r'selectedAppThemePreferenceProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -166,7 +214,7 @@ final class SelectedAppThemePreferenceProvider
 }
 
 String _$selectedAppThemePreferenceHash() =>
-    r'527a6474fd4376cc2a1347491d62b31e5767da1f';
+    r'a4dcdb9f02f15e0bdb5018074167cdadc9636cf9';
 
 abstract class _$SelectedAppThemePreference
     extends $Notifier<AppThemePreference> {
@@ -198,7 +246,7 @@ final class SelectedAccentToneProvider
         argument: null,
         retry: null,
         name: r'selectedAccentToneProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -220,7 +268,7 @@ final class SelectedAccentToneProvider
 }
 
 String _$selectedAccentToneHash() =>
-    r'59b10088a178bb99be5829637f269322ff58abd7';
+    r'a6f84f2cd55e9ae12920b44ff557d56285745bd9';
 
 abstract class _$SelectedAccentTone extends $Notifier<AppAccentTone> {
   AppAccentTone build();
@@ -233,6 +281,59 @@ abstract class _$SelectedAccentTone extends $Notifier<AppAccentTone> {
             as $ClassProviderElement<
               AnyNotifier<AppAccentTone, AppAccentTone>,
               AppAccentTone,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(SelectedAppLanguage)
+final selectedAppLanguageProvider = SelectedAppLanguageProvider._();
+
+final class SelectedAppLanguageProvider
+    extends $NotifierProvider<SelectedAppLanguage, AppLanguage> {
+  SelectedAppLanguageProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedAppLanguageProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedAppLanguageHash();
+
+  @$internal
+  @override
+  SelectedAppLanguage create() => SelectedAppLanguage();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AppLanguage value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AppLanguage>(value),
+    );
+  }
+}
+
+String _$selectedAppLanguageHash() =>
+    r'4f6135caf2dc278fb26c63d05dc4a83fbfa3b0ee';
+
+abstract class _$SelectedAppLanguage extends $Notifier<AppLanguage> {
+  AppLanguage build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AppLanguage, AppLanguage>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AppLanguage, AppLanguage>,
+              AppLanguage,
               Object?,
               Object?
             >;

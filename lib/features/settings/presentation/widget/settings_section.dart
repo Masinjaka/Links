@@ -19,9 +19,9 @@ class SettingsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title.displayText,
-          style: GoogleFonts.openSans(
-            textStyle: textTheme.labelLarge,
+          title.lowerDisplayText,
+          style: textTheme.labelLarge?.copyWith(
+            fontFamily: 'OpenSans',
             color: LinkVaultThemeTokens.ink(context),
             fontSize: titleSize,
             fontWeight: FontWeight.w800,

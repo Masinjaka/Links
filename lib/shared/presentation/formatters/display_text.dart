@@ -4,4 +4,12 @@ String formatDisplayText(String value) {
 
 extension DisplayTextFormatting on String {
   String get displayText => formatDisplayText(this);
+
+  String get lowerDisplayText => formatDisplayText(toLowerCase());
+
+  String get sentenceDisplayText {
+    final value = lowerDisplayText;
+    if (value.isEmpty) return value;
+    return '${value[0].toUpperCase()}${value.substring(1)}';
+  }
 }

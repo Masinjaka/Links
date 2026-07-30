@@ -241,7 +241,7 @@ final class FeedFiltersProvider
   }
 }
 
-String _$feedFiltersHash() => r'ff1394a65784640b102dfb3954e24cc25bd806cf';
+String _$feedFiltersHash() => r'8625143519e327858964823b3ec61b38921280aa';
 
 @ProviderFor(SelectedFeedFilter)
 final selectedFeedFilterProvider = SelectedFeedFilterProvider._();
@@ -348,6 +348,58 @@ abstract class _$FeedSearchQuery extends $Notifier<String> {
   }
 }
 
+@ProviderFor(SelectedFeedSort)
+final selectedFeedSortProvider = SelectedFeedSortProvider._();
+
+final class SelectedFeedSortProvider
+    extends $NotifierProvider<SelectedFeedSort, FeedSort> {
+  SelectedFeedSortProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedFeedSortProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedFeedSortHash();
+
+  @$internal
+  @override
+  SelectedFeedSort create() => SelectedFeedSort();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FeedSort value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FeedSort>(value),
+    );
+  }
+}
+
+String _$selectedFeedSortHash() => r'f5f55b29f0b07b424d0d953d237d1c3c249d7bfa';
+
+abstract class _$SelectedFeedSort extends $Notifier<FeedSort> {
+  FeedSort build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<FeedSort, FeedSort>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<FeedSort, FeedSort>,
+              FeedSort,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(visibleFeedLinks)
 final visibleFeedLinksProvider = VisibleFeedLinksProvider._();
 
@@ -355,10 +407,12 @@ final class VisibleFeedLinksProvider
     extends
         $FunctionalProvider<
           AsyncValue<List<LinkWithTags>>,
-          AsyncValue<List<LinkWithTags>>,
-          AsyncValue<List<LinkWithTags>>
+          List<LinkWithTags>,
+          Stream<List<LinkWithTags>>
         >
-    with $Provider<AsyncValue<List<LinkWithTags>>> {
+    with
+        $FutureModifier<List<LinkWithTags>>,
+        $StreamProvider<List<LinkWithTags>> {
   VisibleFeedLinksProvider._()
     : super(
         from: null,
@@ -375,24 +429,14 @@ final class VisibleFeedLinksProvider
 
   @$internal
   @override
-  $ProviderElement<AsyncValue<List<LinkWithTags>>> $createElement(
+  $StreamProviderElement<List<LinkWithTags>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $StreamProviderElement(pointer);
 
   @override
-  AsyncValue<List<LinkWithTags>> create(Ref ref) {
+  Stream<List<LinkWithTags>> create(Ref ref) {
     return visibleFeedLinks(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AsyncValue<List<LinkWithTags>> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<AsyncValue<List<LinkWithTags>>>(
-        value,
-      ),
-    );
   }
 }
 
-String _$visibleFeedLinksHash() => r'f3db244b0462da368968ae36e8affb4383216ede';
+String _$visibleFeedLinksHash() => r'3011d323597d53131745bd0d2473652e130d89da';

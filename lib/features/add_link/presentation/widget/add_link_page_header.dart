@@ -4,33 +4,34 @@ class AddLinkPageHeader extends StatelessWidget {
   const AddLinkPageHeader({
     super.key,
     required this.onBack,
-    required this.label,
+    required this.title,
   });
 
   final VoidCallback onBack;
-  final String label;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const SizedBox(height: 50),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            PageTitle(title: 'ADD', subtitle: 'LINNKS'),
-            SquareButton(
-              onPressed: onBack,
-              backgroundColor: LinkVaultThemeTokens.surface(context),
-              icon: Icons.close_sharp,
-              iconColor: LinkVaultColors.primary,
-              shadowed: false,
-              tooltip: 'CLOSE',
-              size: 45,
-              borderColor: LinkVaultColors.ink,
-            ),
-          ],
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: LinkVaultThemeTokens.ink(context),
+            fontFamily: 'Oswald',
+            fontSize: 34,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        IconButton(
+          onPressed: onBack,
+          tooltip: linkVaultLocalizationsOf(context).close,
+          icon: Icon(
+            Icons.close_rounded,
+            size: 24,
+            color: LinkVaultThemeTokens.ink(context),
+          ),
         ),
       ],
     );

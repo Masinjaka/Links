@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
-import 'package:linkvault/shared/presentation/formatters/display_text.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 
 class FeedSearchStrip extends StatelessWidget {
   const FeedSearchStrip({super.key, required this.onChanged});
@@ -11,35 +11,29 @@ class FeedSearchStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final ink = LinkVaultThemeTokens.ink(context);
+    final localizations = linkVaultLocalizationsOf(context);
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      height: 44,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: LinkVaultThemeTokens.surface(context),
-        // border: Border.all(color: ink),
-        // boxShadow: [
-        //   BoxShadow(color: _feedInk, offset: Offset(3, 3), blurRadius: 0),
-        // ],
-        borderRadius: LinkVaultThemeTokens.componentRadius,
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Row(
         children: [
-          Icon(Icons.search_rounded, color: ink, size: 32),
-          const SizedBox(width: 16),
+          Icon(Icons.search_rounded, color: ink, size: 21),
+          const SizedBox(width: 12),
           Expanded(
             child: TextField(
-              cursorColor: LinkVaultColors.primary,
               onTapOutside: (_) {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               onChanged: (value) {
                 onChanged(value);
               },
-              style: textTheme.bodyLarge?.copyWith(
-                color: ink,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: InputDecoration(hintText: 'SEARCH'.displayText),
+              style: textTheme.bodyLarge?.copyWith(color: ink),
+              decoration: InputDecoration(hintText: localizations.search),
             ),
           ),
         ],

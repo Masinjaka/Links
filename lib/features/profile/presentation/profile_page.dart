@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/profile/presentation/widget/profile_widgets.dart';
 import 'package:linkvault/features/profile/provider/profile_providers.dart';
-import 'package:linkvault/shared/presentation/formatters/display_text.dart';
 import 'package:linkvault/shared/presentation/widgets/velocity_widgets.dart';
+import 'package:linkvault/l10n/linkvault_localizations.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -26,7 +26,7 @@ class ProfilePage extends ConsumerWidget {
             ),
             Center(
               child: Text(
-                'DATABASE_ERROR'.displayText,
+                linkVaultLocalizationsOf(context).databaseError,
                 style: textTheme.labelLarge,
               ),
             ),

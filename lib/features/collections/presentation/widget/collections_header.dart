@@ -7,24 +7,19 @@ class CollectionsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 50),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Collections',
-              style: textTheme.titleLarge?.copyWith(
-                color: LinkVaultThemeTokens.ink(context),
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        linkVaultLocalizationsOf(context).collectionsPageTitle,
+        style: textTheme.headlineLarge?.copyWith(
+          fontFamily: 'Oswald',
+          color: LinkVaultThemeTokens.ink(context),
+          fontSize: 44,
+          fontWeight: FontWeight.w700,
+          height: 1,
+          letterSpacing: .8,
         ),
-      ],
+      ),
     );
   }
 }

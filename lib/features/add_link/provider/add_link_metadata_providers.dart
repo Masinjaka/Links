@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:linkvault/features/add_link/repository/add_link_metadata_repository.dart';
+import 'package:linkvault/core/database/providers/database_providers.dart';
+import 'package:linkvault/features/add_link/repository/metadata_task_processor.dart';
+import 'package:linkvault/features/add_link/service/metadata_task_runner.dart';
 
 part 'add_link_metadata_providers.g.dart';
 
@@ -22,6 +25,22 @@ Dio addLinkDio(Ref ref) {
 @Riverpod(keepAlive: true)
 AddLinkMetadataRepository addLinkMetadataRepository(Ref ref) {
   return DioAddLinkMetadataRepository(ref.watch(addLinkDioProvider));
+}
+
+@Riverpod(keepAlive: true)
+MetadataTaskProcessor metadataTaskProcessor(Ref ref) {
+  return MetadataTaskProcessor(
+    ref.watch(appDatabaseProvider),
+    ref.watch(addLinkMetadataRepositoryProvider),
+  );
+}
+
+@Riverpod(keepAlive: true)
+MetadataTaskRunner metadataTaskRunner(Ref ref) {
+  final runner = MetadataTaskRunner(ref.watch(metadataTaskProcessorProvider));
+  runner.start();
+  ref.onDispose(runner.dispose);
+  return runner;
 }
 
 @riverpod

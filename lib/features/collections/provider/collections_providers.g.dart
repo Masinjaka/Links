@@ -180,6 +180,59 @@ final class CollectionsVelocityMetricsProvider
 String _$collectionsVelocityMetricsHash() =>
     r'6e1e5850a52cf1ce7ea1c1319c2d708d43b9c291';
 
+@ProviderFor(SelectedCollectionSort)
+final selectedCollectionSortProvider = SelectedCollectionSortProvider._();
+
+final class SelectedCollectionSortProvider
+    extends $NotifierProvider<SelectedCollectionSort, CollectionSort> {
+  SelectedCollectionSortProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedCollectionSortProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedCollectionSortHash();
+
+  @$internal
+  @override
+  SelectedCollectionSort create() => SelectedCollectionSort();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CollectionSort value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CollectionSort>(value),
+    );
+  }
+}
+
+String _$selectedCollectionSortHash() =>
+    r'5f9d90226dae1ca7726b1feb6b3e66bfca737610';
+
+abstract class _$SelectedCollectionSort extends $Notifier<CollectionSort> {
+  CollectionSort build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<CollectionSort, CollectionSort>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CollectionSort, CollectionSort>,
+              CollectionSort,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(CollectionSelectionMode)
 final collectionSelectionModeProvider = CollectionSelectionModeProvider._();
 
@@ -437,7 +490,7 @@ final class CollectionFiltersProvider
   }
 }
 
-String _$collectionFiltersHash() => r'aa2c1afa7c990292fec370995cf5daf1b828e81b';
+String _$collectionFiltersHash() => r'8f2a058b791d7d1a1590eb3c3b1cc3ed52ddf437';
 
 @ProviderFor(visibleCollections)
 final visibleCollectionsProvider = VisibleCollectionsProvider._();
@@ -486,4 +539,4 @@ final class VisibleCollectionsProvider
 }
 
 String _$visibleCollectionsHash() =>
-    r'6d994cb82a81df4b808554ca0577d83b456b792d';
+    r'18301a884a23bc49d20898532121c6dbe8cf44fe';
