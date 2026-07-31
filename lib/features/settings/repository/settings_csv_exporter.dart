@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
 import 'package:linkvault/core/database/app_database.dart';
-import 'package:linkvault/features/settings/repository/settings_csv_parser.dart';
+import 'package:linkvault/features/settings/repository/settings_csv_formatter.dart';
 
 mixin SettingsCsvExporter {
   AppDatabase get settingsDatabase;

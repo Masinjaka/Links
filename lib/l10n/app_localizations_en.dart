@@ -84,9 +84,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportLinksCsv => 'Export links to CSV';
 
   @override
-  String get importFromCsv => 'Import from CSV';
-
-  @override
   String get archived => 'Archived';
 
   @override
@@ -632,40 +629,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get allDataErased => 'All data erased';
-
-  @override
-  String get exportCsv => 'Export CSV';
-
-  @override
-  String get exportCsvMessage =>
-      'Review the generated CSV, then copy it to export your links.';
-
-  @override
-  String get copyCsv => 'Copy CSV';
-
-  @override
-  String get csvCopied => 'CSV copied';
-
-  @override
-  String get importCsv => 'Import CSV';
-
-  @override
-  String get importCsvMessage =>
-      'Paste CSV content containing at least a “url” column.';
-
-  @override
-  String get noLinksImported => 'No links imported';
-
-  @override
-  String importedLinks(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Imported $count links',
-      one: 'Imported 1 link',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get skipIntro => 'Skip intro';

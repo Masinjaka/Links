@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:linkvault/features/settings/presentation/show_archived_library_sheet.dart';
 import 'package:linkvault/features/settings/presentation/show_tags_library_sheet.dart';
-import 'package:linkvault/features/settings/presentation/widget/csv_export_dialog.dart';
-import 'package:linkvault/features/settings/presentation/widget/csv_import_dialog.dart';
 import 'package:linkvault/features/settings/presentation/widgets/settings_list_row.dart';
 import 'package:linkvault/features/settings/presentation/widgets/settings_section_card.dart';
 import 'package:linkvault/features/settings/presentation/widgets/erase_data_dialog.dart';
@@ -25,12 +23,6 @@ class SettingsLinksSection extends ConsumerWidget {
           icon: Icons.save_as_outlined,
           label: localizations.exportLinksCsv,
           onTap: () => _export(context, ref),
-        ),
-        SettingsListRow(
-          key: const Key('settings-import-row'),
-          icon: Icons.file_open_outlined,
-          label: localizations.importFromCsv,
-          onTap: () => _import(context, ref),
         ),
         SettingsListRow(
           key: const Key('settings-archived-row'),
@@ -58,22 +50,6 @@ class SettingsLinksSection extends ConsumerWidget {
   Future<void> _export(BuildContext context, WidgetRef ref) async {
     final csv = await ref.read(settingsRepositoryProvider).exportLinksCsv();
     if (!context.mounted) return;
-    await showCsvExportDialog(context, csv);
-  }
-
-  Future<void> _import(BuildContext context, WidgetRef ref) async {
-    final csv = await showCsvImportDialog(context);
-    if (csv == null || csv.trim().isEmpty) return;
-    final imported = await ref
-        .read(settingsRepositoryProvider)
-        .importLinksCsv(csv);
-    if (!context.mounted) return;
-    final strings = linkVaultLocalizationsOf(context);
-    final message = imported == 0
-        ? strings.noLinksImported
-        : strings.importedLinks(imported);
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    await ref.read(csvFileSaverProvider).save(csv);
   }
 }

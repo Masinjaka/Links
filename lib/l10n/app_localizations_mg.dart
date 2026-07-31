@@ -84,9 +84,6 @@ class AppLocalizationsMg extends AppLocalizations {
   String get exportLinksCsv => 'Hanondrana rohy ho CSV';
 
   @override
-  String get importFromCsv => 'Hampiditra avy amin’ny CSV';
-
-  @override
   String get archived => 'Tahiry';
 
   @override
@@ -632,40 +629,6 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get allDataErased => 'Voafafa ny angona rehetra';
-
-  @override
-  String get exportCsv => 'Hanondrana CSV';
-
-  @override
-  String get exportCsvMessage =>
-      'Jereo ny CSV voaforona, avy eo adikao mba hanondrana ireo rohy.';
-
-  @override
-  String get copyCsv => 'Handika CSV';
-
-  @override
-  String get csvCopied => 'Voafindra ny CSV';
-
-  @override
-  String get importCsv => 'Hampiditra CSV';
-
-  @override
-  String get importCsvMessage =>
-      'Apetaho ny votoaty CSV misy tsanganana “url” farafahakeliny.';
-
-  @override
-  String get noLinksImported => 'Tsy misy rohy nampidirina';
-
-  @override
-  String importedLinks(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Rohy $count nampidirina',
-      one: 'Rohy 1 nampidirina',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get skipIntro => 'Hitsambikina ny fampidirana';

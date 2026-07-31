@@ -2,7 +2,6 @@ import 'package:drift/drift.dart';
 
 import 'package:linkvault/core/database/app_database.dart';
 import 'package:linkvault/features/settings/repository/settings_csv_exporter.dart';
-import 'package:linkvault/features/settings/repository/settings_csv_importer.dart';
 import 'package:linkvault/features/settings/repository/settings_data_eraser.dart';
 import 'package:linkvault/features/settings/repository/managed_tag.dart';
 import 'package:linkvault/features/settings/repository/settings_tag_manager.dart';
@@ -31,7 +30,6 @@ abstract interface class SettingsRepository {
   Stream<List<SettingOption>> watchSettings();
   Future<void> updateSettingEnabled(int id, bool enabled);
   Future<String> exportLinksCsv();
-  Future<int> importLinksCsv(String csvContent);
   Future<void> eraseAllData();
   Stream<List<ManagedTag>> watchLinkTags();
   Stream<List<ManagedTag>> watchCollectionTags();
@@ -40,11 +38,7 @@ abstract interface class SettingsRepository {
 }
 
 class DriftSettingsRepository
-    with
-        SettingsCsvExporter,
-        SettingsCsvImporter,
-        SettingsDataEraser,
-        SettingsTagManager
+    with SettingsCsvExporter, SettingsDataEraser, SettingsTagManager
     implements SettingsRepository {
   const DriftSettingsRepository(this._db);
 

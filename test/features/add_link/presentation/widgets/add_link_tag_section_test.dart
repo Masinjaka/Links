@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/features/add_link/presentation/widget/add_link_tag_section.dart';
 import 'package:linkvault/features/add_link/presentation/widget/add_link_tag_choice_chip.dart';
 
@@ -85,5 +86,17 @@ void main() {
       find.byType(AddLinkTagChoiceChip),
     );
     expect(chip.selected, isTrue);
+  });
+
+  testWidgets('selected tag text is black in dark mode', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LinkVaultTheme.dark(LinkVaultColors.primary),
+        home: AddLinkTagChoiceChip(tag: 'DESIGN', selected: true, onTap: () {}),
+      ),
+    );
+
+    final label = tester.widget<Text>(find.text('Design'));
+    expect(label.style?.color, Colors.black);
   });
 }

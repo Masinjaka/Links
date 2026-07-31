@@ -81,12 +81,6 @@ final class _FakeSystemDataRepository
   }
 
   @override
-  Future<int> importLinksCsv(String csvContent) async {
-    lastImportedCsv = csvContent;
-    return 0;
-  }
-
-  @override
   Future<void> eraseAllData() async {
     settingsEraseCount += 1;
   }

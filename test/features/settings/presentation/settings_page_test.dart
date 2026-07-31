@@ -18,7 +18,7 @@ void main() {
     expect(find.text('English'), findsOneWidget);
     expect(find.text('Links'), findsNWidgets(2));
     expect(find.text('Export links to CSV'), findsOneWidget);
-    expect(find.text('Import from CSV'), findsOneWidget);
+    expect(find.text('Import from CSV'), findsNothing);
     expect(find.text('Archived'), findsOneWidget);
     expect(find.text('Tags'), findsOneWidget);
     expect(find.text('Erase data'), findsOneWidget);

@@ -4,7 +4,6 @@ const _settings = [
   ('APPEARANCE', 'Dark Mode', 'High contrast interface', 'switch', 'dark'),
   ('APPEARANCE', 'Accent Color', 'System-wide highlight', 'accent', 'palette'),
   ('DATA & EXPORT', 'Export Library (.csv)', '', 'button', 'download'),
-  ('DATA & EXPORT', 'Import from CSV', '', 'button', 'upload'),
 ];
 
 const _onboarding = [

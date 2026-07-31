@@ -29,7 +29,7 @@ class AddLinkTagChoiceChip extends StatelessWidget {
           child: Text(
             tag.sentenceDisplayText,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: selected ? Colors.white : ink,
+              color: selected ? LinkVaultThemeTokens.onInk(context) : ink,
               fontSize: 12,
             ),
           ),

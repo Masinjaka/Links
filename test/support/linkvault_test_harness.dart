@@ -27,9 +27,11 @@ import 'package:linkvault/features/settings/provider/settings_providers.dart';
 import 'package:linkvault/features/settings/repository/app_preference_store.dart';
 import 'package:linkvault/features/settings/repository/managed_tag.dart';
 import 'package:linkvault/features/settings/repository/settings_repository.dart';
+import 'package:linkvault/features/settings/service/csv_file_saver.dart';
 
 part 'fake_collections_repository.dart';
 part 'fake_app_preference_store.dart';
+part 'fake_csv_file_saver.dart';
 part 'fake_link_data_repository.dart';
 part 'fake_system_data_repository.dart';
 part 'secondary_link_fixture.dart';
@@ -44,7 +46,7 @@ extension WidgetTesterAppFrame on WidgetTester {
     deletedManagedLinkTags.clear();
     deletedManagedCollectionTags.clear();
     settingsEraseCount = 0;
-    lastImportedCsv = null;
+    lastSavedCsv = null;
     appRouter.go(route);
     await pumpWidget(
       ProviderScope(
@@ -74,6 +76,7 @@ extension WidgetTesterAppFrame on WidgetTester {
           settingsRepositoryProvider.overrideWith(
             (ref) => _FakeSystemDataRepository(),
           ),
+          csvFileSaverProvider.overrideWithValue(_FakeCsvFileSaver()),
           appPreferenceStoreProvider.overrideWithValue(
             _FakeAppPreferenceStore(),
           ),
@@ -105,7 +108,7 @@ final deletedArchivedCollectionIds = <int>[];
 final deletedManagedLinkTags = <String>[];
 final deletedManagedCollectionTags = <String>[];
 var settingsEraseCount = 0;
-String? lastImportedCsv;
+String? lastSavedCsv;
 
 final primaryLink = LinkWithTags(
   link: Link(

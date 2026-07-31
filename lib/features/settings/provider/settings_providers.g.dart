@@ -57,6 +57,47 @@ final class SettingsRepositoryProvider
 String _$settingsRepositoryHash() =>
     r'a69d11b66dc0d826953593045b4f011044931d9e';
 
+@ProviderFor(csvFileSaver)
+final csvFileSaverProvider = CsvFileSaverProvider._();
+
+final class CsvFileSaverProvider
+    extends $FunctionalProvider<CsvFileSaver, CsvFileSaver, CsvFileSaver>
+    with $Provider<CsvFileSaver> {
+  CsvFileSaverProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'csvFileSaverProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$csvFileSaverHash();
+
+  @$internal
+  @override
+  $ProviderElement<CsvFileSaver> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  CsvFileSaver create(Ref ref) {
+    return csvFileSaver(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CsvFileSaver value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CsvFileSaver>(value),
+    );
+  }
+}
+
+String _$csvFileSaverHash() => r'a86f533034cf1e3baea5aa22417d8c35a61bc311';
+
 @ProviderFor(appPreferenceStore)
 final appPreferenceStoreProvider = AppPreferenceStoreProvider._();
 

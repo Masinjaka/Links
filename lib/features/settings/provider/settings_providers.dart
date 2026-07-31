@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:linkvault/core/database/providers/database_providers.dart';
 import 'package:linkvault/features/settings/repository/app_preference_store.dart';
 import 'package:linkvault/features/settings/repository/settings_repository.dart';
+import 'package:linkvault/features/settings/service/csv_file_saver.dart';
 
 part 'settings_providers.g.dart';
 
@@ -35,6 +36,11 @@ enum AppLanguage {
 @Riverpod(keepAlive: true)
 SettingsRepository settingsRepository(Ref ref) {
   return DriftSettingsRepository(ref.watch(appDatabaseProvider));
+}
+
+@Riverpod(keepAlive: true)
+CsvFileSaver csvFileSaver(Ref ref) {
+  return const SystemCsvFileSaver();
 }
 
 @Riverpod(keepAlive: true)

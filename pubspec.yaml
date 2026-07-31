@@ -53,6 +53,7 @@ dependencies:
   google_nav_bar: ^5.0.7
   intl: any
   flutter_launcher_icons: ^0.14.4
+  file_saver: ^0.4.0
 
 dev_dependencies:
   flutter_test:

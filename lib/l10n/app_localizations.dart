@@ -250,12 +250,6 @@ abstract class AppLocalizations {
   /// **'Export links to CSV'**
   String get exportLinksCsv;
 
-  /// No description provided for @importFromCsv.
-  ///
-  /// In en, this message translates to:
-  /// **'Import from CSV'**
-  String get importFromCsv;
-
   /// No description provided for @archived.
   ///
   /// In en, this message translates to:
@@ -1143,54 +1137,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All data erased'**
   String get allDataErased;
-
-  /// No description provided for @exportCsv.
-  ///
-  /// In en, this message translates to:
-  /// **'Export CSV'**
-  String get exportCsv;
-
-  /// No description provided for @exportCsvMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Review the generated CSV, then copy it to export your links.'**
-  String get exportCsvMessage;
-
-  /// No description provided for @copyCsv.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy CSV'**
-  String get copyCsv;
-
-  /// No description provided for @csvCopied.
-  ///
-  /// In en, this message translates to:
-  /// **'CSV copied'**
-  String get csvCopied;
-
-  /// No description provided for @importCsv.
-  ///
-  /// In en, this message translates to:
-  /// **'Import CSV'**
-  String get importCsv;
-
-  /// No description provided for @importCsvMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Paste CSV content containing at least a “url” column.'**
-  String get importCsvMessage;
-
-  /// No description provided for @noLinksImported.
-  ///
-  /// In en, this message translates to:
-  /// **'No links imported'**
-  String get noLinksImported;
-
-  /// No description provided for @importedLinks.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{Imported 1 link} other{Imported {count} links}}'**
-  String importedLinks(int count);
 
   /// No description provided for @skipIntro.
   ///

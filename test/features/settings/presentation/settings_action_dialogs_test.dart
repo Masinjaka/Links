@@ -39,31 +39,14 @@ void main() {
     expect(find.text('All data erased'), findsOneWidget);
   });
 
-  testWidgets('CSV import and export use the shared dialog design', (
+  testWidgets('CSV export saves a file without showing an import action', (
     tester,
   ) async {
     await tester.pumpLinkVault('/settings');
 
+    expect(find.byKey(const Key('settings-import-row')), findsNothing);
     await tester.tap(find.byKey(const Key('settings-export-row')));
     await tester.pumpAndSettle();
-    expect(find.text('Export CSV'), findsOneWidget);
-    expect(find.byType(Dialog), findsOneWidget);
-    expect(find.byType(BottomSheet), findsNothing);
-    expect(find.byKey(const Key('csv-export-content')), findsOneWidget);
-    await tester.tap(find.text('Cancel'));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byKey(const Key('settings-import-row')));
-    await tester.pumpAndSettle();
-    expect(find.text('Import CSV'), findsNWidgets(2));
-    expect(find.byType(Dialog), findsOneWidget);
-    expect(find.byType(BottomSheet), findsNothing);
-    await tester.enterText(
-      find.byKey(const Key('csv-import-field')),
-      'url,title\nhttps://example.com,Example',
-    );
-    await tester.tap(find.byKey(const Key('confirm-csv-import')));
-    await tester.pumpAndSettle();
-    expect(lastImportedCsv, contains('https://example.com'));
+    expect(lastSavedCsv, 'url,title,description,tags,is_archived');
   });
 }
