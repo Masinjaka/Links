@@ -1,17 +1,30 @@
-# linkvault
+# Rohy
 
-A new Flutter project.
+## Android release signing
 
-## Getting Started
+Generate a private upload key:
 
-This project is a starting point for a Flutter application.
+```sh
+keytool -genkeypair -v \
+  -keystore android/upload-keystore.jks \
+  -keyalg RSA \
+  -keysize 2048 \
+  -validity 10000 \
+  -alias upload
+```
 
-A few resources to get you started if this is your first Flutter project:
+Copy the signing properties template:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```sh
+cp android/key.properties.example android/key.properties
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Replace the placeholder passwords in `android/key.properties`, then build:
+
+```sh
+fvm flutter build appbundle --release
+```
+
+The keystore and populated properties file are ignored by Git. Back up the
+upload keystore and its credentials securely because future updates must use
+the same key.

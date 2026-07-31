@@ -52,6 +52,7 @@ dependencies:
   shimmer: ^3.0.0
   google_nav_bar: ^5.0.7
   intl: any
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -93,6 +94,9 @@ flutter:
   assets:
     - assets/svg/no-link-dark.png
     - assets/svg/no-link-light.png
+    - assets/icon/foreground.png
+    - assets/icon/background.png
+    - assets/icon/full.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -119,3 +123,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/full.png"
+  adaptive_icon_background: "assets/icon/background.png"
+  adaptive_icon_foreground: "assets/icon/foreground.png"
+  adaptive_icon_foreground_inset: 16
+  remove_alpha_ios: true
+  min_sdk_android: 21 # android min sdk min:16, default 21

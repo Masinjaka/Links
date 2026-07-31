@@ -2,7 +2,7 @@ import MobileCoreServices
 import Social
 
 final class ShareViewController: SLComposeServiceViewController {
-  private let appGroupName = "group.com.example.linkvault"
+  private let appGroupName = "group.com.masinjaka.rohy"
   private let sharedUrlKey = "pendingSharedUrl"
 
   override func isContentValid() -> Bool {

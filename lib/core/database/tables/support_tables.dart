@@ -6,9 +6,9 @@ class UserProfiles extends Table {
       text().withDefault(const Constant('USER_CORE'))();
   TextColumn get authLevel =>
       text().withDefault(const Constant('AUTH_LEVEL_01'))();
-  IntColumn get linksSaved => integer().withDefault(const Constant(1284))();
-  RealColumn get dataUsedMb => real().withDefault(const Constant(42.8))();
-  RealColumn get storagePercent => real().withDefault(const Constant(.68))();
+  IntColumn get linksSaved => integer().withDefault(const Constant(0))();
+  RealColumn get dataUsedMb => real().withDefault(const Constant(0))();
+  RealColumn get storagePercent => real().withDefault(const Constant(0))();
   TextColumn get version =>
       text().withDefault(const Constant('LINKVAULT_OS v2.4.0-STABLE'))();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();

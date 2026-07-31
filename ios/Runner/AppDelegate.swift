@@ -4,7 +4,7 @@ import UIKit
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
   private let shareChannelName = "linkvault/share_intake"
-  private let appGroupName = "group.com.example.linkvault"
+  private let appGroupName = "group.com.masinjaka.rohy"
   private let sharedUrlKey = "pendingSharedUrl"
   private var shareChannel: FlutterMethodChannel?
   private var pendingSharedUrl: String?

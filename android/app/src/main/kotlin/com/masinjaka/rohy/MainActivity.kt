@@ -1,4 +1,4 @@
-package com.example.linkvault
+package com.masinjaka.rohy
 
 import android.content.Intent
 import io.flutter.embedding.android.FlutterActivity

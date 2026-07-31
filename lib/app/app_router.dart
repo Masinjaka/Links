@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:linkvault/app/primary_navigation_shell.dart';
+import 'package:linkvault/app/widgets/animated_navigation_branch_container.dart';
 import 'package:linkvault/features/add_link/presentation/add_link_page.dart';
 import 'package:linkvault/features/collections/presentation/add_collection_page.dart';
 import 'package:linkvault/features/collections/presentation/collection_details_page.dart';
@@ -11,15 +12,28 @@ import 'package:linkvault/features/link_details/presentation/link_details_page.d
 import 'package:linkvault/features/onboarding/presentation/onboarding_page.dart';
 import 'package:linkvault/features/profile/presentation/profile_page.dart';
 import 'package:linkvault/features/settings/presentation/settings_page.dart';
+import 'package:linkvault/features/splash/presentation/splash_page.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
+  initialLocation: '/splash',
   routes: [
-    StatefulShellRoute.indexedStack(
+    GoRoute(
+      path: '/splash',
+      name: 'splash',
+      builder: (context, state) => const SplashPage(),
+    ),
+    StatefulShellRoute(
       builder: (context, state, navigationShell) {
         return PrimaryNavigationShell(navigationShell: navigationShell);
+      },
+      navigatorContainerBuilder: (context, navigationShell, children) {
+        return AnimatedNavigationBranchContainer(
+          currentIndex: navigationShell.currentIndex,
+          children: children,
+        );
       },
       branches: [
         StatefulShellBranch(

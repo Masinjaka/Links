@@ -4737,7 +4737,7 @@ class $UserProfilesTable extends UserProfiles
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
-    defaultValue: const Constant(1284),
+    defaultValue: const Constant(0),
   );
   static const VerificationMeta _dataUsedMbMeta = const VerificationMeta(
     'dataUsedMb',
@@ -4749,7 +4749,7 @@ class $UserProfilesTable extends UserProfiles
     false,
     type: DriftSqlType.double,
     requiredDuringInsert: false,
-    defaultValue: const Constant(42.8),
+    defaultValue: const Constant(0),
   );
   static const VerificationMeta _storagePercentMeta = const VerificationMeta(
     'storagePercent',
@@ -4761,7 +4761,7 @@ class $UserProfilesTable extends UserProfiles
     false,
     type: DriftSqlType.double,
     requiredDuringInsert: false,
-    defaultValue: const Constant(.68),
+    defaultValue: const Constant(0),
   );
   static const VerificationMeta _versionMeta = const VerificationMeta(
     'version',

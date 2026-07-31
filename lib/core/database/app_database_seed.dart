@@ -13,46 +13,7 @@ extension AppDatabaseSeed on AppDatabase {
     if (initialized) return;
 
     await transaction(() async {
-      final tagIds = <String, int>{};
-      for (final tag in _seedTags) {
-        tagIds[tag] = await into(tags).insert(TagsCompanion.insert(name: tag));
-      }
-
-      final firstLinkId = await _insertSeedLink(_seedLinks.first, tagIds);
-      for (final link in _seedLinks.skip(1)) {
-        await _insertSeedLink(link, tagIds);
-      }
-
-      for (final item in _seedCollections) {
-        final collectionId = await into(collections).insert(
-          CollectionsCompanion.insert(
-            title: item.$1,
-            type: item.$2,
-            iconKey: Value(item.$3),
-            tagName: Value(item.$4),
-          ),
-        );
-        await into(collectionLinks).insert(
-          CollectionLinksCompanion.insert(
-            collectionId: collectionId,
-            linkId: firstLinkId,
-          ),
-        );
-      }
-
-      final profileId = await into(
-        userProfiles,
-      ).insert(UserProfilesCompanion.insert());
-      for (final (index, metric) in _profileMetrics.indexed) {
-        await into(profileMetrics).insert(
-          ProfileMetricsCompanion.insert(
-            profileId: profileId,
-            label: metric.$1,
-            value: metric.$2,
-            sortOrder: index,
-          ),
-        );
-      }
+      await into(userProfiles).insert(UserProfilesCompanion.insert());
 
       for (final (index, item) in _settings.indexed) {
         await into(settingItems).insert(
@@ -98,38 +59,5 @@ extension AppDatabaseSeed on AppDatabase {
       'SELECT EXISTS(SELECT 1 FROM "${table.actualTableName}" LIMIT 1) AS value',
     ).getSingle();
     return row.read<int>('value') == 1;
-  }
-
-  Future<int> _insertSeedLink(_SeedLink seed, Map<String, int> tagIds) async {
-    final linkId = await into(links).insert(
-      LinksCompanion.insert(
-        title: seed.title,
-        url: seed.url,
-        originalUrl: Value(seed.url),
-        normalizedUrl: Value(seed.url.toLowerCase()),
-        urlHash: Value(seed.url.toLowerCase()),
-        domain: seed.domain,
-        description: Value(seed.description),
-        status: const Value('active'),
-        metadataStatus: const Value('completed'),
-        metadataFetchedAt: Value(seed.createdAt),
-        createdAt: Value(seed.createdAt),
-        updatedAt: Value(seed.createdAt),
-      ),
-    );
-    await into(linkPreviews).insert(
-      LinkPreviewsCompanion.insert(
-        linkId: linkId,
-        previewTitle: seed.title,
-        previewDescription: Value(seed.description),
-      ),
-    );
-    for (final tag in seed.tags) {
-      final tagId = tagIds[tag]!;
-      await into(
-        linkTags,
-      ).insert(LinkTagsCompanion.insert(linkId: linkId, tagId: tagId));
-    }
-    return linkId;
   }
 }

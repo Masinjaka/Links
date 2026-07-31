@@ -5,22 +5,6 @@ import 'package:linkvault/features/collections/repository/drift_collections_repo
 import 'package:linkvault/features/feed/repository/feed_repository.dart';
 
 void main() {
-  test('seedIfEmpty does not reseed after all links are deleted', () async {
-    final database = AppDatabase(NativeDatabase.memory());
-    addTearDown(database.close);
-
-    await database.seedIfEmpty();
-    expect((await database.select(database.links).get()).isNotEmpty, isTrue);
-
-    await database.delete(database.links).go();
-    expect(await database.select(database.links).get(), isEmpty);
-
-    await database.seedIfEmpty();
-
-    expect(await database.select(database.links).get(), isEmpty);
-    expect((await database.select(database.tags).get()).isNotEmpty, isTrue);
-  });
-
   test(
     'repairs legacy database schema before loading links and collections',
     () async {
@@ -85,9 +69,7 @@ void main() {
       await database.seedIfEmpty();
 
       final repository = DriftCollectionsRepository(database);
-      final allLinks = await database.select(database.links).get();
-
-      expect(allLinks.length, greaterThanOrEqualTo(2));
+      final allLinks = await _insertTestLinks(database);
 
       final firstCollectionId = await repository.create(
         'FIRST_COLLECTION',
@@ -121,7 +103,7 @@ void main() {
     await database.seedIfEmpty();
 
     final repository = DriftCollectionsRepository(database);
-    final linksBefore = await database.select(database.links).get();
+    final linksBefore = await _insertTestLinks(database);
     final linkIds = linksBefore.take(2).map((link) => link.id).toList();
     final collectionId = await repository.create(
       'REMOVE_TEST',
@@ -144,4 +126,19 @@ void main() {
       linksBefore.map((link) => link.id),
     );
   });
+}
+
+Future<List<Link>> _insertTestLinks(AppDatabase database) async {
+  for (var index = 1; index <= 2; index++) {
+    await database
+        .into(database.links)
+        .insert(
+          LinksCompanion.insert(
+            title: 'Test link $index',
+            url: 'https://example.com/$index',
+            domain: 'example.com',
+          ),
+        );
+  }
+  return database.select(database.links).get();
 }
