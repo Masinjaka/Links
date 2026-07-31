@@ -21,7 +21,7 @@ class SettingsListRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = destructive
-        ? LinkVaultThemeTokens.primary(context)
+        ? LinkVaultColors.destructive
         : LinkVaultThemeTokens.ink(context);
     return Material(
       color: Colors.transparent,
@@ -38,9 +38,10 @@ class SettingsListRow extends StatelessWidget {
                 Expanded(
                   child: Text(
                     label,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: color),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: color,
+                      fontWeight: destructive ? FontWeight.w900 : null,
+                    ),
                   ),
                 ),
                 if (value != null)

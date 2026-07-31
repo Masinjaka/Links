@@ -20,6 +20,9 @@ Map<int, CollectionCardData> buildCollectionCardData(
     final collectionId = membership.collectionId;
     final current = result[collectionId];
     final link = row.readTableOrNull(db.links);
+    if (link == null || !const {'active', 'inbox'}.contains(link.status)) {
+      continue;
+    }
     final preview = row.readTableOrNull(db.linkPreviews);
     final imageUrls = [...?current?.imageUrls];
     if (imageUrls.length < 3) {

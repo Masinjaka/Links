@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/shared/presentation/widgets/library_bottom_sheet.dart';
 
 import '../../../support/linkvault_test_harness.dart';
@@ -109,5 +110,15 @@ void main() {
       tester.widget<Material>(find.byKey(buttonKey)).color,
       const Color(0xFF30D158),
     );
+    final eraseText = tester.widget<Text>(find.text('Erase data'));
+    final eraseIcon = tester.widget<Icon>(
+      find.descendant(
+        of: find.byKey(const Key('settings-erase-data-row')),
+        matching: find.byType(Icon),
+      ),
+    );
+    expect(eraseText.style?.color, LinkVaultColors.destructive);
+    expect(eraseText.style?.fontWeight, FontWeight.w900);
+    expect(eraseIcon.color, LinkVaultColors.destructive);
   });
 }

@@ -8,8 +8,10 @@ import 'package:linkvault/core/database/app_database.dart';
 import 'package:linkvault/core/database/providers/database_providers.dart';
 import 'package:linkvault/features/add_link/provider/add_link_metadata_providers.dart';
 import 'package:linkvault/features/add_link/provider/add_link_providers.dart';
+import 'package:linkvault/features/add_link/provider/shared_url_providers.dart';
 import 'package:linkvault/features/add_link/repository/add_link_metadata_repository.dart';
 import 'package:linkvault/features/add_link/repository/add_link_repository.dart';
+import 'package:linkvault/features/add_link/service/shared_url_service.dart';
 import 'package:linkvault/features/add_link/service/metadata_task_runner.dart';
 import 'package:linkvault/features/collections/provider/collections_providers.dart';
 import 'package:linkvault/features/collections/repository/collections_repository.dart';
@@ -29,6 +31,8 @@ import 'package:linkvault/features/settings/repository/managed_tag.dart';
 import 'package:linkvault/features/settings/repository/settings_repository.dart';
 import 'package:linkvault/features/settings/service/csv_file_saver.dart';
 
+import 'test_shared_url_service.dart';
+
 part 'fake_collections_repository.dart';
 part 'fake_app_preference_store.dart';
 part 'fake_csv_file_saver.dart';
@@ -37,7 +41,15 @@ part 'fake_system_data_repository.dart';
 part 'secondary_link_fixture.dart';
 
 extension WidgetTesterAppFrame on WidgetTester {
-  Future<void> pumpLinkVault(String route) async {
+  Future<void> pumpLinkVault(
+    String route, {
+    SharedUrlService? sharedUrlService,
+  }) async {
+    final effectiveSharedUrlService =
+        sharedUrlService ?? TestSharedUrlService.resolved(null);
+    if (sharedUrlService == null) {
+      addTearDown(effectiveSharedUrlService.dispose);
+    }
     removedCollectionLinkIds.clear();
     restoredArchivedLinkIds.clear();
     deletedArchivedLinkIds.clear();
@@ -64,6 +76,7 @@ extension WidgetTesterAppFrame on WidgetTester {
           addLinkMetadataRepositoryProvider.overrideWith(
             (ref) => const _FakeAddLinkMetadataRepository(),
           ),
+          sharedUrlServiceProvider.overrideWithValue(effectiveSharedUrlService),
           linkDetailsRepositoryProvider.overrideWith(
             (ref) => _FakeLinkDataRepository(),
           ),

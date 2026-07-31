@@ -39,6 +39,7 @@ class CollectionFeedCard extends StatelessWidget {
                     height: CollectionPreviewStack.size.height,
                     child: constraints.maxWidth < 280
                         ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: Row(
@@ -60,6 +61,7 @@ class CollectionFeedCard extends StatelessWidget {
                             ],
                           )
                         : Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CollectionPreviewStack(
                                 iconKey: collection.iconKey,
@@ -102,36 +104,33 @@ class CollectionFeedCard extends StatelessWidget {
     final localizations = linkVaultLocalizationsOf(context);
     return Column(
       key: const Key('collection-card-content'),
-      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           collection.title.sentenceDisplayText,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontSize: 21,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w800,
+            height: 1.05,
           ),
         ),
         const SizedBox(height: 9),
-        Row(
-          children: [
-            Flexible(child: _tag(context, collection.tagName)),
-            const SizedBox(width: 6),
-            Expanded(
-              child: Text(
-                localizations.linkCount(group.count),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: LinkVaultThemeTokens.ink(context),
-                  fontWeight: FontWeight.w400,
-                  height: 1.1,
-                ),
-              ),
-            ),
-          ],
+        Text(
+          localizations.linkCount(group.count),
+          key: const Key('collection-card-link-count'),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: LinkVaultThemeTokens.ink(context),
+            fontWeight: FontWeight.w400,
+            height: 1.1,
+          ),
+        ),
+        const Spacer(),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: _tag(context, collection.tagName),
         ),
       ],
     );
@@ -142,6 +141,7 @@ class CollectionFeedCard extends StatelessWidget {
         ? linkVaultLocalizationsOf(context).general
         : tagName.sentenceDisplayText;
     return Container(
+      key: const Key('collection-card-tag'),
       constraints: const BoxConstraints(minWidth: 48),
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
       decoration: BoxDecoration(

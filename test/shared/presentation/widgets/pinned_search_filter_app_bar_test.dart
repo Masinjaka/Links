@@ -44,11 +44,30 @@ void main() {
     final titleBottom = tester.getBottomLeft(find.byKey(titleKey)).dy;
     final searchTop = tester.getTopLeft(find.byKey(searchKey)).dy;
     expect(searchTop - titleBottom, 28);
+    expect(
+      tester
+          .widget<BackdropFilter>(
+            find.byKey(const Key('pinned-header-backdrop')),
+          )
+          .enabled,
+      isFalse,
+    );
 
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -600));
     await tester.pumpAndSettle();
     final pinnedSearchTop = tester.getTopLeft(find.byKey(searchKey)).dy;
     final pinnedFiltersTop = tester.getTopLeft(find.byKey(filtersKey)).dy;
+    final backdrop = tester.widget<BackdropFilter>(
+      find.byKey(const Key('pinned-header-backdrop')),
+    );
+    final surface = tester.widget<AnimatedContainer>(
+      find.byKey(const Key('pinned-header-surface')),
+    );
+    final decoration = surface.decoration! as BoxDecoration;
+
+    expect(backdrop.enabled, isTrue);
+    expect(decoration.color!.a, lessThan(1));
+    expect(decoration.border, isNull);
 
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -300));
     await tester.pumpAndSettle();

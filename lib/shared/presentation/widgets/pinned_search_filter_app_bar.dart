@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/shared/presentation/widgets/glass_surface.dart';
 
 class PinnedSearchFilterAppBar extends StatelessWidget {
   const PinnedSearchFilterAppBar({
@@ -18,39 +19,54 @@ class PinnedSearchFilterAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      primary: false,
-      automaticallyImplyLeading: false,
-      backgroundColor: LinkVaultThemeTokens.background(context),
-      surfaceTintColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      toolbarHeight: 0,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(controlsHeight),
-        child: SizedBox(
-          height: controlsHeight,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(36, 28, 36, 14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return SliverLayoutBuilder(
+      builder: (context, constraints) {
+        final glass = constraints.scrollOffset > .5;
+        final background = LinkVaultThemeTokens.background(context);
+        return SliverAppBar(
+          pinned: true,
+          primary: false,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          toolbarHeight: 0,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(controlsHeight),
+            child: GlassSurface(
+              enabled: glass,
+              borderRadius: BorderRadius.zero,
+              color: background,
+              glassColor: background.withValues(alpha: .72),
+              height: controlsHeight,
+              backdropKey: const Key('pinned-header-backdrop'),
+              surfaceKey: const Key('pinned-header-surface'),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(36, 28, 36, 13),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(child: search),
-                    if (action != null) ...[const SizedBox(width: 10), action!],
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: search),
+                        if (action != null) ...[
+                          const SizedBox(width: 10),
+                          action!,
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: 28),
+                    filters,
                   ],
                 ),
-                const SizedBox(height: 28),
-                filters,
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

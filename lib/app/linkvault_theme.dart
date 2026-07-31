@@ -5,7 +5,8 @@ import 'package:linkvault/app/linkvault_text_theme.dart';
 export 'package:linkvault/app/linkvault_theme_tokens.dart';
 
 class LinkVaultColors {
-  static const Color _defaultPrimary = Color(0xFFFF6262);
+  static const Color destructive = Color(0xFFFF6262);
+  static const Color _defaultPrimary = destructive;
   static const Color _lightOnPrimary = Color(0xFFEDF2F4);
   static const Color _darkOnPrimary = Color(0xFF000000);
 

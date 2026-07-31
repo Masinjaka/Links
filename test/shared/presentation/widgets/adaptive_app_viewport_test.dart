@@ -1,34 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:linkvault/shared/presentation/widgets/compact_app_viewport.dart';
+import 'package:linkvault/shared/presentation/widgets/adaptive_app_viewport.dart';
 
 void main() {
-  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
-    testWidgets('uses the same compact density on ${platform.name}', (
+  const devices = [
+    (
+      platform: TargetPlatform.iOS,
+      size: Size(393, 852),
+      paintedElementSize: 90.0,
+    ),
+    (
+      platform: TargetPlatform.android,
+      size: Size(412, 892),
+      paintedElementSize: 94.0,
+    ),
+  ];
+
+  for (final device in devices) {
+    testWidgets('adapts the viewport on ${device.platform.name}', (
       tester,
     ) async {
-      await tester.binding.setSurfaceSize(const Size(400, 800));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
+      tester.view.physicalSize = device.size;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: ThemeData(platform: platform),
+          theme: ThemeData(platform: device.platform),
           builder: (context, child) {
-            return CompactAppViewport(child: child!);
+            return AdaptiveAppViewport(child: child!);
           },
           home: const _DensityProbe(),
         ),
       );
 
-      expect(find.text('444.4 × 888.9'), findsOneWidget);
-      expect(_paintedSize(tester, find.byKey(_DensityProbe.pageKey)), _compact);
+      expect(find.text('436.7'), findsOneWidget);
+      expect(
+        _paintedSize(tester, find.byKey(_DensityProbe.pageKey)),
+        Size.square(device.paintedElementSize),
+      );
 
       await tester.tap(find.text('dialog'));
       await tester.pumpAndSettle();
       expect(
         _paintedSize(tester, find.byKey(_DensityProbe.dialogKey)),
-        _compact,
+        Size.square(device.paintedElementSize),
       );
       Navigator.of(tester.element(find.byKey(_DensityProbe.dialogKey))).pop();
       await tester.pumpAndSettle();
@@ -37,13 +54,41 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         _paintedSize(tester, find.byKey(_DensityProbe.sheetKey)),
-        _compact,
+        Size.square(device.paintedElementSize),
       );
     });
   }
-}
 
-const _compact = Size(90, 90);
+  testWidgets('does not magnify large viewports', (tester) async {
+    tester.view.physicalSize = const Size(800, 1200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      const MaterialApp(home: AdaptiveAppViewport(child: _DensityProbe())),
+    );
+
+    expect(
+      _paintedSize(tester, find.byKey(_DensityProbe.pageKey)),
+      const Size.square(100),
+    );
+  });
+
+  testWidgets('compacts short wide viewports', (tester) async {
+    tester.view.physicalSize = const Size(800, 600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      const MaterialApp(home: AdaptiveAppViewport(child: _DensityProbe())),
+    );
+
+    expect(
+      _paintedSize(tester, find.byKey(_DensityProbe.pageKey)),
+      const Size.square(90),
+    );
+  });
+}
 
 Size _paintedSize(WidgetTester tester, Finder finder) {
   final box = tester.renderObject<RenderBox>(finder);
@@ -68,10 +113,7 @@ class _DensityProbe extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Text(
-            '${size.width.toStringAsFixed(1)} × '
-            '${size.height.toStringAsFixed(1)}',
-          ),
+          Text(size.width.toStringAsFixed(1)),
           const SizedBox(key: pageKey, width: 100, height: 100),
           TextButton(
             onPressed: () => showDialog<void>(

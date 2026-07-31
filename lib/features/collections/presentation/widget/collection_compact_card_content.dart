@@ -11,38 +11,31 @@ class _CollectionCompactCardContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                collection.title.sentenceDisplayText,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
-              ),
-            ),
-          ],
+        Text(
+          collection.title.sentenceDisplayText,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.w800,
+            height: 1.05,
+          ),
         ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Flexible(child: _tag(context, collection.tagName)),
-            const SizedBox(width: 6),
-            Expanded(
-              child: Text(
-                linkVaultLocalizationsOf(context).linkCount(group.count),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: LinkVaultThemeTokens.ink(context),
-                  fontWeight: FontWeight.w400,
-                  height: 1.1,
-                ),
-              ),
-            ),
-          ],
+        const SizedBox(height: 9),
+        Text(
+          linkVaultLocalizationsOf(context).linkCount(group.count),
+          key: const Key('collection-card-link-count'),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: LinkVaultThemeTokens.ink(context),
+            fontWeight: FontWeight.w400,
+            height: 1.1,
+          ),
+        ),
+        const Spacer(),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: _tag(context, collection.tagName),
         ),
       ],
     );
@@ -53,6 +46,7 @@ class _CollectionCompactCardContent extends StatelessWidget {
         ? linkVaultLocalizationsOf(context).general
         : tagName.sentenceDisplayText;
     return Container(
+      key: const Key('collection-card-tag'),
       constraints: const BoxConstraints(minWidth: 48),
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
       decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:linkvault/app/linkvault_theme.dart';
 import 'package:linkvault/core/database/app_database.dart';
 import 'package:linkvault/features/collections/presentation/widget/collections_widgets.dart';
 import 'package:linkvault/features/collections/repository/collections_repository.dart';
@@ -24,6 +25,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: LinkVaultTheme.light(const Color(0xFFFF6262)),
         home: Scaffold(
           body: Center(
             child: SizedBox(
@@ -68,6 +70,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: LinkVaultTheme.light(const Color(0xFFFF6262)),
         home: Scaffold(
           body: Align(
             alignment: Alignment.topCenter,
@@ -92,6 +95,9 @@ void main() {
     expect(find.text('A useful development collection.'), findsNothing);
     final tagText = tester.widget<Text>(find.text('Dev'));
     final countText = tester.widget<Text>(find.text('3 links'));
+    final titleText = tester.widget<Text>(find.text('Development'));
+    expect(titleText.style?.fontSize, 15);
+    expect(titleText.style?.height, 1.05);
     expect(tagText.style?.fontSize, 12);
     expect(countText.style?.fontSize, tagText.style?.fontSize);
     expect(
@@ -106,6 +112,8 @@ void main() {
     );
     final card = find.byKey(const Key('collection-feed-card-surface'));
     final icon = find.byKey(const Key('collection-card-icon'));
+    final count = find.byKey(const Key('collection-card-link-count'));
+    final tag = find.byKey(const Key('collection-card-tag'));
     expect(tester.getSize(icon), const Size.square(34));
     expect(tester.getTopRight(card).dx - tester.getTopRight(icon).dx, 10);
     expect(
@@ -113,9 +121,11 @@ void main() {
       tester.getTopLeft(icon).dy,
     );
     expect(
-      tester.getCenter(find.byKey(const Key('collection-card-content'))).dy,
-      tester.getCenter(card).dy,
+      tester.getTopLeft(find.byKey(const Key('collection-card-content'))).dy,
+      tester.getTopLeft(card).dy + 10,
     );
+    expect(tester.getTopLeft(count).dy, lessThan(tester.getTopLeft(tag).dy));
+    expect(tester.getBottomLeft(tag).dy, tester.getBottomLeft(card).dy - 10);
     final trailingIcon = find.descendant(
       of: icon,
       matching: find.byIcon(Icons.terminal_rounded),
@@ -142,6 +152,7 @@ void main() {
     Future<void> pumpCard({required bool selectionMode}) {
       return tester.pumpWidget(
         MaterialApp(
+          theme: LinkVaultTheme.light(const Color(0xFFFF6262)),
           home: Scaffold(
             body: Align(
               alignment: Alignment.topCenter,

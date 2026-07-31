@@ -2,18 +2,17 @@ import 'dart:ui' show DisplayFeature;
 
 import 'package:flutter/material.dart';
 
-/// Applies one visual-density ratio to the complete app, including overlays.
-class CompactAppViewport extends StatelessWidget {
-  const CompactAppViewport({
-    super.key,
-    required this.child,
-    this.scale = defaultScale,
-  }) : assert(scale > 0 && scale <= 1);
+/// Keeps the app's visual proportions consistent across phone widths.
+class AdaptiveAppViewport extends StatelessWidget {
+  const AdaptiveAppViewport({super.key, required this.child});
 
-  static const double defaultScale = .9;
+  static const double referenceWidth = 393;
+  static const double compactWidthBreakpoint = 600;
+  static const double compactHeightBreakpoint = 600;
+  static const double baselineScale = .9;
+  static const double maximumScale = 1.1;
 
   final Widget child;
-  final double scale;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,17 @@ class CompactAppViewport extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (!_hasFiniteViewport(constraints) || scale == 1) return child;
+        if (!_hasFiniteViewport(constraints)) return child;
+        final width = constraints.maxWidth;
+        final scale = width >= compactWidthBreakpoint
+            ? constraints.maxHeight <= compactHeightBreakpoint
+                  ? baselineScale
+                  : 1.0
+            : (baselineScale * width / referenceWidth).clamp(
+                baselineScale,
+                maximumScale,
+              );
+        if (scale == 1) return child;
 
         final viewport = Size(
           constraints.maxWidth / scale,
@@ -29,12 +38,15 @@ class CompactAppViewport extends StatelessWidget {
         );
         final scaledMediaQuery = mediaQuery.copyWith(
           size: viewport,
-          padding: _expandInsets(mediaQuery.padding),
-          viewPadding: _expandInsets(mediaQuery.viewPadding),
-          viewInsets: _expandInsets(mediaQuery.viewInsets),
-          systemGestureInsets: _expandInsets(mediaQuery.systemGestureInsets),
+          padding: _resizeInsets(mediaQuery.padding, scale),
+          viewPadding: _resizeInsets(mediaQuery.viewPadding, scale),
+          viewInsets: _resizeInsets(mediaQuery.viewInsets, scale),
+          systemGestureInsets: _resizeInsets(
+            mediaQuery.systemGestureInsets,
+            scale,
+          ),
           displayFeatures: mediaQuery.displayFeatures
-              .map(_expandDisplayFeature)
+              .map((feature) => _resizeDisplayFeature(feature, scale))
               .toList(growable: false),
         );
 
@@ -66,7 +78,7 @@ class CompactAppViewport extends StatelessWidget {
         constraints.maxHeight.isFinite;
   }
 
-  EdgeInsets _expandInsets(EdgeInsets value) {
+  EdgeInsets _resizeInsets(EdgeInsets value, double scale) {
     return EdgeInsets.fromLTRB(
       value.left / scale,
       value.top / scale,
@@ -75,7 +87,7 @@ class CompactAppViewport extends StatelessWidget {
     );
   }
 
-  DisplayFeature _expandDisplayFeature(DisplayFeature feature) {
+  DisplayFeature _resizeDisplayFeature(DisplayFeature feature, double scale) {
     final bounds = feature.bounds;
     return DisplayFeature(
       bounds: Rect.fromLTRB(

@@ -1,7 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:linkvault/app/navigation_scroll_overlap.dart';
 import 'package:linkvault/app/widgets/primary_add_button.dart';
 import 'package:linkvault/app/widgets/primary_add_menu.dart';
 import 'package:linkvault/app/widgets/primary_navigation_bar.dart';
@@ -22,7 +25,12 @@ class PrimaryNavigationShell extends ConsumerStatefulWidget {
 
 class _PrimaryNavigationShellState
     extends ConsumerState<PrimaryNavigationShell> {
+  static const _pageTrailingPadding = 152.0;
+  static const _navigationHeight = 56.0;
+  static const _navigationBottomMargin = 24.0;
+
   var _addMenuOpen = false;
+  final _contentBehindNavigation = <int, bool>{};
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,13 @@ class _PrimaryNavigationShellState
 
     return Scaffold(
       extendBody: true,
-      body: widget.navigationShell,
+      body: NotificationListener<ScrollMetricsNotification>(
+        onNotification: _handleMetricsNotification,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: _handleScrollNotification,
+          child: widget.navigationShell,
+        ),
+      ),
       bottomNavigationBar: selecting
           ? null
           : SafeArea(
@@ -70,6 +84,7 @@ class _PrimaryNavigationShellState
                         child: PrimaryNavigationBar(
                           currentIndex: widget.navigationShell.currentIndex,
                           onDestinationSelected: _goTo,
+                          glass: _showsNavigationGlass,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -83,6 +98,40 @@ class _PrimaryNavigationShellState
               ),
             ),
     );
+  }
+
+  bool get _showsNavigationGlass {
+    final index = widget.navigationShell.currentIndex;
+    return index < 2 && (_contentBehindNavigation[index] ?? false);
+  }
+
+  bool _handleMetricsNotification(ScrollMetricsNotification notification) {
+    _updateContentOverlap(notification.metrics, notification.depth);
+    return false;
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    _updateContentOverlap(notification.metrics, notification.depth);
+    return false;
+  }
+
+  void _updateContentOverlap(ScrollMetrics metrics, int depth) {
+    final index = widget.navigationShell.currentIndex;
+    if (index >= 2 || depth != 0) return;
+    final bottomOffset = math.max(
+      _navigationBottomMargin,
+      MediaQuery.paddingOf(context).bottom,
+    );
+    final clearExtent = math.max(
+      0.0,
+      _pageTrailingPadding - _navigationHeight - bottomOffset,
+    );
+    final overlaps = hasContentBehindNavigation(
+      metrics,
+      clearExtent: clearExtent,
+    );
+    if (_contentBehindNavigation[index] == overlaps) return;
+    setState(() => _contentBehindNavigation[index] = overlaps);
   }
 
   void _goTo(int index) {
