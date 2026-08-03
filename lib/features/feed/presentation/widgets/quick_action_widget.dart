@@ -9,7 +9,6 @@ class FeedQuickActions extends StatelessWidget {
     this.onAdd,
     this.onArchive,
     this.onRestore,
-    this.onTrash,
     this.onFavourite,
     this.onPin,
     this.onDelete,
@@ -20,7 +19,6 @@ class FeedQuickActions extends StatelessWidget {
   final VoidCallback? onAdd;
   final VoidCallback? onArchive;
   final VoidCallback? onRestore;
-  final VoidCallback? onTrash;
   final VoidCallback? onFavourite;
   final VoidCallback? onPin;
   final VoidCallback? onDelete;
@@ -51,8 +49,6 @@ class FeedQuickActions extends StatelessWidget {
         (localizations.restoreLinks, Icons.restore_rounded, onRestore!),
       if (onArchive != null)
         (localizations.archiveLinks, Icons.archive_outlined, onArchive!),
-      if (onTrash != null)
-        (localizations.moveToTrash, Icons.delete_outline_rounded, onTrash!),
       if (onDelete != null)
         (
           localizations.deletePermanently,

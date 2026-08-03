@@ -80,7 +80,6 @@ AsyncValue<List<String>> feedFilters(Ref ref) {
       allAssetsFilter,
       inboxFilter,
       favouritesFilter,
-      trashFilter,
       ...items.where((tag) => !_isArchiveLabel(tag)),
     ];
 

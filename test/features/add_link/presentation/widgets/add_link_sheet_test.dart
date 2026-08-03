@@ -64,4 +64,47 @@ void main() {
 
     expect(find.text('Work projects'), findsOneWidget);
   });
+
+  testWidgets('new collection is selected for the link being created', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpLinkVault('/', hasCollections: false);
+
+    await tester.tap(find.byType(PrimaryAddButton));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('add-link-collection-selector')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Create collection'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('add-link-create-collection')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('add-link-collection-sheet')), findsNothing);
+    expect(
+      find.byKey(const Key('add-collection-sheet-surface')),
+      findsOneWidget,
+    );
+    expect(find.text('NEW COLLECTION'), findsOneWidget);
+
+    await tester.enterText(
+      find.byKey(const Key('collection-name-field')),
+      'Reading list',
+    );
+    await tester.tap(find.byKey(const Key('save-collection-button')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(const Key('add-link-url-text-field')),
+      'https://example.com/article',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add link'));
+    await tester.pumpAndSettle();
+
+    expect(lastCreatedLinkDraft?.collectionIds, [1]);
+  });
 }

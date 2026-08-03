@@ -1,6 +1,10 @@
 part of 'linkvault_test_harness.dart';
 
 final class _FakeCollectionsRepository implements CollectionsRepository {
+  _FakeCollectionsRepository({this.hasCollections = true});
+
+  final bool hasCollections;
+
   final _collection = Collection(
     id: 1,
     title: 'WORK_PROJECTS',
@@ -16,6 +20,7 @@ final class _FakeCollectionsRepository implements CollectionsRepository {
 
   @override
   Stream<List<CollectionWithCount>> watchCollections() {
+    if (!hasCollections) return Stream.value(const []);
     return Stream.value([
       CollectionWithCount(collection: _collection, count: 4),
     ]);

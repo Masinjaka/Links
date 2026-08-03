@@ -52,7 +52,10 @@ final class _FakeLinkDataRepository
     LinkDraft draft, {
     AddLinkMetadata? metadata,
     bool allowDuplicate = false,
-  }) async => 1;
+  }) async {
+    lastCreatedLinkDraft = draft;
+    return 1;
+  }
 
   @override
   Future<void> update(

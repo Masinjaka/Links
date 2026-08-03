@@ -102,6 +102,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addCollection => 'Ajouter une collection';
 
   @override
+  String get createCollection => 'Créer une collection';
+
+  @override
   String get noLinksYet => 'Aucun lien.';
 
   @override
@@ -511,7 +514,31 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String deletedLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count liens supprimés',
+      one: '1 lien supprimé',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deletePermanentlyQuestion => 'Supprimer définitivement ?';
+
+  @override
+  String deleteLinksMessage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Ces $count liens seront définitivement supprimés. Vous pourrez l’annuler immédiatement après.',
+      one:
+          'Ce lien sera définitivement supprimé. Vous pourrez l’annuler immédiatement après.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String linksCannotRestore(int count) {

@@ -102,6 +102,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addCollection => 'Add collection';
 
   @override
+  String get createCollection => 'Create collection';
+
+  @override
   String get noLinksYet => 'No links yet.';
 
   @override
@@ -510,7 +513,31 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String deletedLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count links deleted',
+      one: '1 link deleted',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deletePermanentlyQuestion => 'Delete permanently?';
+
+  @override
+  String deleteLinksMessage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'These $count links will be permanently deleted. You can undo immediately afterward.',
+      one:
+          'This link will be permanently deleted. You can undo immediately afterward.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String linksCannotRestore(int count) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:linkvault/features/feed/presentation/widgets/archive_links_dialog.dart';
+import 'package:linkvault/features/feed/presentation/widgets/delete_links_dialog.dart';
+import 'package:linkvault/features/feed/presentation/widgets/delete_links_undo_snackbar_content.dart';
 import 'package:linkvault/features/feed/provider/feed_providers.dart';
 import 'package:linkvault/l10n/linkvault_localizations.dart';
 
@@ -19,26 +21,6 @@ class FeedSelectionCommands {
     clearSelection();
   }
 
-  Future<void> trash() async {
-    final ids = _ids;
-    if (ids.isEmpty) return;
-    await ref.read(feedRepositoryProvider).trashLinks(ids);
-    clearSelection();
-    if (!context.mounted) return;
-    final localizations = linkVaultLocalizationsOf(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(localizations.trashedLinks(ids.length)),
-        action: SnackBarAction(
-          label: localizations.undo,
-          onPressed: () {
-            ref.read(feedRepositoryProvider).restoreLinks(ids);
-          },
-        ),
-      ),
-    );
-  }
-
   Future<void> restore() async {
     await ref.read(feedRepositoryProvider).restoreLinks(_ids);
     clearSelection();
@@ -54,9 +36,37 @@ class FeedSelectionCommands {
 
   Future<void> deletePermanently() async {
     final ids = _ids;
-    if (ids.isEmpty || !await _confirmPermanentDelete(ids.length)) return;
-    await ref.read(feedRepositoryProvider).deletePermanently(ids);
+    if (ids.isEmpty || !await showDeleteLinksDialog(context, ids.length)) {
+      return;
+    }
+    final repository = ref.read(feedRepositoryProvider);
+    await repository.trashLinks(ids);
     clearSelection();
+    if (!context.mounted) {
+      await repository.deletePermanently(ids);
+      return;
+    }
+    final localizations = linkVaultLocalizationsOf(context);
+    Future<void>? undo;
+    final messenger = ScaffoldMessenger.of(context);
+    final controller = messenger.showSnackBar(
+      SnackBar(
+        content: DeleteLinksUndoSnackbarContent(
+          message: localizations.deletedLinks(ids.length),
+          undoLabel: localizations.undo,
+          onUndo: () {
+            undo = repository.restoreLinks(ids);
+            messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.action);
+          },
+        ),
+      ),
+    );
+    final reason = await controller.closed;
+    if (reason == SnackBarClosedReason.action) {
+      await undo;
+      return;
+    }
+    await repository.deletePermanently(ids);
   }
 
   void clearSelection() {
@@ -64,28 +74,4 @@ class FeedSelectionCommands {
   }
 
   Set<int> get _ids => ref.read(selectedFeedLinkIdsProvider);
-
-  Future<bool> _confirmPermanentDelete(int count) async {
-    return await showDialog<bool>(
-          context: context,
-          builder: (context) {
-            final localizations = linkVaultLocalizationsOf(context);
-            return AlertDialog(
-              title: Text(localizations.deletePermanentlyQuestion),
-              content: Text(localizations.linksCannotRestore(count)),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context, false),
-                  child: Text(localizations.cancel),
-                ),
-                FilledButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  child: Text(localizations.delete),
-                ),
-              ],
-            );
-          },
-        ) ??
-        false;
-  }
 }

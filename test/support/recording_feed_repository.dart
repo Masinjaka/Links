@@ -8,6 +8,9 @@ final class RecordingFeedRepository implements FeedRepository {
   bool? pinnedValue;
   Set<int> favouriteIds = {};
   Set<int> pinnedIds = {};
+  Set<int> trashedIds = {};
+  Set<int> restoredIds = {};
+  Set<int> deletedIds = {};
 
   @override
   Future<void> setFavourite(Iterable<int> linkIds, bool value) async {
@@ -42,7 +45,9 @@ final class RecordingFeedRepository implements FeedRepository {
   Future<void> archiveLinks(Iterable<int> linkIds) async {}
 
   @override
-  Future<void> deletePermanently(Iterable<int> linkIds) async {}
+  Future<void> deletePermanently(Iterable<int> linkIds) async {
+    deletedIds = linkIds.toSet();
+  }
 
   @override
   Future<void> emptyTrash() async {}
@@ -51,10 +56,14 @@ final class RecordingFeedRepository implements FeedRepository {
   Future<void> markOpened(int linkId) async {}
 
   @override
-  Future<void> restoreLinks(Iterable<int> linkIds) async {}
+  Future<void> restoreLinks(Iterable<int> linkIds) async {
+    restoredIds = linkIds.toSet();
+  }
 
   @override
-  Future<void> trashLinks(Iterable<int> linkIds) async {}
+  Future<void> trashLinks(Iterable<int> linkIds) async {
+    trashedIds = linkIds.toSet();
+  }
 
   @override
   Future<void> updateNote(int linkId, String note) async {}

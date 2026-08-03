@@ -145,29 +145,32 @@ class _AddCollectionPageState extends ConsumerState<AddCollectionPage> {
     try {
       final repository = ref.read(collectionsRepositoryProvider);
       final id = widget.collectionId;
-      id == null
-          ? await repository.create(
-              title,
-              'CUSTOM',
-              _selectedIconKey,
-              tagName: _selectedTag,
-            )
-          : await repository.update(
-              id,
-              title,
-              'CUSTOM',
-              _selectedIconKey,
-              tagName: _selectedTag,
-            );
-      if (mounted) _close();
+      final savedId =
+          id ??
+          await repository.create(
+            title,
+            'CUSTOM',
+            _selectedIconKey,
+            tagName: _selectedTag,
+          );
+      if (id != null) {
+        await repository.update(
+          id,
+          title,
+          'CUSTOM',
+          _selectedIconKey,
+          tagName: _selectedTag,
+        );
+      }
+      if (mounted) _close(savedId);
     } finally {
       if (mounted) setState(() => _saving = false);
     }
   }
 
-  void _close() {
+  void _close([int? savedId]) {
     if (widget.sheetMode) {
-      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context, rootNavigator: true).pop(savedId);
       return;
     }
     context.go('/collections');

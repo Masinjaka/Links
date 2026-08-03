@@ -286,6 +286,12 @@ abstract class AppLocalizations {
   /// **'Add collection'**
   String get addCollection;
 
+  /// No description provided for @createCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Create collection'**
+  String get createCollection;
+
   /// No description provided for @noLinksYet.
   ///
   /// In en, this message translates to:
@@ -982,11 +988,23 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 link trashed} other{{count} links trashed}}'**
   String trashedLinks(int count);
 
+  /// No description provided for @deletedLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 link deleted} other{{count} links deleted}}'**
+  String deletedLinks(int count);
+
   /// No description provided for @deletePermanentlyQuestion.
   ///
   /// In en, this message translates to:
   /// **'Delete permanently?'**
   String get deletePermanentlyQuestion;
+
+  /// No description provided for @deleteLinksMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{This link will be permanently deleted. You can undo immediately afterward.} other{These {count} links will be permanently deleted. You can undo immediately afterward.}}'**
+  String deleteLinksMessage(int count);
 
   /// No description provided for @linksCannotRestore.
   ///

@@ -27,7 +27,7 @@ class FeedSelectionOverlay extends ConsumerWidget {
       ),
       archiveFilter => FeedQuickActions(
         onRestore: commands.restore,
-        onTrash: commands.trash,
+        onDelete: commands.deletePermanently,
       ),
       _ => FeedQuickActions(
         favouriteActive: allFavourite,
@@ -35,7 +35,7 @@ class FeedSelectionOverlay extends ConsumerWidget {
         onFavourite: () => commands.favourite(!allFavourite),
         onPin: () => commands.pin(!allPinned),
         onArchive: commands.archive,
-        onTrash: commands.trash,
+        onDelete: commands.deletePermanently,
       ),
     };
   }

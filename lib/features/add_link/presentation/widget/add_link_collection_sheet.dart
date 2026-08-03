@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:linkvault/app/linkvault_theme.dart';
+import 'package:linkvault/features/add_link/presentation/widget/add_link_collection_empty_state.dart';
+import 'package:linkvault/features/collections/presentation/show_add_collection_sheet.dart';
 import 'package:linkvault/features/collections/presentation/widget/collections_widgets.dart';
 import 'package:linkvault/features/collections/repository/collections_repository.dart';
 import 'package:linkvault/l10n/linkvault_localizations.dart';
@@ -19,13 +21,18 @@ Future<void> showAddLinkCollectionSheet({
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: .36),
-    builder: (context) {
+    builder: (sheetContext) {
       return FractionallySizedBox(
         heightFactor: .66,
         child: AddLinkCollectionSheet(
           collections: collections,
           selectedCollectionId: selectedCollectionId,
           onDone: onDone,
+          onCreateCollection: () async {
+            Navigator.of(sheetContext).pop();
+            final id = await showAddCollectionSheet(context);
+            if (id != null && context.mounted) onDone(id);
+          },
         ),
       );
     },
@@ -38,11 +45,13 @@ class AddLinkCollectionSheet extends StatefulWidget {
     required this.collections,
     required this.selectedCollectionId,
     required this.onDone,
+    required this.onCreateCollection,
   });
 
   final List<CollectionWithCount> collections;
   final int? selectedCollectionId;
   final ValueChanged<int?> onDone;
+  final VoidCallback onCreateCollection;
 
   @override
   State<AddLinkCollectionSheet> createState() => _AddLinkCollectionSheetState();
@@ -120,7 +129,11 @@ class _AddLinkCollectionSheetState extends State<AddLinkCollectionSheet> {
             ),
             const SizedBox(height: 28),
             Expanded(
-              child: collections.isEmpty
+              child: widget.collections.isEmpty
+                  ? AddLinkCollectionEmptyState(
+                      onCreateCollection: widget.onCreateCollection,
+                    )
+                  : collections.isEmpty
                   ? Center(
                       child: Text(
                         linkVaultLocalizationsOf(context).noCollectionsFound,

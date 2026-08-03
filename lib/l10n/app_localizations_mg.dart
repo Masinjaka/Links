@@ -102,6 +102,9 @@ class AppLocalizationsMg extends AppLocalizations {
   String get addCollection => 'Hanampy angona';
 
   @override
+  String get createCollection => 'Hamorona angona';
+
+  @override
   String get noLinksYet => 'Tsy mbola misy rohy.';
 
   @override
@@ -511,7 +514,31 @@ class AppLocalizationsMg extends AppLocalizations {
   }
 
   @override
+  String deletedLinks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Rohy $count voafafa',
+      one: 'Rohy 1 voafafa',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deletePermanentlyQuestion => 'Hamafa tanteraka?';
+
+  @override
+  String deleteLinksMessage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Hofafana tanteraka ireo rohy $count ireo. Afaka manafoana izany avy hatrany ianao.',
+      one:
+          'Hofafana tanteraka ity rohy ity. Afaka manafoana izany avy hatrany ianao.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String linksCannotRestore(int count) {

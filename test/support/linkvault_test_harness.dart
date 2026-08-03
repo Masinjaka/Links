@@ -44,6 +44,7 @@ extension WidgetTesterAppFrame on WidgetTester {
   Future<void> pumpLinkVault(
     String route, {
     SharedUrlService? sharedUrlService,
+    bool hasCollections = true,
   }) async {
     final effectiveSharedUrlService =
         sharedUrlService ?? TestSharedUrlService.resolved(null);
@@ -59,6 +60,7 @@ extension WidgetTesterAppFrame on WidgetTester {
     deletedManagedCollectionTags.clear();
     settingsEraseCount = 0;
     lastSavedCsv = null;
+    lastCreatedLinkDraft = null;
     appRouter.go(route);
     await pumpWidget(
       ProviderScope(
@@ -81,7 +83,7 @@ extension WidgetTesterAppFrame on WidgetTester {
             (ref) => _FakeLinkDataRepository(),
           ),
           collectionsRepositoryProvider.overrideWith(
-            (ref) => _FakeCollectionsRepository(),
+            (ref) => _FakeCollectionsRepository(hasCollections: hasCollections),
           ),
           profileRepositoryProvider.overrideWith(
             (ref) => _FakeSystemDataRepository(),
@@ -122,6 +124,7 @@ final deletedManagedLinkTags = <String>[];
 final deletedManagedCollectionTags = <String>[];
 var settingsEraseCount = 0;
 String? lastSavedCsv;
+LinkDraft? lastCreatedLinkDraft;
 
 final primaryLink = LinkWithTags(
   link: Link(

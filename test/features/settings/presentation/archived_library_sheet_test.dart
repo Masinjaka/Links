@@ -73,12 +73,13 @@ void main() {
     expect(deletedArchivedLinkIds, [1]);
   });
 
-  testWidgets('main pages never expose archive tag filter variants', (
+  testWidgets('main pages never expose archive or trash filters', (
     tester,
   ) async {
     await tester.pumpLinkVault('/');
     expect(find.widgetWithText(FeedFilterChip, 'Archive'), findsNothing);
     expect(find.widgetWithText(FeedFilterChip, 'Archived'), findsNothing);
+    expect(find.widgetWithText(FeedFilterChip, 'Trash'), findsNothing);
 
     await tester.pumpLinkVault('/collections');
     expect(find.widgetWithText(FeedFilterChip, 'Archive'), findsNothing);
